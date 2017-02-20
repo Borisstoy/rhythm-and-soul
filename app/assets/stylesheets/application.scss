@@ -13,3 +13,23 @@
 @import "components/index";
 @import "pages/index";
 @import "vendor/index";
+
+
+h1 {
+  font-family: $title-font-h1;
+  color: $main-blue;
+}
+
+h2, h3, h4, h5 {
+  font-family: $subtitle-font;
+  color: $main-blue;
+}
+
+p {
+  font-family: $base-font;
+  color: $main-blue;
+}
+
+a {
+  font-family: $base-font;
+}
