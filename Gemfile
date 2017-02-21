@@ -22,6 +22,9 @@ gem 'font-awesome-sass'
 gem 'simple_form'
 gem 'autoprefixer-rails'
 
+# Geocoding
+gem "geocoder"
+
 group :development, :test do
   gem 'binding_of_caller'
   gem 'better_errors'
