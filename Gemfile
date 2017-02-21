@@ -10,9 +10,9 @@ gem 'devise'
 gem 'redis'
 gem 'rails-i18n', '~> 5.0.0'
 gem 'devise-i18n'
+gem "discogs-wrapper"
 
 
-gem 'rails-i18n', '~> 5.0.0'
 
 gem 'sass-rails'
 gem 'jquery-rails'
