@@ -1,0 +1,16 @@
+
+<h2><%= @user.first_name%></h2>
+  <p><%= @user.last_name %> </p>
+  <p><%= @user.description %> </p>
+  <p><%= @user.email %> </p>
+  <ul>My favourite genres :
+      <% @user.genres.each do |genre| %>
+      <li><%= genre %></li>
+      <% end %>
+    </ul>
+
+
+<%= simple_form_for @user do |f| %>
+        <%= f.input :genres, collection: [@genres]%>
+        <%= f.submit "Update my information", class: "btn btn-success" %>
+      <% end %>
