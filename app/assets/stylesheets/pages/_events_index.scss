@@ -4,4 +4,10 @@
 }
 #events-container {
   display: flex;
+  background: $very-light-grey;
+}
+#event-map {
+  width: 50%;
+  height: calc(100vh - 70px);
+  position:fixed;
 }
