@@ -16,14 +16,14 @@ require "sprockets/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-#I18N
-config.i18n.default_locale = :en
 
 module RhythmAndSoul
   class Application < Rails::Application
     config.generators do |generate|
       generate.assets false
     end
+    #I18N
+    config.i18n.default_locale = :en
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
