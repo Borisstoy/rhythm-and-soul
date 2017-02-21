@@ -1,3 +1,27 @@
 <h1>Events#index</h1>
 <p>Find me in app/views/events/index.html.erb</p>
-
+<div id="events-container">
+  <div id="events-list">
+    <% @events.each do |event| %>
+      <%= render 'event_element', event: event %>
+    <% end %>
+  </div>
+  <div id="map" style="width: 50%; height: 600px;"></div>
+</div>
+<% content_for(:after_js) do %>
+  <%= javascript_tag do %>
+    $(document).ready(function() {
+      var handler = Gmaps.build('Google');
+      handler.buildMap({ internal: { id: 'map' } }, function() {
+        markers = handler.addMarkers(<%= raw @hash.to_json %>);
+        handler.bounds.extendWith(markers);
+        handler.fitMapToBounds();
+        if (markers.length == 0) {
+          handler.getMap().setZoom(2);
+        } else if (markers.length == 1) {
+          handler.getMap().setZoom(14);
+        }
+      });
+    });
+  <% end %>
+<% end %>
