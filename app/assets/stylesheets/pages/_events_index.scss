@@ -1,6 +1,7 @@
 #events-list {
   width: 50%;
-
+  height: calc(100vh - 70px);
+  overflow: scroll;
 }
 #events-container {
   display: flex;
@@ -9,5 +10,4 @@
 #event-map {
   width: 50%;
   height: calc(100vh - 70px);
-  position:fixed;
 }

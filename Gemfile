@@ -22,6 +22,10 @@ gem 'font-awesome-sass'
 gem 'simple_form'
 gem 'autoprefixer-rails'
 
+#Nokogiri (used for scraping in seeds)
+
+gem 'nokogiri'
+
 # Geocoding
 gem "geocoder"
 

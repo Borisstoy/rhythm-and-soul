@@ -1,3 +1,7 @@
 <div class="event-element">
-  <%= event.name %>
+  <strong><%= event.name %></strong>
+  <br>
+  <strong>Place : </strong> <%= event.venue.name %>
+  <br>
+  <strong>Date : </strong><%= event.date.strftime('%A, %d %b %Y %l:%M %p') %>
 </div>

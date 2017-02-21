@@ -210,6 +210,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   listen (~> 3.0.5)
+  nokogiri
   pg
   pry-byebug
   pry-rails
