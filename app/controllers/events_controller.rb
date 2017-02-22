@@ -18,7 +18,7 @@ class EventsController < ApplicationController
       marker.lat event.venue.latitude
       marker.lng event.venue.longitude
       marker.picture url: ActionController::Base.helpers.asset_path("map_marker.png"), width: 36, height: 36
-      marker.infowindow "<strong><div style='color:blue;'>#{event.venue.name}</div></strong><div>#{event.name}</div><div>#{event.date.strftime('%d %b %Y')}</div>"
+      marker.infowindow "<div class='iw-container'><h3 class='iw-title'>#{event.venue.name}</h3><div class='iw-event'><h3>#{event.name}</h3><div>#{event.date.strftime('%d %b %Y')}</div></div></div>"
     end
 
     #identify coordinates duplicated and add them to an array
@@ -38,15 +38,14 @@ class EventsController < ApplicationController
         picture: inloop_markers_hash[0][:picture],
         infowindow: ""
       }
-      marker_infowindow_head = inloop_markers_hash.first[:infowindow][/(<strong>).*(<\/strong>)/]
+      marker_infowindow_head = inloop_markers_hash.first[:infowindow][/(<h3 class='iw-title'>).*?(<\/h3>)/]
       inloop_markers_hash.each do |marker|
-        new_marker[:infowindow] += marker[:infowindow].gsub(/(<strong>).*(<\/strong>)/, "")
+        new_marker[:infowindow] += marker[:infowindow].gsub(/(<h3 class='iw-title'>).*?(<\/h3>)/, "")
       end
       new_marker[:infowindow] = marker_infowindow_head + new_marker[:infowindow]
       markers_hash.delete_if { |marker| marker[:lat] == coordinates[:lat] && marker[:lng] == coordinates[:lng]}
       markers_hash << new_marker
     end
-
     return markers_hash
   end
 end

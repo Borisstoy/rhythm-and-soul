@@ -20,6 +20,14 @@
           handler.getMap().setZoom(14);
         }
       });
+      function closeInfoWindow(handler){
+        if(handler.currentInfowindow()) {
+          handler.currentInfowindow().close();
+          closeInfoWindow(handler);
+        }
+      }
     });
+
   </script>
 <% end %>
+

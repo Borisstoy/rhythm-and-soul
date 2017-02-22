@@ -1,0 +1,23 @@
+.iw-container{
+  position:relative;
+  h3 {
+    font-size:13px;
+    font-weight:500px;
+    margin:2px 0;
+  }
+}
+
+.iw-event {
+  background-color: $very-light-grey;
+  padding:5px;
+  margin:5px;
+}
+
+.iw-title {
+ color:$dark-grey;
+ font-size: 15px;
+ font-weight: 600;
+ text-align: center;
+ padding: 5px 0;
+
+}
