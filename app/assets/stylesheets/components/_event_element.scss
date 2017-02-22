@@ -1,7 +1,14 @@
 .event-element {
+  h3{
+    font-size: 15px;
+    margin: 0;
+    padding: 5px;
+    font-weight: 600;
+  }
   border: solid 1px $light-grey;
   margin: 10px 20px;
   color: $dark-grey;
   background-color: white;
   height: 80px;
+
 }

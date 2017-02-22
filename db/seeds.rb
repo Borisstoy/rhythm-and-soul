@@ -9,7 +9,7 @@ until_month = "2018-02"
 city = "Paris"
 search_page = 0
 
-for search_page in (1..2)
+for search_page in (1..10)
   url = "https://www.classictic.com/fr/sitesearch/?search=&from_day=#{from_day}&from_month=#{from_month}&until_day=#{until_day}&until_month=#{until_month}&city=#{city}&page=#{search_page}"
 
   html_file = open(url)

@@ -7,11 +7,11 @@
   <div id="event-map"></div>
 </div>
 <% content_for(:after_js) do %>
-  <%= javascript_tag do %>
+  <script>
     $(document).ready(function() {
       var handler = Gmaps.build('Google');
       handler.buildMap({ internal: { id: 'event-map' } }, function() {
-        markers = handler.addMarkers(<%= raw @hash.to_json %>);
+        markers = handler.addMarkers(<%= raw @markers_hash.to_json %>);
         handler.bounds.extendWith(markers);
         handler.fitMapToBounds();
         if (markers.length == 0) {
@@ -21,5 +21,5 @@
         }
       });
     });
-  <% end %>
+  </script>
 <% end %>
