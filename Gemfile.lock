@@ -70,9 +70,9 @@ GEM
       railties (>= 4.1.0, < 5.1)
       responders
       warden (~> 1.2.3)
+    devise-i18n (1.1.1)
     domain_name (0.5.20161129)
       unf (>= 0.0.5, < 1.0.0)
-    devise-i18n (1.1.1)
     erubis (2.7.0)
     excon (0.55.0)
     execjs (2.7.0)
@@ -86,14 +86,13 @@ GEM
     geocoder (1.4.3)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
+    gmaps4rails (2.1.2)
     hashie (3.5.3)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     httparty (0.14.0)
       multi_xml (>= 0.5.2)
     i18n (0.8.1)
-    gmaps4rails (2.1.2)
-    i18n (0.8.0)
     jbuilder (2.6.1)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -244,14 +243,14 @@ DEPENDENCIES
   devise-i18n
   figaro
   font-awesome-sass
-  httparty
-  omniauth-spotify
   geocoder
   gmaps4rails
+  httparty
   jbuilder (~> 2.0)
   jquery-rails
   listen (~> 3.0.5)
   nokogiri
+  omniauth-spotify
   pg
   pry-byebug
   pry-rails
