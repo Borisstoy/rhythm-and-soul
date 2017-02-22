@@ -10,5 +10,8 @@
   color: $dark-grey;
   background-color: white;
   height: 80px;
-
+  transition-duration: 0.5s;
+  &:hover{
+    background-color: $light-grey;
+  }
 }

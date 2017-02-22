@@ -11,6 +11,10 @@
   background-color: $very-light-grey;
   padding:5px;
   margin:5px;
+  transition-duration: 0.3s;
+  &:hover{
+    background-color: $light-grey;
+  }
 }
 
 .iw-title {
