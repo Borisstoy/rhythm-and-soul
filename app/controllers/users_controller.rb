@@ -74,19 +74,28 @@ class UsersController < ApplicationController
     #   tracks_serialized = RestClient::Resource.new(url, headers: {accept: "application/json", authorization: "Bearer #{@user.auth_token}"})
     #   tracks << JSON.parse(tracks_serialized.get)
     # end
-    @artists_names_and_ids = tracks.map do |track|
-      raise
+    @names_and_ids = []
+    @artists_names_and_ids = tracks.map do |playlist_tracks|
       #must iterate on track["items"] to analyse all tracks of a playlist
-      names_and_ids = []
-      names_and_ids << track["items"][0]["track"]["album"]["artists"][0]["name"]
-      names_and_ids << track["items"][0]["track"]["album"]["artists"][0]["id"]
-      names_and_ids
+      #replace 'tracks' by 'all_tracks' and 'track' by 'playlist_tracks'
+      playlist = playlist_tracks["items"]
+      playlist.each do |track|
+        unless track["track"].nil?
+          name_and_id = []
+          track_artist_name = track["track"]["album"]["artists"][0]["name"]
+          track_artist_id = track["track"]["album"]["artists"][0]["id"]
+          name_and_id << track_artist_name
+          name_and_id << track_artist_id
+          @names_and_ids << name_and_id unless @names_and_ids.include?(name_and_id)
+        end
+      end
     end
+    @names_and_ids
   end
 
   def artists_persistence
     get_tracks_artists
-    @artists_names_and_ids.each do |artist|
+    @names_and_ids.each do |artist|
       if Artist.where(name: artist[0]).exists?
         unless @user.artists.include?(Artist.where(name: artist[0])[0])
           new_user_artist = UserArtist.new()
@@ -124,7 +133,8 @@ class UsersController < ApplicationController
   def artists_image_and_genre
     artists_persistence
     get_tracks_artists
-    @artists_images_genre = @artists_names_and_ids.map do |artist|
+    raise
+    @artists_images_genre = @names_and_ids.map do |artist|
       url = "https://api.spotify.com/v1/artists/#{artist[1]}"
       artists_serialized = RestClient::Resource.new(url, headers: {accept: "application/json", authorization: "Bearer #{@user.auth_token}"})
       @artist = JSON.parse(artists_serialized.get)
