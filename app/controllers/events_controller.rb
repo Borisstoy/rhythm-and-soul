@@ -2,14 +2,23 @@ class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
   def index
     @events = Event.all
+    @markers_hash = markers_hash(@events)
+  end
+
+  def show
+  end
+
+  private
+
+  def markers_hash(events)
     venues_coordinates = []
-    markers_hash = Gmaps4rails.build_markers(@events) do |event, marker|
+    markers_hash = Gmaps4rails.build_markers(events) do |event, marker|
       position = { lat: event.venue.latitude, lng: event.venue.longitude }
       venues_coordinates << position
       marker.lat event.venue.latitude
       marker.lng event.venue.longitude
       marker.picture url: ActionController::Base.helpers.asset_path("map_marker.png"), width: 36, height: 36
-      marker.infowindow "<strong>#{event.venue.name}</strong><div>#{event.name}</div><div>#{event.date.strftime('%d %b %Y')}</div>"
+      marker.infowindow "<strong><div style='color:blue;'>#{event.venue.name}</div></strong><div>#{event.name}</div><div>#{event.date.strftime('%d %b %Y')}</div>"
     end
 
     #identify coordinates duplicated and add them to an array
@@ -38,10 +47,7 @@ class EventsController < ApplicationController
       markers_hash << new_marker
     end
 
-    @curated_event_hash = markers_hash.dup
-  end
-
-  def show
+    return markers_hash
   end
 end
 
