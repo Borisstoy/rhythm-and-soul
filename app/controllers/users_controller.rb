@@ -75,6 +75,8 @@ class UsersController < ApplicationController
     #   tracks << JSON.parse(tracks_serialized.get)
     # end
     @artists_names_and_ids = tracks.map do |track|
+      raise
+      #must iterate on track["items"] to analyse all tracks of a playlist
       names_and_ids = []
       names_and_ids << track["items"][0]["track"]["album"]["artists"][0]["name"]
       names_and_ids << track["items"][0]["track"]["album"]["artists"][0]["id"]
@@ -85,7 +87,14 @@ class UsersController < ApplicationController
   def artists_persistence
     get_tracks_artists
     @artists_names_and_ids.each do |artist|
-      unless Artist.where(name: artist).exists?
+      if Artist.where(name: artist[0]).exists?
+        unless @user.artists.include?(Artist.where(name: artist[0])[0])
+          new_user_artist = UserArtist.new()
+          new_user_artist.artist = Artist.where(name: artist[0])[0]
+          new_user_artist.user = @user
+          new_user_artist.save
+        end
+      else
         new_artist = Artist.new(name: artist[0])
         new_artist.save
         new_user_artist = UserArtist.new()
@@ -93,10 +102,27 @@ class UsersController < ApplicationController
         new_user_artist.user = @user
         new_user_artist.save
       end
+      # unless Artist.where(name: artist[0]).exists?
+      #   new_artist = Artist.new(name: artist[0])
+      #   new_artist.save
+      #   new_user_artist = UserArtist.new()
+      #   new_user_artist.artist = new_artist
+      #   new_user_artist.user = @user
+      #   new_user_artist.save
+      # else
+      #   artist_to_link = Artist.where(name: artist[0])
+      #   unless @user.artists.include?(artist_to_link)
+      #     new_user_artist = UserArtist.new()
+      #     new_user_artist.artist = artist_to_link
+      #     new_user_artist.user = @user
+      #     new_user_artist.save
+      #   end
+      # end
     end
   end
 
   def artists_image_and_genre
+    artists_persistence
     get_tracks_artists
     @artists_images_genre = @artists_names_and_ids.map do |artist|
       url = "https://api.spotify.com/v1/artists/#{artist[1]}"
@@ -105,7 +131,16 @@ class UsersController < ApplicationController
     end
     @artists_images_genre.each do |a|
       p a["name"]
-      p a["genres"]
+      p Artist.where(name: a["name"])
+      artist_to_update = Artist.where(name: a["name"])[0]
+      artist_to_update.update(images: a["images"][0]["url"])
+      artist_genres = a["genres"]
+      artist_genres.each do |genre|
+        unless Genre.where(name: genre).exists?
+          new_genre = Genre.new()
+        end
+      end
+      # p a["genres"]
       # p artist_to_update = Artist.where(name: a["name"])
       # p a["name"]
       # artist_to_update.update(images: a["images"][0]["url"])
