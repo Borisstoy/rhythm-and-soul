@@ -25,6 +25,7 @@ gem 'autoprefixer-rails'
 #Nokogiri (used for scraping in seeds)
 
 gem 'nokogiri'
+gem 'json'
 
 # Geocoding
 gem "geocoder"
