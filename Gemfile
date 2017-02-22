@@ -19,6 +19,10 @@ gem 'font-awesome-sass'
 gem 'simple_form'
 gem 'autoprefixer-rails'
 gem 'omniauth-spotify'
+gem 'spotify-client'
+gem 'rest-client'
+gem 'rspotify'
+gem 'httparty'
 
 group :development, :test do
   gem 'binding_of_caller'
