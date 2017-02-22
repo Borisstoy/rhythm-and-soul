@@ -1,53 +1,45 @@
 class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
+
   def index
+    artist_name = "louiseroam"
+    country_name = "france"
+    result = bandsintown_api_client(artist_name, country_name)
+    build_event_index(result, artist_name, country_name)
+  end
+
+ private
+
+ def bandsintown_api_client(artist_name, country_name)
+  url = "https://rest.bandsintown.com/artists/#{artist_name}/events?app_id=r%26s"
+  result_serialized = open(url).read
+  result = JSON.parse(result_serialized)
+ end
+
+def build_event_index(result, artist_name, country_name)
+    Event.destroy_all
+    @hash = {}
+    i = 0
+    until i == 10 || result[i].nil?
+      city = result[i]["venue"]["city"]
+      venue_country = result[i]["venue"]["country"]
+      if country_name.capitalize == venue_country
+        # @lineup = result[i]["lineup"]
+        result[i]["offers"].each {|t| @ticket = t["url"]}
+        @venue = Venue.create(name: result[i]["venue"]["name"], latitude: result[i]["venue"]["latitude"], longitude: result[i]["venue"]["longitude"])
+        @venue.address = Geocoder.address("#{result[i]["venue"]["latitude"]}, #{result[i]["venue"]["longitude"]}")
+        @venue.save
+        @event = Event.create(name: artist_name, venue_id: @venue.id, date: result[i]["datetime"])
+      end
+      i += 1
+    end
     @events = Event.all
-    @markers_hash = markers_hash(@events)
+    @hash = Gmaps4rails.build_markers(@events) do |event, marker|
+        # positions << position
+        marker.lat event.venue.latitude
+        marker.lng event.venue.longitude
+    end
   end
 
-  def show
-  end
-
-  private
-
-  def markers_hash(events)
-    venues_coordinates = []
-    markers_hash = Gmaps4rails.build_markers(events) do |event, marker|
-      position = { lat: event.venue.latitude, lng: event.venue.longitude }
-      venues_coordinates << position
-      marker.lat event.venue.latitude
-      marker.lng event.venue.longitude
-      marker.picture url: ActionController::Base.helpers.asset_path("map_marker.png"), width: 36, height: 36
-      marker.infowindow "<strong><div style='color:blue;'>#{event.venue.name}</div></strong><div>#{event.name}</div><div>#{event.date.strftime('%d %b %Y')}</div>"
-    end
-
-    #identify coordinates duplicated and add them to an array
-    duplicate_coordinates = []
-    venues_coordinates.each do |venue_coordinates|
-      !duplicate_coordinates.include?(venue_coordinates)
-      if venues_coordinates.count { |item| item == venue_coordinates } > 1 && !duplicate_coordinates.include?(venue_coordinates)
-        duplicate_coordinates << venue_coordinates
-      end
-    end
-    #iterate on the duplicate coordinate array to identify the events hash related / create a new element
-    duplicate_coordinates.each do |coordinates|
-      inloop_markers_hash = markers_hash.dup
-      inloop_markers_hash.keep_if { |marker| marker[:lat] == coordinates[:lat] && marker[:lng] == coordinates[:lng]}
-      new_marker = {lat: inloop_markers_hash[0][:lat],
-        lng: inloop_markers_hash[0][:lng],
-        picture: inloop_markers_hash[0][:picture],
-        infowindow: ""
-      }
-      marker_infowindow_head = inloop_markers_hash.first[:infowindow][/(<strong>).*(<\/strong>)/]
-      inloop_markers_hash.each do |marker|
-        new_marker[:infowindow] += marker[:infowindow].gsub(/(<strong>).*(<\/strong>)/, "")
-      end
-      new_marker[:infowindow] = marker_infowindow_head + new_marker[:infowindow]
-      markers_hash.delete_if { |marker| marker[:lat] == coordinates[:lat] && marker[:lng] == coordinates[:lng]}
-      markers_hash << new_marker
-    end
-
-    return markers_hash
-  end
 end
 
