@@ -8,6 +8,9 @@ gem 'figaro'
 gem 'jbuilder', '~> 2.0'
 gem 'devise'
 gem 'redis'
+gem 'rails-i18n', '~> 5.0.0'
+gem 'devise-i18n'
+
 
 gem 'rails-i18n', '~> 5.0.0'
 
@@ -23,6 +26,21 @@ gem 'spotify-client'
 gem 'rest-client'
 gem 'rspotify'
 gem 'httparty'
+
+#Nokogiri (used for scraping in seeds)
+
+gem 'nokogiri'
+
+# Geocoding
+gem "geocoder"
+
+# Google API
+gem "coffee-rails"
+gem "gmaps4rails"
+
+source 'https://rails-assets.org' do
+  gem "rails-assets-underscore"
+end
 
 group :development, :test do
   gem 'binding_of_caller'

@@ -1,0 +1,25 @@
+<div id="events-container">
+  <div id="events-list">
+    <% @events.each do |event| %>
+      <%= render 'event_element', event: event %>
+    <% end %>
+  </div>
+  <div id="event-map"></div>
+</div>
+<% content_for(:after_js) do %>
+  <script>
+    $(document).ready(function() {
+      var handler = Gmaps.build('Google');
+      handler.buildMap({ internal: { id: 'event-map' } }, function() {
+        markers = handler.addMarkers(<%= raw @markers_hash.to_json %>);
+        handler.bounds.extendWith(markers);
+        handler.fitMapToBounds();
+        if (markers.length == 0) {
+          handler.getMap().setZoom(2);
+        } else if (markers.length == 1) {
+          handler.getMap().setZoom(14);
+        }
+      });
+    });
+  </script>
+<% end %>

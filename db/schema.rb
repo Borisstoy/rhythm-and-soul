@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 20170222093848) do
     t.float    "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "address"
   end
 
   add_foreign_key "event_artists", "artists"
