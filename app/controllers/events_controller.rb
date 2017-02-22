@@ -22,9 +22,10 @@ class EventsController < ApplicationController
 
   def build_event_index(result, artist_name, country_name)
       Event.destroy_all
+      Venue.destroy_all
       @hash = {}
       i = 0
-      until i == 10 || result[i].nil?
+      until i == 100 || result[i].nil?
         city = result[i]["venue"]["city"]
         venue_country = result[i]["venue"]["country"]
         if country_name.capitalize == venue_country
