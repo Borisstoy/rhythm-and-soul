@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222093848) do
+ActiveRecord::Schema.define(version: 20170222165308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "artist_genres", force: :cascade do |t|
+    t.integer  "artist_id"
+    t.integer  "genre_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["artist_id"], name: "index_artist_genres_on_artist_id", using: :btree
+    t.index ["genre_id"], name: "index_artist_genres_on_genre_id", using: :btree
+  end
 
   create_table "artists", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -38,6 +47,12 @@ ActiveRecord::Schema.define(version: 20170222093848) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["venue_id"], name: "index_events_on_venue_id", using: :btree
+  end
+
+  create_table "genres", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "user_artists", force: :cascade do |t|
@@ -82,6 +97,8 @@ ActiveRecord::Schema.define(version: 20170222093848) do
     t.string   "address"
   end
 
+  add_foreign_key "artist_genres", "artists"
+  add_foreign_key "artist_genres", "genres"
   add_foreign_key "event_artists", "artists"
   add_foreign_key "event_artists", "events"
   add_foreign_key "events", "venues"

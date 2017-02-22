@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     # RSpotify.authenticate("SPOTIFY_CLIENT_ID", "SPOTIFY_CLIENT_SECRET")
     # spotify_user = RSpotify::User.find(current_user.spotify_uid)
     # raise
-    @toto = get_artists_names
+    @toto = artists_image_and_genre
   end
 
   private
@@ -19,7 +19,6 @@ class UsersController < ApplicationController
     url = "https://api.spotify.com/v1/users/#{@user.spotify_id}/playlists?limit=50&offset=#{offset}"
     playlists_serialized = RestClient::Resource.new(url, headers: {accept: "application/json", authorization: "Bearer #{@user.auth_token}"})
     @partial_playlist = JSON.parse(playlists_serialized.get)
-    @partial_playlist
   end
 
   def playlists_ids_storing
@@ -50,12 +49,66 @@ class UsersController < ApplicationController
     @playlists_ids
   end
 
-  # def get_artists_names
-  #   playlists_ids_storing.each do |playlist_id|
-  #     url = "https://api.spotify.com/v1/users/#{@user.spotify_id}/playlists/#{playlist_id}/tracks"
-  #     tracks_serialized = RestClient::Resource.new(url, headers: {accept: "application/json", authorization: "Bearer #{@user.auth_token}"})
-  #     @tracks = JSON.parse(tracks_serialized.get)
-  #     p @tracks
-  #   end
-  # end
+  def get_tracks_artists
+    tracks = []
+    playlists_ids_storing[0..9].each do |playlist_id|
+      url = "https://api.spotify.com/v1/users/#{@user.spotify_id}/playlists/#{playlist_id}/tracks"
+      tracks_serialized = RestClient::Resource.new(url, headers: {accept: "application/json", authorization: "Bearer #{@user.auth_token}"})
+      tracks << JSON.parse(tracks_serialized.get)
+    end
+    sleep(0.5)
+    playlists_ids_storing[10..19].each do |playlist_id|
+      url = "https://api.spotify.com/v1/users/#{@user.spotify_id}/playlists/#{playlist_id}/tracks"
+      tracks_serialized = RestClient::Resource.new(url, headers: {accept: "application/json", authorization: "Bearer #{@user.auth_token}"})
+      tracks << JSON.parse(tracks_serialized.get)
+    end
+    sleep(0.5)
+    playlists_ids_storing[19..29].each do |playlist_id|
+      url = "https://api.spotify.com/v1/users/#{@user.spotify_id}/playlists/#{playlist_id}/tracks"
+      tracks_serialized = RestClient::Resource.new(url, headers: {accept: "application/json", authorization: "Bearer #{@user.auth_token}"})
+      tracks << JSON.parse(tracks_serialized.get)
+    end
+    # sleep(1.minute)
+    # playlists_ids_storing[29..39].each do |playlist_id|
+    #   url = "https://api.spotify.com/v1/users/#{@user.spotify_id}/playlists/#{playlist_id}/tracks"
+    #   tracks_serialized = RestClient::Resource.new(url, headers: {accept: "application/json", authorization: "Bearer #{@user.auth_token}"})
+    #   tracks << JSON.parse(tracks_serialized.get)
+    # end
+    @artists_names_and_ids = tracks.map do |track|
+      names_and_ids = []
+      names_and_ids << track["items"][0]["track"]["album"]["artists"][0]["name"]
+      names_and_ids << track["items"][0]["track"]["album"]["artists"][0]["id"]
+      names_and_ids
+    end
+  end
+
+  def artists_persistence
+    get_tracks_artists
+    @artists_names_and_ids.each do |artist|
+      unless Artist.where(name: artist).exists?
+        new_artist = Artist.new(name: artist[0])
+        new_artist.save
+        new_user_artist = UserArtist.new()
+        new_user_artist.artist = new_artist
+        new_user_artist.user = @user
+        new_user_artist.save
+      end
+    end
+  end
+
+  def artists_image_and_genre
+    get_tracks_artists
+    @artists_images_genre = @artists_names_and_ids.map do |artist|
+      url = "https://api.spotify.com/v1/artists/#{artist[1]}"
+      artists_serialized = RestClient::Resource.new(url, headers: {accept: "application/json", authorization: "Bearer #{@user.auth_token}"})
+      @artist = JSON.parse(artists_serialized.get)
+    end
+    @artists_images_genre.each do |a|
+      p a["name"]
+      p a["genres"]
+      # p artist_to_update = Artist.where(name: a["name"])
+      # p a["name"]
+      # artist_to_update.update(images: a["images"][0]["url"])
+    end
+  end
 end
