@@ -1,6 +1,10 @@
 <div class="event-element">
-  <h3><%= event.name %></h3>
+  <strong>Artist : </strong><%= event.name.capitalize %>
+  <br>
   <strong>Place : </strong> <%= event.venue.name %>
   <br>
+  <strong>Address : </strong><%= event.venue.address %>
+  <br>
   <strong>Date : </strong><%= event.date.strftime('%A, %d %b %Y %l:%M %p') %>
+  <%= link_to "Ticket", event.ticket, class:"icon fa fa-ticket", target: :_blank %>
 </div>

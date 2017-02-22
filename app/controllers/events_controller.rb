@@ -33,7 +33,7 @@ class EventsController < ApplicationController
           @venue = Venue.create(name: result[i]["venue"]["name"], latitude: result[i]["venue"]["latitude"], longitude: result[i]["venue"]["longitude"])
           @venue.address = Geocoder.address("#{result[i]["venue"]["latitude"]}, #{result[i]["venue"]["longitude"]}")
           @venue.save
-          @event = Event.create(name: artist_name, venue_id: @venue.id, date: result[i]["datetime"])
+          @event = Event.create(name: artist_name, venue_id: @venue.id, date: result[i]["datetime"], ticket: @ticket)
         end
         i += 1
       end
