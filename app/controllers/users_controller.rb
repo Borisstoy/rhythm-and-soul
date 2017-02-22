@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     # RSpotify.authenticate("SPOTIFY_CLIENT_ID", "SPOTIFY_CLIENT_SECRET")
     # spotify_user = RSpotify::User.find(current_user.spotify_uid)
     # raise
-    @toto = playlists_ids_storing
+    @toto = get_artists_names
   end
 
   private
