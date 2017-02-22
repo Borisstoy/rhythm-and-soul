@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
   def index
-    artist_name = "pnl"
+    artist_name = "Drake"
     country_name = "France"
     result = bandsintown_api_client(artist_name, country_name)
     build_event_index(result, artist_name, country_name)
@@ -22,9 +22,10 @@ class EventsController < ApplicationController
 
   def build_event_index(result, artist_name, country_name)
       Event.destroy_all
+      Venue.destroy_all
       @hash = {}
       i = 0
-      until i == 10 || result[i].nil?
+      until i == 100 || result[i].nil?
         city = result[i]["venue"]["city"]
         venue_country = result[i]["venue"]["country"]
         if country_name.capitalize == venue_country
