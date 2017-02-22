@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
   def index
-    artist_name = "Drake"
+    artist_name = "pnl"
     country_name = "France"
     result = bandsintown_api_client(artist_name, country_name)
     build_event_index(result, artist_name, country_name)
