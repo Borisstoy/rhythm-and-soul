@@ -12,7 +12,7 @@
       </div>
     </div>
     <div id="events-list">
-      <% @events.each do |event| %>
+      <% @events_filtered.each do |event| %>
         <%= render 'event_element', event: event %>
       <% end %>
     </div>

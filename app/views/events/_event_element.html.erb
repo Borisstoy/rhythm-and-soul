@@ -1,10 +1,11 @@
 <div class="event-element">
   <strong>Artist : </strong><%= event.name.capitalize %>
   <br>
-  <strong>Place : </strong> <%= event.venue.name %>
+  <strong>Place : </strong> <%#= event.venue.name %>
   <br>
-  <strong>Address : </strong><%= event.venue.address %>
+  <strong>Address : </strong><%#= event.venue.address %>
   <br>
-  <strong>Date : </strong><%= event.date.strftime('%A, %d %b %Y %l:%M %p') %>
-  <%= link_to "Ticket", event.ticket, class:"icon fa fa-ticket", target: :_blank %>
+  <strong>Date : </strong><%#= event.date.strftime('%A, %d %b %Y %l:%M %p') %>
+  <%#= link_to "Ticket", event.ticket, class:"icon fa fa-ticket", target: :_blank %>
+  <%= link_to "Save Event", bookmark_event_path(@event), method: :put %>
 </div>

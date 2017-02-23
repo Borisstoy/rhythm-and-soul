@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222203433) do
+ActiveRecord::Schema.define(version: 20170223130703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,15 @@ ActiveRecord::Schema.define(version: 20170222203433) do
     t.index ["user_id"], name: "index_user_artists_on_user_id", using: :btree
   end
 
+  create_table "user_events", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.index ["event_id"], name: "index_user_events_on_event_id", using: :btree
+    t.index ["user_id"], name: "index_user_events_on_user_id", using: :btree
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -98,6 +107,20 @@ ActiveRecord::Schema.define(version: 20170222203433) do
     t.string   "address"
   end
 
+  create_table "votes", force: :cascade do |t|
+    t.string   "votable_type"
+    t.integer  "votable_id"
+    t.string   "voter_type"
+    t.integer  "voter_id"
+    t.boolean  "vote_flag"
+    t.string   "vote_scope"
+    t.integer  "vote_weight"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope", using: :btree
+    t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope", using: :btree
+  end
+
   add_foreign_key "artist_genres", "artists"
   add_foreign_key "artist_genres", "genres"
   add_foreign_key "event_artists", "artists"
@@ -105,4 +128,6 @@ ActiveRecord::Schema.define(version: 20170222203433) do
   add_foreign_key "events", "venues"
   add_foreign_key "user_artists", "artists"
   add_foreign_key "user_artists", "users"
+  add_foreign_key "user_events", "events"
+  add_foreign_key "user_events", "users"
 end
