@@ -3,10 +3,10 @@ class ApiJob < ApplicationJob
 
   def perform
     artists = ["drake", "pnl", "vianney"]
-    artists.each do |artist_name|
-    result = bandsintown_api_client(artist_name)
-    build_event_index(result, artist_name)
-  end
+      artists.each do |artist_name|
+      result = bandsintown_api_client(artist_name)
+      build_event_index(result, artist_name)
+    end
   end
 
   def bandsintown_api_client(artist_name)
