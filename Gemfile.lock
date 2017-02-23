@@ -64,6 +64,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.4)
+    connection_pool (2.2.1)
     debug_inspector (0.0.2)
     devise (4.2.0)
       bcrypt (~> 3.0)
@@ -147,6 +148,8 @@ GEM
       pry (>= 0.9.10)
     puma (3.7.1)
     rack (2.0.1)
+    rack-protection (1.5.3)
+      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (5.0.1)
@@ -161,6 +164,9 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 5.0.1)
       sprockets-rails (>= 2.0.0)
+    rails-assets-bootstrap-datepicker (1.6.4)
+      rails-assets-jquery (>= 1.7.1)
+    rails-assets-jquery (3.1.1)
     rails-assets-underscore (1.8.3)
     rails-dom-testing (2.0.2)
       activesupport (>= 4.2.0, < 6.0)
@@ -197,6 +203,13 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    sidekiq (4.2.9)
+      concurrent-ruby (~> 1.0)
+      connection_pool (~> 2.2, >= 2.2.0)
+      rack-protection (>= 1.5.0)
+      redis (~> 3.2, >= 3.2.1)
+    sidekiq-failures (0.4.5)
+      sidekiq (>= 2.16.0)
     simple_form (3.4.0)
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
@@ -258,12 +271,15 @@ DEPENDENCIES
   pry-rails
   puma
   rails (= 5.0.1)
+  rails-assets-bootstrap-datepicker!
   rails-assets-underscore!
   rails-i18n (~> 5.0.0)
   redis
   rest-client
   rspotify
   sass-rails
+  sidekiq
+  sidekiq-failures
   simple_form
   spotify-client
   spring
