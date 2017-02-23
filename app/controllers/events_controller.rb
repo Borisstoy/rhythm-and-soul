@@ -1,12 +1,18 @@
 class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
   def index
-    artist_name = "pnl"
+    artist_name = "vianney"
     country_name = "France"
     result = bandsintown_api_client(artist_name, country_name)
     build_event_index(result, artist_name, country_name)
-    @events = Event.where(name: artist_name)
-    @markers_hash = markers_hash(@events)
+    @events_filtered = []
+    Artist.all.each do |artist|
+    @events = Event.where(name: artist.name)[0]
+    @events_filtered << @events
+    end
+    @events_filtered.each do |event|
+    @markers_hash = markers_hash(event)
+    end
   end
 
   def show
