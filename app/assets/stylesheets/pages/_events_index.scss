@@ -1,9 +1,20 @@
-#events-list {
-  width: 50%;
-  height: calc(100vh - 70px);
+#events-search {
   overflow: scroll;
+  height: calc(100vh - 70px);
+  width:50%
 }
-#events-container {
+#events-list {
+
+}
+#events-filters {
+  height:200px;
+  background-color: $very-light-grey;
+  .container{
+    padding-top: 15px;
+    width:100%;
+  }
+}
+#events-wrapper {
   display: flex;
   background: $very-light-grey;
 }

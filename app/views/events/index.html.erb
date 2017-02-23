@@ -1,14 +1,35 @@
-<div id="events-container">
-  <div id="events-list">
-    <% @events_filtered.each do |event| %>
-      <%= render 'event_element', event: event %>
-    <% end %>
+<div id="events-wrapper">
+  <div id="events-search">
+    <div id="events-filters">
+      <div class="container">
+        <form action="#" class="">
+          <input type="text" class="location" placeholder="Where?" name="location" value="">
+          <input class="datepicker" name="start_date" data-date-format="dd/mm/yyyy" data-date-start-date="<%= Date.today.strftime('%d/%m/%Y') %>"  value="">
+          <input class="datepicker" name="start_date" data-date-format="dd/mm/yyyy" data-date-start-date="<%= Date.today.strftime('%d/%m/%Y') %>"  value="">
+          <input type="text" placeholder="Genre">
+          <input type="submit" class="" value="Filter">
+        </form>
+      </div>
+    </div>
+    <div id="events-list">
+      <% @events_filtered.each do |event| %>
+        <%= render 'event_element', event: event %>
+      <% end %>
+    </div>
   </div>
   <div id="event-map"></div>
 </div>
 <% content_for(:after_js) do %>
   <script>
     $(document).ready(function() {
+      //Datepicker
+      $('.datepicker').datepicker({
+        autoclose: true,
+        weekStart: 1,
+        todayHighlight: true
+      });
+
+      //Map
       var handler = Gmaps.build('Google');
       handler.buildMap({ internal: { id: 'event-map' } }, function() {
         markers = handler.addMarkers(<%= raw @markers_hash.to_json %>);
@@ -25,9 +46,23 @@
           handler.currentInfowindow().close();
           closeInfoWindow(handler);
         }
+      };
+
+      $("#events-filters input").on("keydown", function(e) {
+        if (e.keyCode == 13) {
+          console.log("enter")
+          e.preventDefault(); // Do not submit the form on Enter.
+        }
+      });
+
+      //Autocomplete
+      var search_location = $('.location').get(0);
+      if (search_location) {
+        var autocomplete = new google.maps.places.Autocomplete(search_location, { types: ['geocode'] });
+        google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChanged);
+        google.maps.event.addDomListener(search_location, 'keydown');
       }
     });
-
   </script>
+  <script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=<%= ENV['GOOGLE_API_BROWSER_KEY']%>"></script>
 <% end %>
-
