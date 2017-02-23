@@ -1,12 +1,18 @@
 class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
   def index
-    artist_name = "pnl"
+    artist_name = "vianney"
     country_name = "France"
     result = bandsintown_api_client(artist_name, country_name)
     build_event_index(result, artist_name, country_name)
-    @events = Event.all
-    @markers_hash = markers_hash(@events)
+    @events_filtered = []
+    Artist.all.each do |artist|
+    @events = Event.where(name: artist.name)[0]
+    @events_filtered << @events
+    end
+    @events_filtered.each do |event|
+    @markers_hash = markers_hash(event)
+    end
   end
 
   def show
@@ -21,8 +27,6 @@ class EventsController < ApplicationController
    end
 
   def build_event_index(result, artist_name, country_name)
-      Event.destroy_all
-      Venue.destroy_all
       @hash = {}
       i = 0
       until i == 100 || result[i].nil?
@@ -31,20 +35,16 @@ class EventsController < ApplicationController
         if country_name.capitalize == venue_country
           # @lineup = result[i]["lineup"]
           result[i]["offers"].each {|t| @ticket = t["url"]}
-          @venue = Venue.create(name: result[i]["venue"]["name"], latitude: result[i]["venue"]["latitude"], longitude: result[i]["venue"]["longitude"])
+          @venue = Venue.new(name: result[i]["venue"]["name"], latitude: result[i]["venue"]["latitude"], longitude: result[i]["venue"]["longitude"])
           @venue.address = Geocoder.address("#{result[i]["venue"]["latitude"]}, #{result[i]["venue"]["longitude"]}")
-          @venue.save
+          @venue.save unless Venue.where(name: result[i]['venue']['name']).exists?
           @event = Event.create(name: artist_name, venue_id: @venue.id, date: result[i]["datetime"], ticket: @ticket)
         end
         i += 1
       end
-      @events = Event.all
-      @hash = Gmaps4rails.build_markers(@events) do |event, marker|
-          # positions << position
-          marker.lat event.venue.latitude
-          marker.lng event.venue.longitude
-      end
     end
+
+
   def markers_hash(events)
     venues_coordinates = []
     markers_hash = Gmaps4rails.build_markers(events) do |event, marker|
