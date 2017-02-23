@@ -13,5 +13,6 @@ Rails.application.routes.draw do
       resources :bookmarks, only: [:index, :show,:create]
     end
     resources :users, only: [:show, :edit, :update]
+    get '/scan_playlist' => 'users#scan_playlist', as: :scan_playlist
   end
 end
