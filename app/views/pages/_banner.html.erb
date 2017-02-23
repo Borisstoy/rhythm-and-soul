@@ -1,0 +1,7 @@
+<div class="banner" style="background-image: url('<%= image_path "banner-home.jpg" %>');" >
+  <div class="banner-content text-center">
+    <h1>Find music events that match your playlists</h1>
+    <p>Login with Spotify, we take care of the rest</p>
+    <%= link_to 'Sign in with Spotify', user_spotify_omniauth_authorize_path, class:'login-spotify' %>
+  </div>
+</div>

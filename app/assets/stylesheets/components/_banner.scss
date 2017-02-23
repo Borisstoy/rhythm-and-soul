@@ -1,0 +1,46 @@
+.banner {
+  color: white;
+  text-align: center;
+  height: 100vh;
+  /* if you have a 70px navbar => height: calc(100vh - 70px); */
+  background-size: cover !important;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.banner-content {
+  text-align: left;
+  width: 30%;
+  margin: 0 0 7rem 16rem;
+}
+
+.banner h1 {
+  font-size: 55px;
+  font-weight: 800;
+}
+
+.banner p {
+  font-size: 25px;
+  font-weight: 500;
+  color: $main-blue;
+  margin-bottom: 40px;
+}
+
+.login-spotify {
+  background-color: #0B486B;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.1em;
+  border-radius: 45px;
+  padding: 1.5em 2.5em;
+  border: 2px solid #0B486B;
+  text-transform: uppercase;
+  &:hover {
+    color: #fff;
+    background-color: $action-blue;
+    text-decoration: none;
+    border: 2px solid $action-blue;
+  }
+}
