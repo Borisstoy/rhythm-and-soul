@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
   def index
-    artist_name = "pnl"
+    artist_name = "vianney"
     country_name = "France"
     result = bandsintown_api_client(artist_name, country_name)
     build_event_index(result, artist_name, country_name)
@@ -37,12 +37,6 @@ class EventsController < ApplicationController
           @event = Event.create(name: artist_name, venue_id: @venue.id, date: result[i]["datetime"], ticket: @ticket)
         end
         i += 1
-      end
-      @events = Event.all
-      @hash = Gmaps4rails.build_markers(@events) do |event, marker|
-          # positions << position
-          marker.lat event.venue.latitude
-          marker.lng event.venue.longitude
       end
     end
   def markers_hash(events)
