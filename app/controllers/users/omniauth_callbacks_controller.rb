@@ -29,7 +29,6 @@ class Users::OmniauthCallbacksController <  Devise::OmniauthCallbacksController
     @client ||= ::Spotify::Client.new(config)
 
     sign_in_and_redirect @user
-
   end
 
   def validate_spotify_auth_token
