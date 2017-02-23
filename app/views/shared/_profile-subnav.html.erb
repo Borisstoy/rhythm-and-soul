@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row">
+    <div class="subnavbar-wagon">
+      <!-- Logo -->
+
+      <!-- Right Navigation -->
+      <div class="subnavbar-wagon-right hidden-xs hidden-sm">
+
+<!--           <p class="subnavbar-wagon-item subnavbar-wagon-button"><%#= link_to t(".top_call_to_action", default: "Search for a motorbike"), motorbikes_path %></p> -->
+          <a class="tab active" data-target="#past">
+            <p class="subnavbar-wagon-item subnavbar-wagon-button">Past Events</p>
+          </a>
+          <a class="tab" data-target="#saved">
+            <p class="subnavbar-wagon-item subnavbar-wagon-button">Saved Events</p>
+          </a>
+          <a class="tab" data-target="#artists">
+            <p class="subnavbar-wagon-item subnavbar-wagon-button">Artists &amp; Genres</p>
+          </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<% content_for(:js) do %>
+  <%= javascript_tag do %>
+    $(".tab").on("click", function(e){
+    // Change active tab
+    $(".tab").removeClass("active");
+    $(this).addClass("active");
+    // Hide all tab-content (use class="hidden")
+    $(".tab-content").addClass("hidden");
+    // Show target tab-content (use class="hidden")
+    showTab = $(this).data("target");
+    $(showTab).removeClass("hidden");
+  });
+  <% end %>
+<% end %>
