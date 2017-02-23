@@ -8,6 +8,23 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:spotify]
+  after_save :async_update # Run on create & update
+
+  private
+
+  def async_update
+    UpdateUserJob.perform_later(self.id)
+  end
+
+  def update
+    if current_user.update(user_params)
+      UpdateUserJob.perform_later(current_user.id)  # <- The job is queued
+      flash[:notice] = "Your profile has been updated"
+      redirect_to root_path
+    else
+      render :edit
+    end
+  end
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, spotify_id: auth.uid).first_or_create do |user|
@@ -21,5 +38,8 @@ class User < ApplicationRecord
       user.expires_at = Time.at(auth.credentials.expires_at)
       user.password = Devise.friendly_token[0,20]
     end
+  end
+  def user_params
+    params.require(:user).permit(:email)
   end
 end

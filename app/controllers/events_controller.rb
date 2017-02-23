@@ -1,18 +1,15 @@
 class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
   def index
-    artist_name = "vianney"
-    country_name = "France"
-    result = bandsintown_api_client(artist_name, country_name)
-    build_event_index(result, artist_name, country_name)
-    @events_filtered = Event.all
-    # Artist.all.each do |artist|
-    # @events = Event.where(name: artist.name)[0]
-    # @events_filtered << @events
-    # end
-    # @events_filtered.each do |event|
-    #   @markers_hash = markers_hash(event)
-    # end
+    @events_filtered = []
+    Artist.all.each do |artist|
+    @events = Event.where(name: artist.name)[0]
+    unless @events.nil?
+    @events_filtered << @events
+    end
+    end
+    @events_filtered.each do |event|
+    @markers_hash = markers_hash(event)
     @user  = @event.votes_for.up.by_type(User).voters
   end
 
@@ -33,29 +30,6 @@ class EventsController < ApplicationController
 
   private
 
-   def bandsintown_api_client(artist_name, country_name)
-    url = "https://rest.bandsintown.com/artists/#{artist_name}/events?app_id=r%26s"
-    result_serialized = open(url).read
-    result = JSON.parse(result_serialized)
-   end
-
-  def build_event_index(result, artist_name, country_name)
-      @hash = {}
-      i = 0
-      until i == 100 || result[i].nil?
-        city = result[i]["venue"]["city"]
-        venue_country = result[i]["venue"]["country"]
-        if country_name.capitalize == venue_country
-          # @lineup = result[i]["lineup"]
-          result[i]["offers"].each {|t| @ticket = t["url"]}
-          @venue = Venue.new(name: result[i]["venue"]["name"], latitude: result[i]["venue"]["latitude"], longitude: result[i]["venue"]["longitude"])
-          @venue.address = Geocoder.address("#{result[i]["venue"]["latitude"]}, #{result[i]["venue"]["longitude"]}")
-          @venue.save unless Venue.where(name: result[i]['venue']['name']).exists?
-          @event = Event.create(name: artist_name, venue_id: @venue.id, date: result[i]["datetime"], ticket: @ticket)
-        end
-        i += 1
-      end
-    end
 
 
   def markers_hash(events)
