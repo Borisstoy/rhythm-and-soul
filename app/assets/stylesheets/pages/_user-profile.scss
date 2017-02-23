@@ -34,10 +34,11 @@
   width: 30%;
   float: left;
   padding: 2em;
+  text-align: left;
   h3 {
     font-weight: 800;
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 2rem;
   }
 }
 
@@ -47,6 +48,21 @@
   padding: 1em;
 }
 
-.hr.profile{
+hr.profile {
   border-top: 1px solid #eaeaea;
+
+}
+
+.subnavbar {
+  a {
+    text-decoration: none;
+    color: $main-blue;
+    p {
+      text-decoration: none;
+      &:hover {
+      text-decoration: none;
+      color: $hover-blue;
+      }
+    }
+  }
 }

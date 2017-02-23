@@ -14,7 +14,6 @@ class Users::OmniauthCallbacksController <  Devise::OmniauthCallbacksController
 
   def spotify
     @user = User.from_omniauth(request.env["omniauth.auth"])
-    sign_in_and_redirect @user
 
     self.validate_spotify_auth_token if self.spotify_auth_token.present?
     config = {
@@ -28,6 +27,9 @@ class Users::OmniauthCallbacksController <  Devise::OmniauthCallbacksController
      :persistent    => false # when true, make multiple requests calls using a single persistent connection. Use +close_connection+ method on the client to manually clean up sockets
     }
     @client ||= ::Spotify::Client.new(config)
+
+    sign_in_and_redirect @user
+
   end
 
   def validate_spotify_auth_token

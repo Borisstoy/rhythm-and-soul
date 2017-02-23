@@ -5,17 +5,30 @@ class EventsController < ApplicationController
     country_name = "France"
     result = bandsintown_api_client(artist_name, country_name)
     build_event_index(result, artist_name, country_name)
-    @events_filtered = []
-    Artist.all.each do |artist|
-    @events = Event.where(name: artist.name)[0]
-    @events_filtered << @events
-    end
-    @events_filtered.each do |event|
-    @markers_hash = markers_hash(event)
-    end
+    @events_filtered = Event.all
+    # Artist.all.each do |artist|
+    # @events = Event.where(name: artist.name)[0]
+    # @events_filtered << @events
+    # end
+    # @events_filtered.each do |event|
+    #   @markers_hash = markers_hash(event)
+    # end
+    @user  = @event.votes_for.up.by_type(User).voters
   end
 
   def show
+  end
+
+  def bookmark
+    @event = Event.find(params[:id])
+    @event.liked_by current_user
+    redirect_to @event
+  end
+
+  def remove_bookmark
+    @event = Event.find(params[:id])
+    @event.downvote_from current_user
+    redirect_to @event
   end
 
   private
