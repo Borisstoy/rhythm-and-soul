@@ -13,6 +13,8 @@ gem 'devise-i18n'
 gem 'sidekiq'
 gem 'sidekiq-failures'
 
+#BOOKMARK / UPVOTES
+gem 'acts_as_votable', '~> 0.10.0'
 
 gem 'rails-i18n', '~> 5.0.0'
 
@@ -29,8 +31,12 @@ gem 'rest-client'
 gem 'rspotify'
 gem 'httparty'
 
-#Nokogiri (used for scraping in seeds)
+#Datepicker
+source "https://rails-assets.org" do
+  gem 'rails-assets-bootstrap-datepicker'
+end
 
+#Nokogiri (used for scraping in seeds)
 gem 'nokogiri'
 
 # Geocoding

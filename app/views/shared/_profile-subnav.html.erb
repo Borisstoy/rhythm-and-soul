@@ -1,0 +1,26 @@
+<div class="subnavbar">
+    <a class="tab active" data-target="#saved">
+      <p class="subnavbar-wagon-item subnavbar-wagon-button">Saved Events</p>
+    </a>
+    <a class="tab" data-target="#past">
+      <p class="subnavbar-wagon-item subnavbar-wagon-button">Past Events</p>
+    </a>
+    <a class="tab" data-target="#artists">
+      <p class="subnavbar-wagon-item subnavbar-wagon-button">Artists &amp; Genres</p>
+    </a>
+</div>
+
+<% content_for(:js) do %>
+  <%= javascript_tag do %>
+    $(".tab").on("click", function(e){
+    // Change active tab
+    $(".tab").removeClass("active");
+    $(this).addClass("active");
+    // Hide all tab-content (use class="hidden")
+    $(".tab-content").addClass("hidden");
+    // Show target tab-content (use class="hidden")
+    showTab = $(this).data("target");
+    $(showTab).removeClass("hidden");
+  });
+  <% end %>
+<% end %>

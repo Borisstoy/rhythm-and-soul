@@ -10,10 +10,22 @@ class EventsController < ApplicationController
     end
     @events_filtered.each do |event|
     @markers_hash = markers_hash(event)
-    end
+    @user  = @event.votes_for.up.by_type(User).voters
   end
 
   def show
+  end
+
+  def bookmark
+    @event = Event.find(params[:id])
+    @event.liked_by current_user
+    redirect_to @event
+  end
+
+  def remove_bookmark
+    @event = Event.find(params[:id])
+    @event.downvote_from current_user
+    redirect_to @event
   end
 
   private

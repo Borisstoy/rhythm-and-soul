@@ -1,6 +1,8 @@
 class User < ApplicationRecord
-  has_many :user_artists
+  has_many :user_artists, dependent: :destroy
   has_many :artists, through: :user_artists
+  has_many :events, through: :user_events
+  acts_as_voter
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -29,7 +31,7 @@ class User < ApplicationRecord
       user.provider = auth.provider
       user.spotify_id = auth.uid
       user.email = auth.info.email
-      user.image = auth.info.image
+      user.image = auth.info.images[0].url
       user.name = auth.info.display_name
       user.auth_token = auth.credentials.token
       user.refresh_token = auth.credentials.refresh_token
