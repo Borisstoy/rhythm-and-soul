@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_many :user_artists, dependent: :destroy
   has_many :artists, through: :user_artists
+  has_many :events, through: :user_events
+  acts_as_voter
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

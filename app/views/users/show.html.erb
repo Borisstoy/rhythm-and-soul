@@ -1,3 +1,4 @@
+<div class="main-wrapper-profile">
   <div class="left-side">
     <div class="user-profile-image">
       <%= image_tag @user.image, class:'profile-image center-cropped' %>
@@ -5,23 +6,22 @@
     <div class="user-info">
       <h3><%= @user.name %></h3>
       <hr class="profile">
-      <p></p>
     </div>
     <div class="profile-nav">
       <%= render "shared/profile-subnav" %>
-      <div class="tab-content" id="bikes">
+      <div class="tab-content" id="saved">
         <%= render 'saved-events' %>
       </div>
-      <div class="tab-content hidden" id="rentals">
+      <div class="tab-content hidden" id="past">
         <%= render 'past-events' %>
       </div>
-      <div class="tab-content hidden" id="past-rentals">
-        <%= render 'atists-genres' %>
+      <div class="tab-content hidden" id="artists">
+        <%= render 'artists-genres' %>
       </div>
     </div>
   </div>
   <div class="right-side">
-    info
+    <p>Events details</p>
   </div>
 </div>
 <p class= "padded"><%= link_to "Re-scan my Spotify Playlist", scan_playlist_path %></p>
