@@ -3,7 +3,11 @@
     <% current_user.artists.each do |artist| %>
       <div class="card-artist-genre">
         <div class="artist-image">
+        <% if artist.images %>
           <%= image_tag artist.images %>
+        <% else %>
+          <img src="http://placehold.it/80x80">
+        <% end %>
         </div>
         <div class="artist-description">
           <h4><%= artist.name %></h4>
