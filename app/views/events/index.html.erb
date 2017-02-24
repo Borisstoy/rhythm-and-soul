@@ -21,6 +21,13 @@
         </form>
       </div>
       <div id="events-list">
+        <div id="event-count" class="text-center">
+          <% if @events_filtered.count == 0 %>
+            Sorry, there is no event matching your search
+          <% elsif @events_filtered.count > 1 %>
+            There are <strong><%= @events_filtered.count %> events</strong> matching your search
+          <% end %>
+        </div>
         <% @events_filtered.each do |event| %>
         <%= render 'event_element', event: event %>
         <% end %>
