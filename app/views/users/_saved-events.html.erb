@@ -1,1 +1,8 @@
 <h2>Saved Events</h2>
+<% current_user.find_voted_items.each do |item| %>
+  <div class="wrapper-events-profile">
+    <%= item.name.capitalize %>
+    <%= item.venue.name %>
+    <%= item.date %>
+  </div>
+<% end %>

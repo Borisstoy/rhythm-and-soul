@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [ :show ]
 
   def show
-    # @toto = artists_image_and_genre
+    @bookmarked_event = Event.where()
   end
 
   def scan_playlist
