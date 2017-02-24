@@ -9,19 +9,21 @@
     </div>
     <div class="profile-nav">
       <%= render "shared/profile-subnav" %>
-      <div class="tab-content" id="saved">
-        <%= render 'saved-events' %>
-      </div>
-      <div class="tab-content hidden" id="past">
-        <%= render 'past-events' %>
-      </div>
-      <div class="tab-content hidden" id="artists">
-        <%= render 'artists-genres' %>
-      </div>
+    </div>
+    <div class="wrapper-scan">
+      <%= link_to "Re-scan my Spotify Playlist", scan_playlist_path, class: 'scan-playlist' %>
     </div>
   </div>
   <div class="right-side">
-    <p>Events details</p>
+    <div class="tab-content" id="saved">
+      <%= render 'saved-events' %>
+    </div>
+    <div class="tab-content hidden" id="past">
+      <%= render 'past-events' %>
+    </div>
+    <div class="tab-content hidden" id="artists">
+      <%= render 'artists-genres' %>
+    </div>
   </div>
 </div>
-<p class= "padded"><%= link_to "Re-scan my Spotify Playlist", scan_playlist_path %></p>
+

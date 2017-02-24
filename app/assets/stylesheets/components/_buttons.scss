@@ -42,3 +42,39 @@
     text-decoration: none;
   }
 }
+
+.login-spotify-form {
+  background-color: #0B486B;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.1em;
+  border-radius: 45px;
+  padding: 1em 1.5em;
+  border: 2px solid #0B486B;
+  text-transform: uppercase;
+  &:hover {
+    color: #fff;
+    background-color: $action-blue;
+    text-decoration: none;
+    border: 2px solid $action-blue;
+  }
+}
+
+.scan-playlist {
+  background-color: none;
+  text-decoration: none;
+  color: $hover-blue;
+  font-weight: 800;
+  font-size: .8em;
+  border-radius: 45px;
+  padding: 1em 1.5em;
+  border: 2px solid $hover-blue;
+  text-transform: uppercase;
+  &:hover {
+    color: #fff;
+    background-color: $hover-blue;
+    text-decoration: none;
+    border: 2px solid $hover-blue;
+  }
+}
