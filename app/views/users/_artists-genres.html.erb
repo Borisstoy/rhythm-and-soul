@@ -6,7 +6,7 @@
           <%= image_tag artist.images %>
         </div>
         <div class="artist-description">
-          <h4><%= artist.name.downcase.split.map(&:capitalize).join(' ') %></h4>
+          <h4><%= artist.name.downcase.capitalize %></h4>
         </div>
       </div>
     <% end %>
