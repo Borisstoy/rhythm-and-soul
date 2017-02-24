@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
+  after_save :async_update
   def index
     @events_filtered = []
     Artist.all.each do |artist|
@@ -28,8 +29,16 @@ class EventsController < ApplicationController
     redirect_to @event
   end
 
+  def create
+    ApiJob.perform_later
+    flash[:notice] = "Events created!"
+  end
+
   private
 
+  def async_update
+    ApiJob.perform_later
+  end
 
   def markers_hash(events)
     venues_coordinates = []
