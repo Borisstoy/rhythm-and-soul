@@ -16,7 +16,6 @@
         <%= link_to "Buy ticket", event.ticket, class:"buy-ticket-button", target: :_blank %>
       </div>
       <div class="event-desc-bookmark">
-        <% if %>
         <%= link_to "", bookmark_event_path(event), method: :put, class: 'fa fa-star' %>
       </div>
     </div>
