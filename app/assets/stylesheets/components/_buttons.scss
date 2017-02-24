@@ -84,3 +84,23 @@
     border: 2px solid $hover-blue;
   }
 }
+
+.buy-ticket-button {
+  background-color: none;
+  text-decoration: none;
+  color: $hover-blue;
+  font-weight: 800;
+  font-size: .8em;
+  border-radius: 45px;
+  padding: .4em 1.5em;
+  border: 2px solid $hover-blue;
+  text-transform: uppercase;
+  &:hover,
+  &:focus,
+  &:active {
+    color: #fff;
+    background-color: $hover-blue;
+    text-decoration: none;
+    border: 2px solid $hover-blue;
+  }
+}

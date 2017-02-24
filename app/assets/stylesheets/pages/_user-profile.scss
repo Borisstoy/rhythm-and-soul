@@ -27,6 +27,7 @@
   padding: 3em 0 0 3em;
   margin: 0 auto;
   width: 960px;
+  height: calc(100vh - 70px);
 }
 
 .left-side {
@@ -46,6 +47,8 @@
   width: 70%;
   float: right;
   padding: 1em 2.5em;
+  height: 100%;
+  overflow:scroll;
 }
 
 hr.profile {
@@ -71,8 +74,11 @@ hr.profile {
   margin: 3rem 0;
 }
 
-.active {
+.active, .subnavbar .active {
   color: $hover-blue;
+  p {
+    color: $hover-blue;
+  }
 }
 
 .event-box {
