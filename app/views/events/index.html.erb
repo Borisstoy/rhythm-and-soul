@@ -2,12 +2,22 @@
   <div id="events-search">
     <div id="events-filters">
       <div class="container">
-        <form action="" class="">
-        <input type="text" class="location" placeholder="Where?" name="location" value="">
-          <input class="datepicker" name="start_date" data-date-format="dd/mm/yyyy" data-date-start-date="<%= Date.today.strftime('%d/%m/%Y') %>"  value="">
-          <input class="datepicker" name="start_date" data-date-format="dd/mm/yyyy" data-date-start-date="<%= Date.today.strftime('%d/%m/%Y') %>"  value="">
-          <input type="text" placeholder="Genre">
-          <input type="submit" class="" value="Filter">
+        <form action="<% events_path %>" class="">
+          <div class="form-group">
+            <label for="location">Location :</label>
+            <input type="text" class="form-control location" id="location" placeholder="Where?" name="location" value="<%= @location %>">
+          </div>
+          <div class="form-inline">
+            <div class="form-group">
+              <label for="start-date">From :</label>
+              <input id="start-date" class="form-control datepicker" name="start_date" data-date-format="dd/mm/yyyy" data-date-start-date="<%= Date.today.strftime('%d/%m/%Y') %>"  value="<%= @picked_start_date %>">
+            </div>
+            <div class="form-group">
+              <label for="end-date">To :</label>
+              <input id="end-date" class="form-control datepicker" name="end_date" data-date-format="dd/mm/yyyy" data-date-start-date="<%= Date.today.strftime('%d/%m/%Y') %>"  value="<%= @picked_end_date %>">
+            </div>
+            <input type="submit" class="btn btn-primary" value="Filter">
+          </div>
         </form>
       </div>
       <div id="events-list">

@@ -1,16 +1,49 @@
 class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
   def index
+
+    @picked_start_date = params['start_date']
+    @picked_end_date = params['end_date']
+    @location = params['location']
     @events_filtered = []
     Artist.all.each do |artist|
-      @events = Event.where(name: artist.name)
-      unless @events.nil?
-        @events.each do |event|
+      events = Event.where(name: artist.name)
+      unless events.nil?
+        events.each do |event|
         @events_filtered << event
         end
       end
-      @markers_hash = markers_hash(@events_filtered)
     end
+
+    ########## Filters ##########
+    # LOCATION
+    # Select venues according to location search
+    unless params['location'].blank?
+      searched_venues = Venue.near(params['location'], 100)
+    else
+      searched_venues = Venue.all
+    end
+    # Select the associated events
+    @events_filtered.select! do |event|
+      searched_venues.include?(event.venue)
+    end
+
+    # DATE
+    picked_start_date = DateTime.parse(params['start_date']).to_time unless params['start_date'].blank?
+    picked_end_date = DateTime.parse(params['end_date']).to_time unless params['end_date'].blank?
+    @events_filtered.select! do |event|
+      if !params['start_date'].blank? && !params['end_date'].blank?
+        event.date >= picked_start_date && event.date <= picked_end_date
+      elsif params['start_date'].blank? && !params['end_date'].blank?
+        event.date <= picked_end_date
+      elsif !params['start_date'].blank? && params['end_date'].blank?
+        event.date >= picked_start_date
+      else
+        true
+      end
+    end
+
+    @markers_hash = markers_hash(@events_filtered)
   end
 
   def show
