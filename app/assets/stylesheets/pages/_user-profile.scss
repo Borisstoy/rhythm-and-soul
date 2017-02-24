@@ -45,7 +45,7 @@
 .right-side {
   width: 70%;
   float: right;
-  padding: 1em;
+  padding: 1em 2.5em;
 }
 
 hr.profile {
@@ -65,4 +65,12 @@ hr.profile {
       }
     }
   }
+}
+
+.wrapper-scan {
+  margin: 3rem 0;
+}
+
+.active {
+  color: $hover-blue;
 }
