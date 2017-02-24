@@ -4,18 +4,25 @@ class ApiJob < ApplicationJob
 
   def perform
     artists = []
+    artists_full_name = []
     Artist.all.select(:name).each do |artist|
+      @name = artist.name.dup
       artists << artist.name.gsub(" ", "").gsub("ë", "e").gsub("ö", "o").gsub("ä", "a")
+      artists_full_name << @name
     end
     artists.each do |artist_name|
       result = bandsintown_api_client(artist_name.capitalize)
       build_event_index(result, artist_name)
     end
+    artists_full_name.each do|artist_full_name|
+    build_event_artists(artist_full_name)
+    end
+
   end
 
   def bandsintown_api_client(artist_name)
     url = URI.escape "https://rest.bandsintown.com/artists/#{artist_name}/events?app_id=r%26s"
-    result = HTTParty.get(url)
+    return HTTParty.get(url)
   end
 
   def build_event_index(result, artist_name)
@@ -34,6 +41,15 @@ class ApiJob < ApplicationJob
         i += 1
       end
     end
+  end
+
+  def build_event_artists(artists_full_name)
+    @events = Event.where(name: artists_full_name.gsub(" ", "").gsub("ë", "e").gsub("ö", "o").gsub("ä", "a"))
+    @events.each do |event|
+      artists = Artist.where(name: artists_full_name)
+      event.artists << artists
+    end
+
   end
 
 
