@@ -3,9 +3,12 @@ class EventsController < ApplicationController
   def index
     @events_filtered = []
     Artist.all.each do |artist|
-      @events = Event.where(name: artist.name)[0]
+      @events = Event.where(name: artist.name)
       unless @events.nil?
-        @events_filtered << @events
+        @events.each do |event|
+        @events_filtered << event
+        end
+        @markers_hash =  markers_hash(@events_filtered)
       end
     end
     @events_filtered.each do |event|
@@ -29,7 +32,6 @@ class EventsController < ApplicationController
   end
 
   private
-
 
 
   def markers_hash(events)
