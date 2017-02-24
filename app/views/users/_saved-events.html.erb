@@ -2,6 +2,7 @@
 <% current_user.find_voted_items.each do |item| %>
   <div class="wrapper-events-profile">
     <div class="event-box">
+    <%#= image_tag %>
       <div class="event-name">
         <h4><%= item.name.capitalize %></h4>
       </div>
@@ -12,7 +13,7 @@
         <%= item.date.strftime("%m/%d/%y") %>
       </div>
       <div class="event-bookmark-controller">
-        <%= link_to "Remove", remove_bookmark_event_path(item.id), method: :put %>
+        <%= link_to "Remove", remove_bookmark_user_path(item), method: :put %>
       </div>
       <%# raise %>
     </div>

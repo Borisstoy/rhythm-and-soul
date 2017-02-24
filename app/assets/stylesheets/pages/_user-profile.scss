@@ -90,12 +90,54 @@ hr.profile {
     }
   }
   .event-venue {
-    flex: 0 0 50%;
+    flex: 0 0 40%;
   }
   .event-date {
     flex: 0 0 10%;
   }
   .event-bookmark-controller {
-    flex: 0 0 10%
+    flex: 0 0 20%;
+    text-align: right;
+    a {
+      text-transform: uppercase;
+      font-size: .9em;
+      color: $standard-grey;
+      font-weight: 500;
+      &:hover {
+        color: $hover-blue;
+      }
+    }
+  }
+}
+
+.wrapper-artists-genre-profile {
+  width: 100%;
+  .card-artist-genre {
+    height: 220px;
+    float: left;
+    margin: .5rem;
+    border-radius: .3em;
+    width: 30%;
+    border: 1px solid #eaeaea;
+    h4 {
+      font-weight: 800;
+      font-size: 1.2em;
+    }
+    p {
+      font-size: .8em;
+      font-weight: 500;
+      color: $standard-grey;
+    }
+    .artist-image {
+      img {
+        width: 100%;
+        border-radius: .15em;
+        object-fit: cover;
+        height: 120px;
+      }
+    }
+    .artist-description {
+      padding: .7em;
+    }
   }
 }
