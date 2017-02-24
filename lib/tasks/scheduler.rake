@@ -1,7 +1,7 @@
 desc "This task is called by the Heroku scheduler add-on"
 task :update_all => :environment do
   puts "Updating events..."
-  ApiJob.perform
+  ApiJob.perform_now
   puts "done."
 end
 
