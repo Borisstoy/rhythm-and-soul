@@ -1,8 +1,20 @@
 <h2>Saved Events</h2>
 <% current_user.find_voted_items.each do |item| %>
   <div class="wrapper-events-profile">
-    <%= item.name.capitalize %>
-    <%= item.venue.name %>
-    <%= item.date %>
+    <div class="event-box">
+      <div class="event-name">
+        <h4><%= item.name.capitalize %></h4>
+      </div>
+      <div class="event-venue">
+        <%= item.venue.name %>
+      </div>
+      <div class="event-date">
+        <%= item.date.strftime("%m/%d/%y") %>
+      </div>
+      <div class="event-bookmark-controller">
+        <%= link_to "Remove", remove_bookmark_event_path(item.id), method: :put %>
+      </div>
+      <%# raise %>
+    </div>
   </div>
 <% end %>

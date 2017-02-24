@@ -74,3 +74,28 @@ hr.profile {
 .active {
   color: $hover-blue;
 }
+
+.event-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  margin: 2rem 0;
+  padding: .5em 0;
+  border-bottom: 1px solid #eaeaea;
+  .event-name {
+    flex: 0 0 30%;
+    h4 {
+      font-weight: 800;
+    }
+  }
+  .event-venue {
+    flex: 0 0 50%;
+  }
+  .event-date {
+    flex: 0 0 10%;
+  }
+  .event-bookmark-controller {
+    flex: 0 0 10%
+  }
+}

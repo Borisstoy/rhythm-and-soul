@@ -2,8 +2,7 @@
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  background-repeat: no-repeat;
-  background-size: cover;
+  object-fit: cover;
 }
 .avatar-large {
   width: 50px;
