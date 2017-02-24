@@ -8,11 +8,8 @@ class EventsController < ApplicationController
         @events.each do |event|
         @events_filtered << event
         end
-        @markers_hash =  markers_hash(@events_filtered)
       end
-    end
-    @events_filtered.each do |event|
-      @markers_hash = markers_hash(event)
+      @markers_hash = markers_hash(@events_filtered)
     end
   end
 
