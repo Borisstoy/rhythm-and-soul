@@ -1,1 +1,16 @@
 <h2>Artists &amp; Genres</h2>
+<div class="wrapper-artists-genre-profile">
+    <% current_user.artists.each do |artist| %>
+      <div class="card-artist-genre">
+        <div class="artist-image">
+          <%= image_tag artist.images %>
+        </div>
+        <div class="artist-description">
+          <h4><%= artist.name.downcase.split.map(&:capitalize).join(' ') %></h4>
+          <%# artist.genres.each do |genre| %>
+            <%#= genre.name.first(4).capitalize %>
+          <%# end %>
+        </div>
+      </div>
+    <% end %>
+</div>

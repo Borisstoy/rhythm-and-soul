@@ -19,13 +19,13 @@ class EventsController < ApplicationController
   def bookmark
     @event = Event.find(params[:id])
     @event.liked_by current_user
-    redirect_to @event
+    redirect_to events_path
   end
 
   def remove_bookmark
     @event = Event.find(params[:id])
-    @event.downvote_from current_user
-    redirect_to @event
+    @event.unliked_by current_user
+    redirect_to user_path(current_user)
   end
 
   private

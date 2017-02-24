@@ -21,11 +21,13 @@
   border-radius: 4px;
   padding: 1.5em 2.5em;
   border: 2px solid $main-blue;
-  &:hover {
+  &:hover,
+  &:focus,
+  &:active {
     color: #fff;
-    background-color: lighten($main-blue, 10%);
+    background-color: $action-blue;
     text-decoration: none;
-    border: 2px solid lighten($main-blue, 10%);
+    border: 2px solid $action-blue;
   }
 }
 
@@ -53,7 +55,9 @@
   padding: 1em 1.5em;
   border: 2px solid #0B486B;
   text-transform: uppercase;
-  &:hover {
+  &:hover,
+  &:focus,
+  &:active {
     color: #fff;
     background-color: $action-blue;
     text-decoration: none;
@@ -71,7 +75,9 @@
   padding: 1em 1.5em;
   border: 2px solid $hover-blue;
   text-transform: uppercase;
-  &:hover {
+  &:hover,
+  &:focus,
+  &:active {
     color: #fff;
     background-color: $hover-blue;
     text-decoration: none;
