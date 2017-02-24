@@ -2,26 +2,26 @@
   <div id="events-search">
     <div id="events-filters">
       <div class="container">
-        <form action="#" class="">
-          <input type="text" class="location" placeholder="Where?" name="location" value="">
+        <form action="" class="">
+        <input type="text" class="location" placeholder="Where?" name="location" value="">
           <input class="datepicker" name="start_date" data-date-format="dd/mm/yyyy" data-date-start-date="<%= Date.today.strftime('%d/%m/%Y') %>"  value="">
           <input class="datepicker" name="start_date" data-date-format="dd/mm/yyyy" data-date-start-date="<%= Date.today.strftime('%d/%m/%Y') %>"  value="">
           <input type="text" placeholder="Genre">
           <input type="submit" class="" value="Filter">
         </form>
       </div>
-    </div>
-    <div id="events-list">
-      <% @events_filtered.each do |event| %>
+      <div id="events-list">
+        <% @events_filtered.each do |event| %>
         <%= render 'event_element', event: event %>
-      <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
   <div id="event-map"></div>
 </div>
 <% content_for(:after_js) do %>
-  <script>
-    $(document).ready(function() {
+<script>
+  $(document).ready(function() {
       //Datepicker
       $('.datepicker').datepicker({
         autoclose: true,
@@ -65,4 +65,4 @@
     });
   </script>
   <script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=<%= ENV['GOOGLE_API_BROWSER_KEY']%>"></script>
-<% end %>
+  <% end %>
