@@ -11,7 +11,9 @@ class EventsController < ApplicationController
         @markers_hash =  markers_hash(@events_filtered)
       end
     end
-    # @user  = @event.votes_for.up.by_type(User).voters
+    @events_filtered.each do |event|
+      @markers_hash = markers_hash(event)
+    end
   end
 
   def show
