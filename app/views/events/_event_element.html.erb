@@ -1,4 +1,7 @@
 <div class="wrapper-event-description">
+    <div class="event-desc-image">
+      <%= image_tag event.artists.first.images %>
+    </div>
     <div class="event-desc-name">
       <h4><%= event.name.capitalize %></h4>
     </div>
@@ -16,7 +19,11 @@
         <%= link_to "Buy ticket", event.ticket, class:"buy-ticket-button", target: :_blank %>
       </div>
       <div class="event-desc-bookmark">
-        <%= link_to "", bookmark_event_path(event), method: :put, class: 'fa fa-star' %>
+        <% if event.liked_by @user %>
+          <i class="fa fa-star" aria-hidden="true"></i>
+        <% else %>
+          <%= link_to "", bookmark_event_path(event), method: :put, class: 'fa fa-star-o' %>
+        <% end %>
       </div>
     </div>
 </div>

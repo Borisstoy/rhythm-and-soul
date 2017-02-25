@@ -44,6 +44,7 @@ class EventsController < ApplicationController
     end
 
     @markers_hash = markers_hash(@events_filtered)
+
   end
 
   def show
