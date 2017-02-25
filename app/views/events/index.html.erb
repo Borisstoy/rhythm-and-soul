@@ -6,6 +6,7 @@
         <form action="<% events_path %>" class="">
 
           <div class="row">
+
             <div class="col-xs-12 col-sm-4 col-md-4">
               <div class="event-location-picker">
                 <div class="form-group">
@@ -32,7 +33,27 @@
                   </div>
                 </div>
             </div>
+          </div>
 
+          <div class="row">
+
+            <div class="col-xs-12 col-md-4">
+              <div class="form-group">
+                <label for="artist-selection">Artists</label>
+                <select class="form-control" id="artist-selection" name="artitst_filter" >
+                  <option></option>
+                   <% if user_signed_in? %>
+                      <% current_user.artists.each do |artist| %>
+                        <option><%= artist.name %></option>
+                      <% end %>
+                    <% else %>
+                      <% Artist.all.first(100).each do |artist| %>
+                        <option><%= artist.name %></option>
+                      <% end %>
+                    <% end %>
+                </select>
+              </div>
+            </div>
 
           </div>
 

@@ -45,6 +45,12 @@ class EventsController < ApplicationController
 
     @markers_hash = markers_hash(@events_filtered)
 
+    # ARTISTS
+    @artitst_filter = params['artitst_filter']
+    picked_artist = Artist.where(name: params['artitst_filter'])
+    @events_filtered.select! do |e|
+      @event_per_artist = e if picked_artist == e.name
+    end
   end
 
   def show
