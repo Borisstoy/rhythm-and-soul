@@ -7,15 +7,16 @@ class UsersController < ApplicationController
   end
 
   def scan_playlist
-    @user = current_user
-    artists_image_and_genre
+    SpotifyJob.perform_later(current_user.id)
+    # @user = current_user
+    # artists_image_and_genre
     redirect_to root_path
   end
 
   private
 
   def set_user
-    @user = User.find(params[:id])
+    @user = current_user
   end
 
   def playlists_ids_parsing(offset)
@@ -26,26 +27,30 @@ class UsersController < ApplicationController
 
   def playlists_ids_storing
     playlists_ids_parsing(0)
-    playlists = []
+    all_playlists = []
     @partial_playlist["items"].each do |playlist|
-      playlists << playlist
+      all_playlists << playlist
     end
 
-    if playlists.count % 50 != 0
-      return playlists
+    if all_playlists.count % 50 != 0
+      return all_playlists
     else
       i = 50
-      until playlists.count % 50 != 0
+      until all_playlists.count % 50 != 0
         playlists_ids_parsing(i)
         @partial_playlist["items"].each do |playlist|
-          playlists << playlist
+          all_playlists << playlist
         end
         i += 50
       end
     end
-    playlists.each do |playlist|
-      playlists.delete(playlist) if playlist["owner"]["id"] != @user.spotify_id
+    unwanted_playlists = all_playlists.map do |playlist|
+      if playlist["owner"]["id"] != @user.spotify_id
+        playlist
+      end
     end
+    unwanted_playlists.delete(nil)
+    playlists = all_playlists - unwanted_playlists
     @playlists_ids = playlists.map do |playlist|
       playlist["id"]
     end
@@ -54,20 +59,7 @@ class UsersController < ApplicationController
 
   def get_tracks_artists
     tracks = []
-    # i = 0
-    # j = 1
-    # k = playlists_ids_storing.count
-    # until j > k - 1
-    #   playlists_ids_storing[i..j].each do |playlist_id|
-    #     url = "https://api.spotify.com/v1/users/#{@user.spotify_id}/playlists/#{playlist_id}/tracks"
-    #     tracks_serialized = RestClient::Resource.new(url, headers: {accept: "application/json", authorization: "Bearer #{@user.auth_token}"})
-    #     tracks << JSON.parse(tracks_serialized.get)
-    #   end
-    #   i += 1
-    #   j += 1
-    #   sleep(5)
-    # end
-    playlists_ids_storing[5..6].each do |playlist_id|
+    playlists_ids_storing.each do |playlist_id|
       url = "https://api.spotify.com/v1/users/#{@user.spotify_id}/playlists/#{playlist_id}/tracks"
       tracks_serialized = RestClient::Resource.new(url, headers: {accept: "application/json", authorization: "Bearer #{@user.auth_token}"})
       tracks << JSON.parse(tracks_serialized.get)
@@ -76,7 +68,7 @@ class UsersController < ApplicationController
     @artists_names_and_ids = tracks.map do |playlist_tracks|
       playlist = playlist_tracks["items"]
       playlist.each do |track|
-        unless track["track"].nil?
+        unless track["track"].nil? || track["track"]["artists"][0]["uri"].nil?
           name_and_id = []
           track_artist_name = track["track"]["album"]["artists"][0]["name"]
           track_artist_id = track["track"]["album"]["artists"][0]["id"]
@@ -93,7 +85,7 @@ class UsersController < ApplicationController
     get_tracks_artists
     @names_and_ids.each do |artist_array|
       artist = Artist.where(name: artist_array[0])
-      if Artist.where(name: artist[0]).exists?
+      unless artist.empty?
         unless @user.artists.include?(artist[0])
           new_user_artist = UserArtist.new()
           new_user_artist.artist = artist[0]
@@ -113,32 +105,56 @@ class UsersController < ApplicationController
 
   def artists_image_and_genre
     artists_persistence
-    get_tracks_artists
-    @artists_images_genre = @names_and_ids.map do |artist|
-      url = "https://api.spotify.com/v1/artists/#{artist[1]}"
+    # get_tracks_artists
+
+    url = "https://api.spotify.com/v1/artists?ids="
+    url_start_split = url.split("")
+    i = 0
+    j = 49
+    @artists_images_genre = []
+    while j < @names_and_ids.count + 50
+      url_ids = []
+      @names_and_ids[i..j].each do |artist|
+        url_ids << artist[1]
+        url_ids << ","
+      end
+      url = url_start_split + url_ids
+      url.pop
+      url = url.join("")
       artists_serialized = RestClient::Resource.new(url, headers: {accept: "application/json", authorization: "Bearer #{@user.auth_token}"})
-      @artist = JSON.parse(artists_serialized.get)
+      artists_parsed = JSON.parse(artists_serialized.get)
+      artists_parsed["artists"].each { |artist| @artists_images_genre << artist }
+      i += 50
+      j += 50
     end
+    # @artists_images_genre = @names_and_ids.map do |artist|
+    #   url = "https://api.spotify.com/v1/artists/#{artist[1]}"
+    #   artists_serialized = RestClient::Resource.new(url, headers: {accept: "application/json", authorization: "Bearer #{@user.auth_token}"})
+    #   @artist = JSON.parse(artists_serialized.get)
+    # end
     @artists_images_genre.each do |a|
       artist_to_update = Artist.where(name: a["name"])[0]
-      artist_to_update.update(images: a["images"][0]["url"])
+      artist_to_update.update(images: a["images"][0]["url"]) unless a["images"].empty? || Artist.where(name: a["name"])[0].nil? #Needs to be fixed, second condition shouldn't have to exist to prevent 'undefined method `genres'' error
+        new_artist_genre = ArtistGenre.new()
       artist_genres = a["genres"]
-      artist_genres.each do |genre_name|
-        genre = Genre.where(name: genre_name)
-        if genre.exists?
-          unless artist_to_update.genres.include?(genre[0])
+      unless a["genres"].empty?
+        artist_genres.each do |genre_name|
+          genre = Genre.where(name: genre_name)
+          if genre.exists?
+            unless artist_to_update.nil? || artist_to_update.genres.include?(genre[0]) #Needs to be fixed, second condition shouldn't have to exist to prevent 'undefined method `genres'' error
+              new_artist_genre = ArtistGenre.new()
+              new_artist_genre.genre = genre[0]
+              new_artist_genre.artist = artist_to_update
+              new_artist_genre.save
+            end
+          else
+            new_genre = Genre.new(name: genre_name)
+            new_genre.save
             new_artist_genre = ArtistGenre.new()
-            new_artist_genre.genre = genre[0]
+            new_artist_genre.genre = new_genre
             new_artist_genre.artist = artist_to_update
             new_artist_genre.save
           end
-        else
-          new_genre = Genre.new(name: genre_name)
-          new_genre.save
-          new_artist_genre = ArtistGenre.new()
-          new_artist_genre.genre = new_genre
-          new_artist_genre.artist = artist_to_update
-          new_artist_genre.save
         end
       end
     end
