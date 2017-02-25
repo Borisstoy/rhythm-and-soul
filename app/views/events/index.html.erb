@@ -1,25 +1,67 @@
 <div id="events-wrapper">
   <div id="events-search">
     <div id="events-filters">
-      <div class="container">
+
+      <div class="wrapper-filter">
         <form action="<% events_path %>" class="">
-          <div class="form-group">
-            <label for="location">Location</label>
-            <input type="text" class="form-control location" id="location" placeholder="Where?" name="location" value="<%= @location %>">
-          </div>
-          <div class="form-inline">
-            <div class="form-group">
-              <label for="start-date">After</label>
-              <input id="start-date" class="form-control datepicker" name="start_date" data-date-format="dd/mm/yyyy" data-date-start-date="<%= Date.today.strftime('%d/%m/%Y') %>" placeholder="<%= Date.today.strftime('%d/%m/%Y') %>" value="<%= @picked_start_date %>">
+
+          <div class="row">
+
+            <div class="col-xs-12 col-sm-4 col-md-4">
+              <div class="event-location-picker">
+                <div class="form-group">
+                  <label for="location">Location</label>
+                  <input type="text" class="form-control location" id="location" placeholder="Where?" name="location" value="<%= @location %>">
+                </div>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="end-date">Before</label>
-              <input id="end-date" class="form-control datepicker" name="end_date" data-date-format="dd/mm/yyyy" data-date-start-date="<%= Date.today.strftime('%d/%m/%Y') %>" placeholder="-" value="<%= @picked_end_date %>">
+
+            <div class="col-xs-12 col-sm-8 col-md-8">
+                <div class="event-date-picker">
+                  <div class="form-inline">
+                    <div class="form-group">
+                      <label for="start-date">After</label><br>
+                      <input id="start-date" class="form-control datepicker" name="start_date" data-date-format="dd/mm/yyyy" data-date-start-date="<%= Date.today.strftime('%d/%m/%Y') %>" placeholder="<%= Date.today.strftime('%d/%m/%Y') %>" value="<%= @picked_start_date %>">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="end-date">Before</label><br>
+                      <input id="end-date" class="form-control datepicker" name="end_date" data-date-format="dd/mm/yyyy" data-date-start-date="<%= Date.today.strftime('%d/%m/%Y') %>" placeholder="-" value="<%= @picked_end_date %>">
+                      <input type="submit" class="filter-button" value="Filter">
+                    </div>
+
+                  </div>
+                </div>
             </div>
-            <input type="submit" class="btn btn-primary" value="Filter">
           </div>
+
+          <div class="row">
+
+            <div class="col-xs-12 col-md-4">
+              <div class="form-group">
+                <label for="artist-selection">Artists</label>
+                <select class="form-control" id="artist-selection" name="artitst_filter" >
+                  <option></option>
+                   <% if user_signed_in? %>
+                      <% current_user.artists.each do |artist| %>
+                        <option><%= artist.name %></option>
+                      <% end %>
+                    <% else %>
+                      <% Artist.all.first(100).each do |artist| %>
+                        <option><%= artist.name %></option>
+                      <% end %>
+                    <% end %>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
         </form>
+
       </div>
+
+
       <div id="events-list">
         <div id="event-count" class="text-center">
           <% if @events_filtered.count == 0 %>
@@ -28,15 +70,24 @@
             There are <strong><%= @events_filtered.count %> events</strong> matching your search
           <% end %>
         </div>
+
+        <div class="events-list-header">
+          <%= render 'event_list_header' %>
+        </div>
+
         <% @events_filtered.each do |event| %>
-        <%= render 'event_element', event: event %>
+          <%= render 'event_element', event: event %>
         <% end %>
       </div>
     </div>
   </div>
+
   <div id="event-map"></div>
+
 </div>
+
 <% content_for(:after_js) do %>
+
 <script>
   $(document).ready(function() {
       //Datepicker
@@ -64,6 +115,7 @@
           closeInfoWindow(handler);
         }
       };
+
 
       $("#events-filters input").on("keydown", function(e) {
         if (e.keyCode == 13) {
