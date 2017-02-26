@@ -6,13 +6,22 @@ class EventsController < ApplicationController
     @picked_end_date = params['end_date']
     @location = params['location']
     @events_filtered = []
-    Artist.all.each do |artist|
+    current_user.artists.each do |artist|
       events = Event.where(name: artist.name)
-      unless events.nil?
+      unless events.empty?
         events.each do |event|
-        @events_filtered << event
+          unless current_user.events.include?(event)
+            user_event = UserEvent.new
+            user_event.event = event
+            user_event.user = current_user
+            user_event.save
+          end
         end
       end
+    end
+    current_user_events = current_user.events.order(date: :asc)
+    current_user_events.each do |event|
+      @events_filtered << event
     end
 
     ########## Filters ##########
@@ -109,4 +118,3 @@ class EventsController < ApplicationController
     return markers_hash
   end
 end
-
