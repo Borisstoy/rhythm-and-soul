@@ -248,7 +248,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  acts_as_votable (~> 0.10.0)
+  acts_as_votable
   autoprefixer-rails
   better_errors
   binding_of_caller

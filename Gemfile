@@ -14,7 +14,7 @@ gem 'sidekiq'
 gem 'sidekiq-failures'
 
 #BOOKMARK / UPVOTES
-gem 'acts_as_votable', '~> 0.10.0'
+gem 'acts_as_votable'
 
 gem 'sass-rails'
 gem 'jquery-rails'
