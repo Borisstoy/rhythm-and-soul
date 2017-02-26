@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   def scan_playlist
     #comment following line to run in controller
     SpotifyJob.perform_later(current_user.id)
-    #uncomment lines 13 and 14 to run in controller 
+    #uncomment lines 13 and 14 to run in controller
     # @user = current_user
     # artists_image_and_genre
     redirect_to root_path
@@ -17,11 +17,11 @@ class UsersController < ApplicationController
 
   #uncomment all private methods to run in controller
 
-  # private
-  #
-  # def set_user
-  #   @user = current_user
-  # end
+  private
+
+  def set_user
+    @user = current_user
+  end
   #
   # def playlists_ids_parsing(offset)
   #   url = "https://api.spotify.com/v1/users/#{@user.spotify_id}/playlists?limit=50&offset=#{offset}"
