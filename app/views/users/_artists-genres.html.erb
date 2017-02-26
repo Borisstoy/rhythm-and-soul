@@ -2,11 +2,11 @@
 <div class="wrapper-artists-genre-profile">
     <% current_user.artists.each do |artist| %>
       <div class="card-artist-genre">
-        <div class="artist-image">
+        <div class="artist-image center-cropped">
         <% if artist.images %>
           <%= image_tag artist.images %>
         <% else %>
-          <img src="http://placehold.it/80x80">
+          <img src="http://placehold.it/100x100">
         <% end %>
         </div>
         <div class="artist-description">

@@ -15,13 +15,15 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
 
-  #uncomment all private methods to run in controller
 
   private
 
   def set_user
     @user = current_user
   end
+
+  #uncomment all following private methods to run in controller
+
   #
   # def playlists_ids_parsing(offset)
   #   url = "https://api.spotify.com/v1/users/#{@user.spotify_id}/playlists?limit=50&offset=#{offset}"
