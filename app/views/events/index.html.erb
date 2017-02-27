@@ -60,8 +60,6 @@
         </form>
 
       </div>
-
-
       <div id="events-list">
         <div id="event-count" class="text-center">
           <% if @events_filtered.count == 0 %>
@@ -76,7 +74,9 @@
         </div>
 
         <% @events_filtered.each do |event| %>
-          <%= render 'event_element', event: event %>
+          <div class="wrapper-event-description" id="event_<%= event.id %>">
+            <%= render 'event_element', event: event, current_user_liked_items: @current_user_liked_items %>
+          </div>
         <% end %>
       </div>
     </div>

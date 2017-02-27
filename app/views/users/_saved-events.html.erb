@@ -12,7 +12,7 @@
         <%= item.date.strftime("%m/%d/%y") %>
       </div>
       <div class="event-bookmark-controller">
-        <%= link_to "Remove", remove_bookmark_user_path(item), method: :put %>
+        <%= link_to "Remove", remove_bookmark_event_path(item), method: :put %>
       </div>
     </div>
   </div>
