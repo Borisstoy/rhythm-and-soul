@@ -5,7 +5,7 @@ class ApiJob < ApplicationJob
   def perform
     artists = []
     artists_full_name = []
-    Artist.all.select(:name).each do |artist|
+    User.first.artists.where(name: "Kebu").select(:name).each do |artist|
       @name = artist.name.dup
       artists << artist.name.gsub(" ", "").gsub("ë", "e").gsub("ö", "o").gsub("ä", "a")
       artists_full_name << @name
@@ -15,7 +15,7 @@ class ApiJob < ApplicationJob
       build_event_index(result, artist_name)
     end
     artists_full_name.each do|artist_full_name|
-    build_event_artists(artist_full_name)
+      build_event_artists(artist_full_name)
     end
 
   end
@@ -47,11 +47,10 @@ class ApiJob < ApplicationJob
     @events = Event.where(name: artists_full_name.gsub(" ", "").gsub("ë", "e").gsub("ö", "o").gsub("ä", "a"))
     @events.each do |event|
       artists = Artist.where(name: artists_full_name)
-      event.artists << artists
+      artists.each do |artist|
+        event.artists << artist unless event.artists.include?(artist)
+        artist.events << event unless artist.events.include?(event)
+      end
     end
-
   end
-
-
 end
-
