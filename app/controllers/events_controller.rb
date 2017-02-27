@@ -19,9 +19,18 @@ class EventsController < ApplicationController
         end
       end
     end
-    current_user_events = current_user.events.order(date: :asc)
-    current_user_events.each do |event|
-      @events_filtered << event
+    #Use the following line instead if grouping by day is desired
+    current_user_events = current_user.events.order(date: :asc).group_by(&:day)
+    # current_user_events = current_user.events.order(date: :asc)
+    @events_with_day = []
+    current_user_events.each do |day, events|
+      events_day = []
+      events_day << day
+      events_day << events
+      @events_with_day << events_day
+      events.each do |event|
+        @events_filtered << event
+      end
     end
 
     ########## Filters ##########
@@ -36,6 +45,30 @@ class EventsController < ApplicationController
     @events_filtered.select! do |event|
       searched_venues.include?(event.venue)
     end
+
+    # ARTISTS
+    # filter for specific artist
+    @events_filtered.select! do |event|
+      if params['artitst_filter'] == 'All'
+        event
+      elsif params['artitst_filter']
+        picked_artist = Artist.where(name: params['artitst_filter'])
+        event.name == picked_artist[0].name
+      elsif params['artitst_filter'].blank?
+        event
+      else
+        event.name == 'Log in and scan your playlist!'
+      end
+    end
+    # show in dropdown only artists if they have an event
+    @user_artists_event = []
+    current_user.artists.each do |artist|
+      @user_artists_event << artist unless artist.events.empty?
+    end
+
+
+    # GENRE
+
 
     # DATE
     picked_start_date = DateTime.parse(params['start_date']).to_time unless params['start_date'].blank?
@@ -56,12 +89,6 @@ class EventsController < ApplicationController
 
     @current_user_liked_items = current_user.find_liked_items
 
-    # ARTISTS
-    # @artitst_filter = params['artitst_filter']
-    # picked_artist = Artist.where(name: params['artitst_filter'])
-    # @events_filtered.select! do |e|
-    #   picked_artist == e.name
-    # end
   end
 
   def show
