@@ -40,7 +40,6 @@
               <div class="form-group">
                 <label for="artist-selection">Artists</label>
                 <select class="form-control" id="artist-selection" name="artitst_filter" value">
-                  <option></option>
                    <% if user_signed_in? %>
                         <option>All</option>
                         <% @user_artists_event.each do |artist| %>
