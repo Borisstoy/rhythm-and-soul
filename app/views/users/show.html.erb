@@ -17,14 +17,14 @@
 
   </div>
   <div class="right-side">
-    <div class="tab-content" id="saved">
+    <div class="tab-content" id="artists">
+      <%= render 'artists-genres' %>
+    </div>
+    <div class="tab-content hidden" id="saved">
       <%= render 'saved-events' %>
     </div>
     <div class="tab-content hidden" id="past">
       <%= render 'past-events' %>
-    </div>
-    <div class="tab-content hidden" id="artists">
-      <%= render 'artists-genres' %>
     </div>
   </div>
 </div>
