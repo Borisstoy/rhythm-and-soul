@@ -74,7 +74,7 @@
         </div>
 
         <% @events_filtered.each do |event| %>
-          <div class="wrapper-event-description" id="event_<%= event.id %>">
+          <div class="wrapper-event-description event" id="event_<%= event.id %>" data-latitude="<%= event.venue.latitude %>" data-longitude="<%= event.venue.longitude %>">
             <%= render 'event_element', event: event, current_user_liked_items: @current_user_liked_items %>
           </div>
 
