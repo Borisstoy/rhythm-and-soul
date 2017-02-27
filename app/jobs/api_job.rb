@@ -47,7 +47,9 @@ class ApiJob < ApplicationJob
     @events = Event.where(name: artists_full_name.gsub(" ", "").gsub("ë", "e").gsub("ö", "o").gsub("ä", "a"))
     @events.each do |event|
       artists = Artist.where(name: artists_full_name)
-      event.artists << artists
+      artists.each do |artist|
+        event.artists << artist unless event.artists.include?(artist)
+      end
     end
 
   end
