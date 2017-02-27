@@ -17,6 +17,7 @@ gem 'sidekiq-failures'
 gem 'acts_as_votable'
 
 gem 'sass-rails'
+gem 'compass-rails'
 gem 'jquery-rails'
 gem 'uglifier'
 gem 'bootstrap-sass'

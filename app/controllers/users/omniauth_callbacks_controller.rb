@@ -28,6 +28,8 @@ class Users::OmniauthCallbacksController <  Devise::OmniauthCallbacksController
     }
     @client ||= ::Spotify::Client.new(config)
 
+    SpotifyJob.perform_later(@user.id)
+    session[:scanning] = true
     sign_in_and_redirect @user
   end
 
