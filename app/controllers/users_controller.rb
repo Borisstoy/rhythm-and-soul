@@ -37,9 +37,8 @@ class UsersController < ApplicationController
   #   @partial_playlist["items"].each do |playlist|
   #     all_playlists << playlist
   #   end
-  #
   #   if all_playlists.count % 50 != 0
-  #     return all_playlists
+  #     all_playlists
   #   else
   #     i = 50
   #     until all_playlists.count % 50 != 0
@@ -60,7 +59,7 @@ class UsersController < ApplicationController
   #   @playlists_ids = playlists.map do |playlist|
   #     playlist["id"]
   #   end
-  #   @playlists_ids
+  #   return @playlists_ids
   # end
   #
   # def get_tracks_artists
