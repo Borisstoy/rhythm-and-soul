@@ -75,8 +75,11 @@
           <%= render 'event_list_header' %>
         </div>
 
-        <% @events_filtered.each do |event| %>
-          <%= render 'event_element', event: event %>
+        <% @events_with_day.each do |event| %>
+          <%= event[0] %>
+          <% event[1].each do |e|  %>
+            <%= render 'event_element', event: e %>
+          <% end %>
         <% end %>
       </div>
     </div>

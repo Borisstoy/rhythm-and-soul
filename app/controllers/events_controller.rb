@@ -20,10 +20,17 @@ class EventsController < ApplicationController
       end
     end
     #Use the following line instead if grouping by day is desired
-    #current_user_events = current_user.events.order(date: :asc).group_by(&:day)
-    current_user_events = current_user.events.order(date: :asc)
-    current_user_events.each do |event|
-      @events_filtered << event
+    current_user_events = current_user.events.order(date: :asc).group_by(&:day)
+    # current_user_events = current_user.events.order(date: :asc)
+    @events_with_day = []
+    current_user_events.each do |day, events|
+      events_day = []
+      events_day << day
+      events_day << events
+      @events_with_day << events_day
+      events.each do |event|
+        @events_filtered << event
+      end
     end
 
     ########## Filters ##########
