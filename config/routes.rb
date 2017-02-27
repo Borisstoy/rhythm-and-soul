@@ -25,5 +25,6 @@ Rails.application.routes.draw do
         end
     end
      get '/scan_playlist' => 'users#scan_playlist', as: :scan_playlist
+     resources :artists, only: [:show]
   end
 end

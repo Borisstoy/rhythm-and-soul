@@ -1,0 +1,54 @@
+<div class="main-wrapper-profile artists-padded">
+  <div class="artist-profile-header">
+    <div class="artist-profile-image">
+    <% if @artist.images %>
+      <%= image_tag @artist.images %>
+    <% else %>
+      <img src="http://placehold.it/100x100">
+    <% end %>
+    </div>
+    <div class="artist-description">
+      <h2><%= @artist.name.split.map(&:capitalize).join(' ') %></h2>
+      <hr>
+      <p>UPCOMING EVENTS</p>
+    </div>
+    <div class="back-button-artists">
+      <%= link_to "Back To The List", user_path(current_user, artist_id: @artist.id), class: 'filter-button' %>
+    </div>
+  </div>
+  <div class="artist-profile-events">
+    <p>There is no event currently planned for <%@artist.name %></p>
+    <% @artist.events.each do |event| %>
+      <div class="wrapper-artists-events">
+        <% if event %>
+          <div class="artist-date">
+            <%= event.date.strftime('%A, %d %b %Y %l:%M %p') %>
+          </div>
+          <div class="artist-address">
+            <%= event.venue.address %>
+          </div>
+          <% if !event.ticket.nil? %>
+            <div class="artist-ticket">
+              <%= link_to "Buy ticket", event.ticket, class:"buy-ticket-button", target: :_blank %>
+            </div>
+          <% end %>
+      <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% content_for(:js) do %>
+  <%= javascript_tag do %>
+    $(".tab").on("click", function(e){
+      // Change active tab
+      $(".tab").removeClass("active");
+      $(this).addClass("active");
+      // Hide all tab-content (use class="hidden")
+      $(".tab-content").addClass("hidden");
+      // Show target tab-content (use class="hidden")
+      showTab = $(this).data("target");
+      $(showTab).removeClass("hidden");
+    });
+  <% end %>
+<% end %>
