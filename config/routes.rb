@@ -16,13 +16,11 @@ Rails.application.routes.draw do
     resources :events, only: [:index, :show] do
       member do
         put "bookmark", to: "events#bookmark"
+        put "remove_bookmark", to: "events#remove_bookmark"
       end
     end
     resources :users, only: [:show, :edit, :update] do
       resources :events, only: [:show]
-        member do
-          put "remove_bookmark", to: "events#remove_bookmark"
-        end
     end
      get '/scan_playlist' => 'users#scan_playlist', as: :scan_playlist
   end

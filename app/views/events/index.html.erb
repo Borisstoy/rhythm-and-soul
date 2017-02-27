@@ -60,8 +60,6 @@
         </form>
 
       </div>
-
-
       <div id="events-list">
         <div id="event-count" class="text-center">
           <% if @events_filtered.count == 0 %>
@@ -75,11 +73,11 @@
           <%= render 'event_list_header' %>
         </div>
 
-        <% @events_with_day.each do |event| %>
-          <h3 class="day-events-list"><%= event[1][0].date.strftime("%A, %d %B %Y") %></h3>
-          <% event[1].each do |e|  %>
-            <%= render 'event_element', event: e %>
-          <% end %>
+        <% @events_filtered.each do |event| %>
+          <div class="wrapper-event-description" id="event_<%= event.id %>">
+            <%= render 'event_element', event: event, current_user_liked_items: @current_user_liked_items %>
+          </div>
+
         <% end %>
       </div>
     </div>

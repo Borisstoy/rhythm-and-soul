@@ -87,7 +87,7 @@ class EventsController < ApplicationController
 
     @markers_hash = markers_hash(@events_filtered)
 
-
+    @current_user_liked_items = current_user.find_liked_items
 
   end
 
@@ -97,13 +97,21 @@ class EventsController < ApplicationController
   def bookmark
     @event = Event.find(params[:id])
     @event.liked_by current_user
-    redirect_to events_path
+    @current_user_liked_items = current_user.find_liked_items
+    respond_to do |format|
+      format.html { redirect_to events_path }
+      format.js
+    end
   end
 
   def remove_bookmark
     @event = Event.find(params[:id])
     @event.unliked_by current_user
-    redirect_to user_path(current_user)
+    @current_user_liked_items = current_user.find_liked_items
+    respond_to do |format|
+      format.html { redirect_to events_path }
+      format.js
+    end
   end
 
   private

@@ -1,29 +1,27 @@
-<div class="wrapper-event-description">
-    <div class="event-desc-image">
-      <%= image_tag event.artists.first.images %>
-    </div>
-    <div class="event-desc-name">
-      <h4><%= event.name.capitalize %></h4>
-    </div>
-    <div class="event-desc-venue">
-      <%= event.venue.name %>
-    </div>
-    <div class="event-desc-address">
-      <%= event.venue.address %>
-    </div>
-    <div class="event-desc-date">
-      <%= event.date.strftime('%A, %d %b %Y %l:%M %p') %>
-    </div>
-    <div class="event-desc-links">
-      <div class="event-desc-ticket">
-        <%= link_to "Buy ticket", event.ticket, class:"buy-ticket-button", target: :_blank %>
-      </div>
-      <div class="event-desc-bookmark">
-        <% if event.liked_by @user %>
-          <i class="fa fa-star" aria-hidden="true"></i>
-        <% else %>
-          <%= link_to "", bookmark_event_path(event), method: :put, class: 'fa fa-star-o' %>
-        <% end %>
-      </div>
-    </div>
+<div class="event-desc-image">
+  <%= image_tag event.artists.first.images %>
+</div>
+<div class="event-desc-name">
+  <h4><%= event.name.capitalize %></h4>
+</div>
+<div class="event-desc-venue">
+  <%= event.venue.name %>
+</div>
+<div class="event-desc-address">
+  <%= event.venue.address %>
+</div>
+<div class="event-desc-date">
+  <%= event.date.strftime('%A, %d %b %Y %l:%M %p') %>
+</div>
+<div class="event-desc-links">
+  <div class="event-desc-ticket">
+    <%= link_to "Buy ticket", event.ticket, class:"buy-ticket-button", target: :_blank %>
+  </div>
+  <div class="event-desc-bookmark">
+    <% if current_user_liked_items.include? event %>
+      <%= link_to "", remove_bookmark_event_path(event), method: :put, remote: true, class: 'fa fa-star' %>
+    <% else %>
+      <%= link_to "", bookmark_event_path(event), method: :put, remote: true, class: 'fa fa-star-o' %>
+    <% end %>
+  </div>
 </div>
