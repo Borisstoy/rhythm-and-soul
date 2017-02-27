@@ -1,0 +1,61 @@
+
+// ARTISTS PROFILES
+
+.artist-profile-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  text-align: left;
+  border-bottom: 5px solid $main-blue;
+  position: relative;
+  .back-button-artists{
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+  h2 {
+    font-weight: 800;
+    font-size: 2.5em;
+  }
+  p {
+    font-weight: 500;
+    color: $dark-grey;
+  }
+  .artist-profile-image {
+    flex: 0 0 30%;
+    img {
+      width: 200px;
+      height: 200px;
+    }
+  }
+  .artist-description {
+    flex: 0 0 70%;
+  }
+}
+
+.artist-profile-events {
+  width: 100%;
+  padding: 2.5em;
+  .wrapper-artists-events {
+    height: 80px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid #eaeaea;
+    padding: .5em;
+      .artist-date {
+        flex: 30%;
+        font-size: .9em;
+        text-transform: uppercase;
+        font-weight: 800;
+      }
+      .artist-address {
+        flex: 50%;
+      }
+      .artist-ticket {
+        flex: 20%;
+      }
+    }
+}
+

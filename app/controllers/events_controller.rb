@@ -34,18 +34,6 @@ class EventsController < ApplicationController
     end
 
     ########## Filters ##########
-    # LOCATION
-    # Select venues according to location search
-    unless params['location'].blank?
-      searched_venues = Venue.near(params['location'], 100)
-    else
-      searched_venues = Venue.all
-    end
-    # Select the associated events
-    @events_filtered.select! do |event|
-      searched_venues.include?(event.venue)
-    end
-
     # ARTISTS
     # filter for specific artist
     @events_filtered.select! do |event|
@@ -65,6 +53,19 @@ class EventsController < ApplicationController
     current_user.artists.each do |artist|
       @user_artists_event << artist unless artist.events.empty?
     end
+
+    # LOCATION
+    # Select venues according to location search
+    unless params['location'].blank?
+      searched_venues = Venue.near(params['location'], 100)
+    else
+      searched_venues = Venue.all
+    end
+    # Select the associated events
+    @events_filtered.select! do |event|
+      searched_venues.include?(event.venue)
+    end
+
 
 
     # GENRE
