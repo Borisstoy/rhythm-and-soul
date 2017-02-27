@@ -76,7 +76,7 @@
         </div>
 
         <% @events_with_day.each do |event| %>
-          <%= event[0] %>
+          <h3 class="day-events-list"><%= event[1][0].date.strftime("%A, %d %B %Y") %></h3>
           <% event[1].each do |e|  %>
             <%= render 'event_element', event: e %>
           <% end %>
