@@ -167,3 +167,11 @@ label {
   font-weight: 500;
   text-transform: uppercase;
 }
+
+.alert-playlist-scan {
+  background-color: $hover-blue;
+  align-items: center;
+  padding: 20px;
+  color: $standard-grey;
+  max-width: 100%;
+}
