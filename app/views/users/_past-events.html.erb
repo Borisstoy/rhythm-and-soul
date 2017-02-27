@@ -1,1 +1,23 @@
 <h2>Past Events</h2>
+<% current_user.find_voted_items.each do |item| %>
+  <div class="wrapper-events-profile">
+    <div class="event-box">
+      <div class="event-image">
+        <%= image_tag item.artists.first.images %>
+      </div>
+      <div class="event-name">
+        <h4><%= item.name.capitalize %></h4>
+      </div>
+      <div class="event-venue">
+        <strong><%= item.venue.name %></strong>,
+        <%= item.venue.address %>
+      </div>
+      <div class="event-date">
+        <%= item.date.strftime("%m/%d/%y") %>
+      </div>
+      <div class="event-bookmark-controller">
+        <%= link_to "Remove", remove_bookmark_event_path(item), method: :put %>
+      </div>
+    </div>
+  </div>
+<% end %>

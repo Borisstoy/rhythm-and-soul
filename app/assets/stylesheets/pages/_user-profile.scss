@@ -90,20 +90,33 @@ hr.profile {
   margin: 2rem 0;
   padding: .5em 0;
   border-bottom: 1px solid #eaeaea;
+  .event-image {
+    flex: 0 0 15%;
+    img {
+      width: 80px;
+      border-radius: .15em;
+      object-fit: cover;
+      height: 80px;
+    }
+  }
   .event-name {
-    flex: 0 0 30%;
+    flex: 0 0 15%;
     h4 {
       font-weight: 800;
+      padding-left: .9em;
+
     }
   }
   .event-venue {
-    flex: 0 0 40%;
+    flex: 0 0 50%;
+    padding-left: .5em;
+    padding-right: .5em;
   }
   .event-date {
     flex: 0 0 10%;
   }
   .event-bookmark-controller {
-    flex: 0 0 20%;
+    flex: 0 0 10%;
     text-align: right;
     a {
       text-transform: uppercase;

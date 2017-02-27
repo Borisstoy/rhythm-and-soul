@@ -19,9 +19,18 @@ class EventsController < ApplicationController
         end
       end
     end
-    current_user_events = current_user.events.order(date: :asc)
-    current_user_events.each do |event|
-      @events_filtered << event
+    #Use the following line instead if grouping by day is desired
+    current_user_events = current_user.events.order(date: :asc).group_by(&:day)
+    # current_user_events = current_user.events.order(date: :asc)
+    @events_with_day = []
+    current_user_events.each do |day, events|
+      events_day = []
+      events_day << day
+      events_day << events
+      @events_with_day << events_day
+      events.each do |event|
+        @events_filtered << event
+      end
     end
 
     ########## Filters ##########
@@ -37,6 +46,30 @@ class EventsController < ApplicationController
       searched_venues.include?(event.venue)
     end
 
+    # ARTISTS
+    # filter for specific artist
+    @events_filtered.select! do |event|
+      if params['artitst_filter'] == 'All'
+        event
+      elsif params['artitst_filter']
+        picked_artist = Artist.where(name: params['artitst_filter'])
+        event.name == picked_artist[0].name
+      elsif params['artitst_filter'].blank?
+        event
+      else
+        event.name == 'Log in and scan your playlist!'
+      end
+    end
+    # show in dropdown only artists if they have an event
+    @user_artists_event = []
+    current_user.artists.each do |artist|
+      @user_artists_event << artist unless artist.events.empty?
+    end
+
+
+    # GENRE
+
+
     # DATE
     picked_start_date = DateTime.parse(params['start_date']).to_time unless params['start_date'].blank?
     picked_end_date = DateTime.parse(params['end_date']).to_time unless params['end_date'].blank?
@@ -50,15 +83,8 @@ class EventsController < ApplicationController
       else
         true
       end
-    end
-
     @events_markers = events_markers(@events_filtered)
-    # ARTISTS
-    # @artitst_filter = params['artitst_filter']
-    # picked_artist = Artist.where(name: params['artitst_filter'])
-    # @events_filtered.select! do |e|
-    #   picked_artist == e.name
-    # end
+    @current_user_liked_items = current_user.find_liked_items
   end
 
   def show
@@ -67,13 +93,21 @@ class EventsController < ApplicationController
   def bookmark
     @event = Event.find(params[:id])
     @event.liked_by current_user
-    redirect_to events_path
+    @current_user_liked_items = current_user.find_liked_items
+    respond_to do |format|
+      format.html { redirect_to events_path }
+      format.js
+    end
   end
 
   def remove_bookmark
     @event = Event.find(params[:id])
     @event.unliked_by current_user
-    redirect_to user_path(current_user)
+    @current_user_liked_items = current_user.find_liked_items
+    respond_to do |format|
+      format.html { redirect_to events_path }
+      format.js
+    end
   end
 
   private

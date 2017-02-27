@@ -62,6 +62,10 @@
   }
 }
 
+.day-events-list {
+  border-bottom: 2px solid $main-blue;
+}
+
 .wrapper-event-description {
   height: 150px;
   display: flex;
