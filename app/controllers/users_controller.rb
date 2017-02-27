@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :authenticate_user!, only: :show
-  before_action :set_user, only: [ :show ]
+  before_action :set_user, only: [ :show, :scan_playlist ]
 
   def show
     @bookmarked_event = Event.where()
@@ -8,13 +8,22 @@ class UsersController < ApplicationController
 
   def scan_playlist
     #comment following line to run in controller
-    SpotifyJob.perform_now(current_user.id)
+    #UNCOMMENT IF CRASH
+#     SpotifyJob.perform_now(current_user.id)
+#     #uncomment lines 13 and 14 to run in controller
+#     # @user = current_user
+#     # artists_image_and_genre
+#     #uncomment line 16 to run ApiJob instead of Spotify job, in controller (bandsintown API call)
+#     # perform
+#     redirect_to user_path(current_user)
+   
+    SpotifyJob.perform_later(current_user.id)
+    session[:scanning] = true
+
     #uncomment lines 13 and 14 to run in controller
     # @user = current_user
     # artists_image_and_genre
-    #uncomment line 16 to run ApiJob instead of Spotify job, in controller (bandsintown API call)
-    # perform
-    redirect_to user_path(current_user)
+    redirect_to user_path(@user)
   end
 
 
@@ -83,13 +92,14 @@ class UsersController < ApplicationController
   #   playlists_serialized = RestClient::Resource.new(url, headers: {accept: "application/json", authorization: "Bearer #{@user.auth_token}"})
   #   @partial_playlist = JSON.parse(playlists_serialized.get)
   # end
-  #
+
   # def playlists_ids_storing
   #   playlists_ids_parsing(0)
   #   all_playlists = []
   #   @partial_playlist["items"].each do |playlist|
   #     all_playlists << playlist
   #   end
+
   #   if all_playlists.count % 50 != 0
   #     all_playlists
   #   else
@@ -114,7 +124,7 @@ class UsersController < ApplicationController
   #   end
   #   return @playlists_ids
   # end
-  #
+
   # def get_tracks_artists
   #   tracks = []
   #   playlists_ids_storing.each do |playlist_id|
@@ -138,7 +148,7 @@ class UsersController < ApplicationController
   #   end
   #   @names_and_ids
   # end
-  #
+
   # def artists_persistence
   #   get_tracks_artists
   #   @names_and_ids.each do |artist_array|
@@ -160,11 +170,11 @@ class UsersController < ApplicationController
   #     end
   #   end
   # end
-  #
+
   # def artists_image_and_genre
   #   artists_persistence
   #   # get_tracks_artists
-  #
+
   #   url = "https://api.spotify.com/v1/artists?ids="
   #   url_start_split = url.split("")
   #   i = 0

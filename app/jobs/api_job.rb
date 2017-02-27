@@ -48,7 +48,6 @@ class ApiJob < ApplicationJob
     @events.each do |event|
       artists = Artist.where(name: artists_full_name)
       artists.each do |artist|
-        event.artists << artist unless event.artists.include?(artist)
         artist.events << event unless artist.events.include?(event)
       end
     end

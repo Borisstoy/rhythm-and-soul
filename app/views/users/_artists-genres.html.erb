@@ -1,17 +1,19 @@
 <h2>Artists &amp; Genres</h2>
 <div class="wrapper-artists-genre-profile">
     <% current_user.artists.each do |artist| %>
-      <div class="card-artist-genre">
-        <div class="artist-image">
-        <% if artist.images %>
-          <%= image_tag artist.images %>
-        <% else %>
-          <img src="http://placehold.it/100x100">
-        <% end %>
+      <%= link_to artist_path(artist) do %>
+        <div class="card-artist-genre">
+          <div class="artist-image">
+          <% if artist.images %>
+            <%= image_tag artist.images %>
+          <% else %>
+            <img src="http://placehold.it/100x100">
+          <% end %>
+          </div>
+          <div class="artist-description">
+            <h4><%= artist.name.split.map(&:capitalize).join(' ') %></h4>
+          </div>
         </div>
-        <div class="artist-description">
-          <h4><%= artist.name.split.map(&:capitalize).join(' ') %></h4>
-        </div>
-      </div>
+      <% end %>
     <% end %>
 </div>

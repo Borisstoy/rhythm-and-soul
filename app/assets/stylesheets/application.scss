@@ -8,12 +8,13 @@
 @import "font-awesome-sprockets";
 @import "font-awesome";
 @import "bootstrap-datepicker";
+@import "compass";
 
 // Your CSS
+@import "vendor/index";
 @import "layout/index";
 @import "components/index";
 @import "pages/index";
-@import "vendor/index";
 
 
 
