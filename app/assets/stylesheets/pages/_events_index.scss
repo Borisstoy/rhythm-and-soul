@@ -76,6 +76,10 @@
   margin: 2rem .6rem 2rem .6rem;
   border-bottom: 1px solid #eaeaea;
   position: relative;
+  cursor: pointer;
+  &:hover {
+    border-bottom: 1px solid $main-blue;
+  }
   h5 {
     font-size: .8em;
     font-weight: 800;
