@@ -46,6 +46,30 @@ class EventsController < ApplicationController
       searched_venues.include?(event.venue)
     end
 
+    # ARTISTS
+    # filter for specific artist
+    @events_filtered.select! do |event|
+      if params['artitst_filter'] == 'All'
+        event
+      elsif params['artitst_filter']
+        picked_artist = Artist.where(name: params['artitst_filter'])
+        event.name == picked_artist[0].name
+      elsif params['artitst_filter'].blank?
+        event
+      else
+        event.name == 'Log in and scan your playlist!'
+      end
+    end
+    # show in dropdown only artists if they have an event
+    @user_artists_event = []
+    current_user.artists.each do |artist|
+      @user_artists_event << artist unless artist.events.empty?
+    end
+
+
+    # GENRE
+
+
     # DATE
     picked_start_date = DateTime.parse(params['start_date']).to_time unless params['start_date'].blank?
     picked_end_date = DateTime.parse(params['end_date']).to_time unless params['end_date'].blank?
@@ -63,12 +87,8 @@ class EventsController < ApplicationController
 
     @markers_hash = markers_hash(@events_filtered)
 
-    # ARTISTS
-    # @artitst_filter = params['artitst_filter']
-    # picked_artist = Artist.where(name: params['artitst_filter'])
-    # @events_filtered.select! do |e|
-    #   picked_artist == e.name
-    # end
+
+
   end
 
   def show
