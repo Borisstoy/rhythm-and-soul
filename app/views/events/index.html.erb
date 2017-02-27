@@ -74,7 +74,7 @@
         </div>
 
         <% @events_filtered.each do |event| %>
-          <div class="wrapper-event-description" id="event_<%= event.id %>">
+          <div class="wrapper-event-description event" id="event_<%= event.id %>" data-latitude="<%= event.venue.latitude %>" data-longitude="<%= event.venue.longitude %>">
             <%= render 'event_element', event: event, current_user_liked_items: @current_user_liked_items %>
           </div>
 
@@ -89,8 +89,8 @@
 
 <% content_for(:after_js) do %>
 
-<script>
-  $(document).ready(function() {
+  <script>
+    $(document).ready(function() {
       //Datepicker
       $('.datepicker').datepicker({
         autoclose: true,
@@ -98,41 +98,103 @@
         todayHighlight: true
       });
 
-      //Map
-      var handler = Gmaps.build('Google');
-      handler.buildMap({ internal: { id: 'event-map' } }, function() {
-        markers = handler.addMarkers(<%= raw @markers_hash.to_json %>);
-        handler.bounds.extendWith(markers);
-        handler.fitMapToBounds();
-        if (markers.length == 0) {
-          handler.getMap().setZoom(2);
-        } else if (markers.length == 1) {
-          handler.getMap().setZoom(14);
-        }
-      });
-      function closeInfoWindow(handler){
-        if(handler.currentInfowindow()) {
-          handler.currentInfowindow().close();
-          closeInfoWindow(handler);
-        }
-      };
+      // GMAPS API V3
+      //store the ruby poi markers into JS format
+      var markersData = <%= raw @events_markers.to_json %>;
+      var markers = [];
+      function createMarker (latlng, markerInfowindow, icon) {
+        var marker = new google.maps.Marker({
+          map: map,
+          position: latlng,
+          icon: icon
+        });
+        markers.push(marker);
+        google.maps.event.addListener(marker, 'click', function() {
+          //infowindow content
+          var iwContent = markerInfowindow;
+          // including content to the infowindow
+          infoWindow.setContent(iwContent);
+          // opening the infowindow in the current map and at the current marker location
+          infoWindow.open(map, marker);
+        });
+      }
+      // creating markers with createMarker function
+      function displayMarkers(markersData){
+        // this variable sets the map bounds and zoom level according to markers position
+        var bounds = new google.maps.LatLngBounds();
+        var venues_coordinates = [];
+        for (var i = 0; i < markersData.length; i++){
+          var latlng = new google.maps.LatLng(markersData[i].venue_lat, markersData[i].venue_lng);
+          var markerInfowindow = markersData[i].infowindow;
+          var icon = {
+              path: "M4.415,8.829c2.432,0,4.415-1.983,4.415-4.415 C8.829,1.983,6.846,0,4.415,0S0,1.983,0,4.415C0,6.846,1.983,8.829,4.415,8.829z",
+              fillColor: '#10627F',
+              fillOpacity: 1,
+              anchor: new google.maps.Point(0,0),
+              strokeWeight: 1,
+              scale: 1.5
+          }
+          venues_coordinates.push(latlng);
+          createMarker(latlng, markerInfowindow, icon);
 
+          // Marker’s Lat. and Lng. values are added to bounds variable
+          bounds.extend(latlng);
+        }
+        var markerCluster = new MarkerClusterer(map, markers);
+        // the bounds variable is used to set the map bounds with API’s fitBounds() function
+        map.fitBounds(bounds);
+      }
 
+      function initialize() {
+        var mapOptions = {
+          zoom: 9,
+          mapTypeId: 'roadmap',
+          styles: [{"featureType":"administrative","elementType":"all","stylers":[{"visibility":"on"},{"lightness":33}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2e5d4"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#c5dac6"}]},{"featureType":"poi.park","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":20}]},{"featureType":"road","elementType":"all","stylers":[{"lightness":20}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#c5c6c6"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#e4d7c6"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#fbfaf7"}]},{"featureType":"water","elementType":"all","stylers":[{"visibility":"on"},{"color":"#acbcc9"}]}]
+        };
+        map = new google.maps.Map(document.getElementById('event-map'), mapOptions);
+        // a new Info Window is created
+        infoWindow = new google.maps.InfoWindow();
+        // Event that closes the InfoWindow with a click on the map
+        google.maps.event.addListener(map, 'click', function() {
+          infoWindow.close();
+        });
+        // displayMarkers() function is called for markers creation
+        displayMarkers(markersData);
+      }
+      initialize();
+      // google.maps.event.addDomListener(window, 'load', initialize);
+
+      //function to reposition the map
+      function newLocation(newLat,newLng) {
+        map.setCenter({
+          lat : newLat,
+          lng : newLng
+        });
+        map.setZoom(15);
+      }
+
+      var lat;
+      var lng;
+      //create the associated event listener for newLocation and zoom of the map
+      $('.event').on('click', function() {
+        var lat = $(this).data('latitude')
+        var lng = $(this).data('longitude')
+        newLocation(lat, lng);
+      })
+
+      //Autocomplete
+      var search_location = $('.location').get(0);
+      if (search_location) {
+        var autocomplete = new google.maps.places.Autocomplete(search_location, { types: ['geocode'] });
+        // google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChanged);
+        google.maps.event.addDomListener(search_location, 'keydown');
+      }
       $("#events-filters input").on("keydown", function(e) {
         if (e.keyCode == 13) {
           console.log("enter")
           e.preventDefault(); // Do not submit the form on Enter.
         }
       });
-
-      //Autocomplete
-      var search_location = $('.location').get(0);
-      if (search_location) {
-        var autocomplete = new google.maps.places.Autocomplete(search_location, { types: ['geocode'] });
-        google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChanged);
-        google.maps.event.addDomListener(search_location, 'keydown');
-      }
     });
   </script>
-  <script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=<%= ENV['GOOGLE_API_BROWSER_KEY']%>"></script>
-  <% end %>
+<% end %>
