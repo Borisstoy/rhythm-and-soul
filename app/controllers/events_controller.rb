@@ -1,93 +1,37 @@
 class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
-  def index
 
+  def index
     @picked_start_date = params['start_date']
-    @picked_artist = Artist.where(name: params['artist_filter'])
-    @searched_venues = Venue.near(params['location'], 100)
     @picked_end_date = params['end_date']
     @location = params['location']
-    unless current_user.nil?
-      @curent_user_artists = UserArtist.where(user_id: current_user.id)
-      @curent_user_artists.each do |artist|
-        @curent_user_events = EventArtist.where(artist_id: artist.id)
-      end
-    end
-    @artists = Artist.all
-    @all_events = Event.all
-    @venues = Venue.all
-
-    @events_filtered = []
-    if current_user.nil?
-      @all_events.sample(25).each do |event|
-        @events_filtered << event
-      end
-      @events_filtered.sort_by!(&:date)
-    else
-      @curent_user_events
-      current_user_events = current_user.events.order(date: :asc)
-      @events_with_day = []
-      current_user_events.each do |event|
-        @events_filtered << event
-      end
-    end
-
+    picked_artist = Artist.where(name: params['artist_filter'])
+    searched_venues = Venue.near(params['location'], 100)
+    # show in dropdown only artists if they have an event
+    @user_artists_event = user_signed_in? ? current_user.artists.order(name: :asc) : Artist.order(name: :asc)
 
     ########## Filters ##########
+    @events_filtered = user_signed_in? ? current_user.events.includes(:artists, :venue).where("date >= ?", Date.today) : Event.includes(:artists, :venue).where("date >= ?", Date.today)
+
     # ARTISTS
     # filter for specific artist
-    @events_filtered.select! do |event|
-      if params['artist_filter'] == 'All'
-        event
-      elsif params['artist_filter']
-        event.name == @picked_artist[0].name
-      elsif params['artist_filter'].blank?
-        event
-      else
-        event.name == 'Log in and scan your playlist!'
-      end
-    end
-    # show in dropdown only artists if they have an event
-    @user_artists_event = []
-    if current_user.nil?
-        @user_artists_event << @artists
-    else
-      current_user.artists.each do |artist|
-        @user_artists_event << artist unless artist.events.empty?
-      end
-    end
-    @user_artists_event.sort_by!(&:name)
+    @events_filtered = @events_filtered.where(artist: { name: params[:artist_filter]}) if !params[:artist_filter].blank? && params[:artist_filter] != 'All'
+
     # LOCATION
     # Select venues according to location search
-    unless params['location'].blank?
-      @searched_venues
-    else
-      @searched_venues = @venues
-    end
-    # Select the associated events
-    @events_filtered.select! do |event|
-      @searched_venues.include?(event.venue)
-    end
-
+    @events_filtered = @events_filtered.where(venue: searched_venues) unless params['location'].blank?
 
     # DATE
-    picked_start_date = DateTime.parse(params['start_date']).to_time unless params['start_date'].blank?
-    picked_end_date = DateTime.parse(params['end_date']).to_time unless params['end_date'].blank?
-    @events_filtered.select! do |event|
-      if !params['start_date'].blank? && !params['end_date'].blank?
-        event.date >= picked_start_date && event.date <= picked_end_date
-      elsif params['start_date'].blank? && !params['end_date'].blank?
-        event.date <= picked_end_date
-      elsif !params['start_date'].blank? && params['end_date'].blank?
-        event.date >= picked_start_date
-      else
-        true
-      end
-    end
+    @events_filtered = @events_filtered.where("date >= ?", @picked_start_date) unless @picked_start_date.blank?
+    @events_filtered = @events_filtered.where("date < ?", @picked_end_date) unless @picked_end_date.blank?
+
+    # MARKERS
     @events_markers = events_markers(@events_filtered)
-      unless current_user.nil?
-        @current_user_liked_items = current_user.find_liked_items
-      end
+
+    # BOOKMARKED
+    @current_user_liked_items = current_user.find_liked_items if user_signed_in?
+
+
   end
 
   def show

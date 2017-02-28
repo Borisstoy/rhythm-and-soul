@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_many :user_artists, dependent: :destroy
   has_many :artists, through: :user_artists
-  has_many :events, through: :user_events
+  has_many :events, through: :artists
   has_many :user_events, dependent: :destroy
   acts_as_voter
   # Include default devise modules. Others available are:
