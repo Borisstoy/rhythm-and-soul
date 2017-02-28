@@ -12,6 +12,9 @@ gem 'rails-i18n', '~> 5.0.0'
 gem 'devise-i18n'
 gem 'sidekiq'
 gem 'sidekiq-failures'
+gem 'coffee-rails', '~> 4.1.0'
+#KAMINARI
+gem 'kaminari'
 
 #BOOKMARK / UPVOTES
 gem 'acts_as_votable'

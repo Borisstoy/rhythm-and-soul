@@ -46,8 +46,8 @@
                     <option><%= artist.name %></option>
                   <% end %>
                 </select>
+                <input type="submit" class="filter-button" value="Filter">
               </div>
-              <input type="submit" class="filter-button" value="Filter">
             </div>
 
           </div>
@@ -82,12 +82,12 @@
           <%= render 'event_list_header' %>
         </div>
 
-        <% @events_filtered.each do |event| %>
+        <%  @events_filtered.each do |event| %>
           <div class="wrapper-event-description event" id="event_<%= event.id %>" data-latitude="<%= event.venue.latitude %>" data-longitude="<%= event.venue.longitude %>">
             <%= render 'event_element', event: event, current_user_liked_items: @current_user_liked_items %>
           </div>
-
         <% end %>
+
       </div>
     </div>
   </div>
