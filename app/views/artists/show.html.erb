@@ -17,38 +17,26 @@
     </div>
   </div>
   <div class="artist-profile-events">
-    <p>There is no event currently planned for <%@artist.name %></p>
-    <% @artist.events.each do |event| %>
-      <div class="wrapper-artists-events">
-        <% if event %>
-          <div class="artist-date">
-            <%= event.date.strftime('%A, %d %b %Y %l:%M %p') %>
+    <% if @artist.events.empty? %>
+      <p>There is no event currently planned for <%= @artist.name %>.</p>
+    <% else %>
+      <% @artist.events.each do |event| %>
+          <div class="wrapper-artists-events">
+            <% if event %>
+              <div class="artist-date">
+                <%= event.date.strftime('%A, %d %b %Y %l:%M %p') %>
+              </div>
+              <div class="artist-address">
+                <%= event.venue.address %>
+              </div>
+              <% if !event.ticket.nil? %>
+                <div class="artist-ticket">
+                  <%= link_to "Buy ticket", event.ticket, class:"buy-ticket-button", target: :_blank %>
+                </div>
+              <% end %>
+            <% end %>
           </div>
-          <div class="artist-address">
-            <%= event.venue.address %>
-          </div>
-          <% if !event.ticket.nil? %>
-            <div class="artist-ticket">
-              <%= link_to "Buy ticket", event.ticket, class:"buy-ticket-button", target: :_blank %>
-            </div>
-          <% end %>
       <% end %>
-      </div>
     <% end %>
   </div>
 </div>
-
-<% content_for(:js) do %>
-  <%= javascript_tag do %>
-    $(".tab").on("click", function(e){
-      // Change active tab
-      $(".tab").removeClass("active");
-      $(this).addClass("active");
-      // Hide all tab-content (use class="hidden")
-      $(".tab-content").addClass("hidden");
-      // Show target tab-content (use class="hidden")
-      showTab = $(this).data("target");
-      $(showTab).removeClass("hidden");
-    });
-  <% end %>
-<% end %>

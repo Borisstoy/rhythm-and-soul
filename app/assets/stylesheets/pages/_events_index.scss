@@ -76,6 +76,10 @@
   margin: 2rem .6rem 2rem .6rem;
   border-bottom: 1px solid #eaeaea;
   position: relative;
+  cursor: pointer;
+  &:hover {
+    border-bottom: 1px solid $main-blue;
+  }
   h5 {
     font-size: .8em;
     font-weight: 800;
@@ -162,4 +166,12 @@ label {
   font-size: .8em;
   font-weight: 500;
   text-transform: uppercase;
+}
+
+.alert-playlist-scan {
+  background-color: $hover-blue;
+  align-items: center;
+  padding: 20px;
+  color: $standard-grey;
+  max-width: 100%;
 }

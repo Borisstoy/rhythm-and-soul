@@ -33,6 +33,7 @@ class EventsController < ApplicationController
           end
         end
       end
+
       current_user_events = current_user.events.order(date: :asc)
       @events_with_day = []
       current_user_events.each do |event|
@@ -44,12 +45,12 @@ class EventsController < ApplicationController
     # ARTISTS
     # filter for specific artist
     @events_filtered.select! do |event|
-      if params['artitst_filter'] == 'All'
+      if params['artist_filter'] == 'All'
         event
-      elsif params['artitst_filter']
-        picked_artist = Artist.where(name: params['artitst_filter'])
+      elsif params['artist_filter']
+        picked_artist = Artist.where(name: params['artist_filter'])
         event.name == picked_artist[0].name
-      elsif params['artitst_filter'].blank?
+      elsif params['artist_filter'].blank?
         event
       else
         event.name == 'Log in and scan your playlist!'
