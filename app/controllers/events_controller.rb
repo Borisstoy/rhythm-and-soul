@@ -20,7 +20,7 @@ class EventsController < ApplicationController
 
     # show in dropdown only artists if they have an event
     # use '.sort_by!{ |e| I18n.transliterate(e.name.downcase) }' for sorting alphabetically (case & accent insensitive)
-    @user_artists_event = user_signed_in? ? current_user.artists.order(name: :asc) : Artist.order(name: :asc)
+    @user_artists_event = user_signed_in? ? current_user.artists.sort_by{ |e| I18n.transliterate(e.name.downcase) } : Artist.sort_by{ |e| I18n.transliterate(e.name.downcase) }
 
     ########## Filters ##########
     @events_filtered = user_signed_in? ? current_user.events.includes(:artists, :venue).where("date >= ?", Date.today) : Event.includes(:artists, :venue).where("date >= ?", Date.today)
