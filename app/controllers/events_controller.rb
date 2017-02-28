@@ -3,43 +3,35 @@ class EventsController < ApplicationController
   def index
 
     @picked_start_date = params['start_date']
+    @picked_artist = Artist.where(name: params['artist_filter'])
+    @searched_venues = Venue.near(params['location'], 100)
     @picked_end_date = params['end_date']
     @location = params['location']
+    unless current_user.nil?
+      @curent_user_artists = UserArtist.where(user_id: current_user.id)
+      @curent_user_artists.each do |artist|
+        @curent_user_events = EventArtist.where(artist_id: artist.id)
+      end
+    end
+    @artists = Artist.all
+    @all_events = Event.all
+    @venues = Venue.all
+
     @events_filtered = []
     if current_user.nil?
-      Event.all.each do |event|
+      @all_events.sample(25).each do |event|
         @events_filtered << event
       end
-      # Artist.order("RANDOM()").first(100).each do |artist|
-      #   events = Event.where(name: artist.name)
-      #   unless events.empty?
-      #     events.each do |event|
-      #       @events_filtered << event
-      #     end
-      #   end
-      # end
       @events_filtered.sort_by!(&:date)
     else
-      current_user.artists.each do |artist|
-        events = Event.where(name: artist.name)
-        unless events.empty?
-          events.each do |event|
-            unless current_user.events.include?(event)
-              user_event = UserEvent.new
-              user_event.event = event
-              user_event.user = current_user
-              user_event.save
-            end
-          end
-        end
-      end
-
+      @curent_user_events
       current_user_events = current_user.events.order(date: :asc)
       @events_with_day = []
       current_user_events.each do |event|
         @events_filtered << event
-        end
       end
+    end
+
 
     ########## Filters ##########
     # ARTISTS
@@ -48,8 +40,7 @@ class EventsController < ApplicationController
       if params['artist_filter'] == 'All'
         event
       elsif params['artist_filter']
-        picked_artist = Artist.where(name: params['artist_filter'])
-        event.name == picked_artist[0].name
+        event.name == @picked_artist[0].name
       elsif params['artist_filter'].blank?
         event
       else
@@ -59,9 +50,7 @@ class EventsController < ApplicationController
     # show in dropdown only artists if they have an event
     @user_artists_event = []
     if current_user.nil?
-      Artist.all.each do |artist|
-        @user_artists_event << artist unless artist.events.empty?
-      end
+        @user_artists_event << @artists
     else
       current_user.artists.each do |artist|
         @user_artists_event << artist unless artist.events.empty?
@@ -71,18 +60,14 @@ class EventsController < ApplicationController
     # LOCATION
     # Select venues according to location search
     unless params['location'].blank?
-      searched_venues = Venue.near(params['location'], 100)
+      @searched_venues
     else
-      searched_venues = Venue.all
+      @searched_venues = @venues
     end
     # Select the associated events
     @events_filtered.select! do |event|
-      searched_venues.include?(event.venue)
+      @searched_venues.include?(event.venue)
     end
-
-
-
-    # GENRE
 
 
     # DATE
@@ -100,9 +85,9 @@ class EventsController < ApplicationController
       end
     end
     @events_markers = events_markers(@events_filtered)
-    unless current_user.nil?
-    @current_user_liked_items = current_user.find_liked_items
-    end
+      unless current_user.nil?
+        @current_user_liked_items = current_user.find_liked_items
+      end
   end
 
   def show
