@@ -1,108 +1,49 @@
 class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
-  def index
 
+  def index
     @picked_start_date = params['start_date']
     @picked_end_date = params['end_date']
     @location = params['location']
-    @events_filtered = []
-    if current_user.nil?
-      Event.all.each do |event|
-        @events_filtered << event
-      end
-      # Artist.order("RANDOM()").first(100).each do |artist|
-      #   events = Event.where(name: artist.name)
-      #   unless events.empty?
-      #     events.each do |event|
-      #       @events_filtered << event
-      #     end
-      #   end
-      # end
-      @events_filtered.sort_by!(&:date)
-    else
-      current_user.artists.each do |artist|
-        events = Event.where(name: artist.name)
-        unless events.empty?
-          events.each do |event|
-            unless current_user.events.include?(event)
-              user_event = UserEvent.new
-              user_event.event = event
-              user_event.user = current_user
-              user_event.save
-            end
-          end
-        end
-      end
+    picked_artist = Artist.where(name: params['artist_filter'])
+    unless params['location'].blank?
+      center = Geocoder.search(params[:location])
+      bounds = center.first.geometry['bounds']
+      box = [
+        bounds['southwest']['lat'],
+        bounds['southwest']['lng'],
+        bounds['northeast']['lat'],
+        bounds['northeast']['lng'],
+      ]
+      searched_venues = Venue.within_bounding_box(box)
+    end
 
-      current_user_events = current_user.events.order(date: :asc)
-      @events_with_day = []
-      current_user_events.each do |event|
-        @events_filtered << event
-        end
-      end
+    # show in dropdown only artists if they have an event
+    # use '.sort_by!{ |e| I18n.transliterate(e.name.downcase) }' for sorting alphabetically (case & accent insensitive)
+    @user_artists_event = user_signed_in? ? current_user.artists.order(name: :asc) : Artist.order(name: :asc)
 
     ########## Filters ##########
+    @events_filtered = user_signed_in? ? current_user.events.includes(:artists, :venue).where("date >= ?", Date.today) : Event.includes(:artists, :venue).where("date >= ?", Date.today)
+
     # ARTISTS
     # filter for specific artist
-    @events_filtered.select! do |event|
-      if params['artist_filter'] == 'All'
-        event
-      elsif params['artist_filter']
-        picked_artist = Artist.where(name: params['artist_filter'])
-        event.name == picked_artist[0].name
-      elsif params['artist_filter'].blank?
-        event
-      else
-        event.name == 'Log in and scan your playlist!'
-      end
-    end
-    # show in dropdown only artists if they have an event
-    @user_artists_event = []
-    if current_user.nil?
-      Artist.all.each do |artist|
-        @user_artists_event << artist unless artist.events.empty?
-      end
-    else
-      current_user.artists.each do |artist|
-        @user_artists_event << artist unless artist.events.empty?
-      end
-    end
-    @user_artists_event.sort_by!{ |e| I18n.transliterate(e.name.downcase) }
+    @events_filtered = @events_filtered.where(artist: { name: params[:artist_filter]}) if !params[:artist_filter].blank? && params[:artist_filter] != 'All'
+
     # LOCATION
     # Select venues according to location search
-    unless params['location'].blank?
-      searched_venues = Venue.near(params['location'], 100)
-    else
-      searched_venues = Venue.all
-    end
-    # Select the associated events
-    @events_filtered.select! do |event|
-      searched_venues.include?(event.venue)
-    end
-
-
-
-    # GENRE
-
+    @events_filtered = @events_filtered.where(venue: searched_venues) unless params['location'].blank?
 
     # DATE
-    picked_start_date = DateTime.parse(params['start_date']).to_time unless params['start_date'].blank?
-    picked_end_date = DateTime.parse(params['end_date']).to_time unless params['end_date'].blank?
-    @events_filtered.select! do |event|
-      if !params['start_date'].blank? && !params['end_date'].blank?
-        event.date >= picked_start_date && event.date <= picked_end_date
-      elsif params['start_date'].blank? && !params['end_date'].blank?
-        event.date <= picked_end_date
-      elsif !params['start_date'].blank? && params['end_date'].blank?
-        event.date >= picked_start_date
-      else
-        true
-      end
-    end
+    @events_filtered = @events_filtered.where("date >= ?", @picked_start_date) unless @picked_start_date.blank?
+    @events_filtered = @events_filtered.where("date < ?", @picked_end_date) unless @picked_end_date.blank?
+
+    # MARKERS
     @events_markers = events_markers(@events_filtered)
-    unless current_user.nil?
-    @current_user_liked_items = current_user.find_liked_items
-    end
+
+    # BOOKMARKED
+    @current_user_liked_items = current_user.find_liked_items if user_signed_in?
+
+
   end
 
   def show

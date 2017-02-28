@@ -17,6 +17,7 @@
   <div class="event-desc-ticket">
     <%= link_to "Buy ticket", event.ticket, class:"buy-ticket-button", target: :_blank %>
   </div>
+
   <% unless current_user.nil? %>
     <div class="event-desc-bookmark">
       <% if @current_user_liked_items.include? event %>
