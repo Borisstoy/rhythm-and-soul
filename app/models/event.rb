@@ -5,6 +5,7 @@ class Event < ApplicationRecord
   has_many :users, through: :user_events
   has_many :user_events, dependent: :destroy
   acts_as_votable
+  paginates_per 50
 
   def day
     self.date.strftime('%j')

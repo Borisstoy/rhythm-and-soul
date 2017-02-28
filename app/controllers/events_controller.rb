@@ -43,7 +43,8 @@ class EventsController < ApplicationController
     # BOOKMARKED
     @current_user_liked_items = current_user.find_liked_items if user_signed_in?
 
-
+    #KAMINARI
+    @events_filtered = @events_filtered.order(:date).page(params[:page]).per(25)
   end
 
   def show

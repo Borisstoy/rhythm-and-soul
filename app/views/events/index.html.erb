@@ -46,8 +46,8 @@
                     <option><%= artist.name %></option>
                   <% end %>
                 </select>
+                <input type="submit" class="filter-button" value="Filter">
               </div>
-              <input type="submit" class="filter-button" value="Filter">
             </div>
 
           </div>
@@ -94,6 +94,7 @@
         <div class="events-list-header">
           <%= render 'event_list_header' %>
         </div>
+
 
         <% @events_filtered.group_by(&:year).each do |year, events_array| %>
           <% Hash[ events_array.group_by(&:day).sort_by { |key, val| key } ].each do |day, events| %>

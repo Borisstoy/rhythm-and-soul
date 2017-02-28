@@ -2,10 +2,10 @@
   <%= image_tag event.artists.first.images %>
 </div>
 <div class="event-desc-name">
-  <h4><%= event.name.capitalize %></h4>
-</div>
-<div class="event-desc-venue">
-  <%= event.venue.name %>
+  <div class="content">
+    <h4><%= event.name.capitalize %></h4>
+    <p><%= event.venue.name %></p>
+  </div>
 </div>
 <div class="event-desc-address">
   <%= event.venue.address %>
