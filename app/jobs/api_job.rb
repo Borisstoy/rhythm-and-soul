@@ -5,7 +5,7 @@ class ApiJob < ApplicationJob
   def perform
     artists = []
     artists_full_name = []
-    User.first.artists.where(name: "Kebu").select(:name).each do |artist|
+    Artist.all.select(:name).each do |artist|
       @name = artist.name.dup
       artists << artist.name.gsub(" ", "").gsub("ë", "e").gsub("ö", "o").gsub("ä", "a")
       artists_full_name << @name
