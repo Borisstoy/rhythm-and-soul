@@ -95,12 +95,15 @@
           <%= render 'event_list_header' %>
         </div>
 
-        <% @events_filtered.group_by(&:day).each do |day, events| %>
-          <h3 class="day-events-list"><%= events[0].date.strftime("%A, %d %B %Y") %></h3>
-          <% events.each do |e|  %>
-            <div class="wrapper-event-description event" id="event_<%#= event.id %>" data-latitude="<%#= event.venue.latitude %>" data-longitude="<%#= event.venue.longitude %>">
-              <%= render 'event_element', event: e, current_user_liked_items: @current_user_liked_items %>
-            </div>
+        <% @events_filtered.group_by(&:year).each do |year, events_array| %>
+          <% Hash[ events_array.group_by(&:day).sort_by { |key, val| key } ].each do |day, events| %>
+            <%# raise %>
+            <h3 class="day-events-list"><%= events[0].date.strftime("%A, %d %B %Y") %></h3>
+            <% events.each do |e|  %>
+              <div class="wrapper-event-description event" id="event_<%#= e.id %>" data-latitude="<%#= e.venue.latitude %>" data-longitude="<%#= e.venue.longitude %>">
+                <%= render 'event_element', event: e, current_user_liked_items: @current_user_liked_items %>
+              </div>
+            <% end %>
           <% end %>
         <% end %>
 
