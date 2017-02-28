@@ -170,9 +170,25 @@ label {
 }
 
 .alert-playlist-scan {
-  background-color: $hover-blue;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  padding: 20px;
-  color: $standard-grey;
-  max-width: 100%;
+  justify-content: space-between;
+  background-color: $action-blue;
+  color: $very-light-grey;
+  padding: 25px;
+}
+
+.alert-playlist-scan > div {
+  margin: 5px;
+}
+
+#alert-playlist-scan-text-div {
+  flex: 1 0 auto;
+}
+
+#alert-playlist-scan-text {
+  color: $very-light-grey;
+  text-align: left;
 }

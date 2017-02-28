@@ -55,15 +55,26 @@
         </form>
 
       </div>
-      <% unless user_signed_in? %>
-      <div class="container text-center alert-playlist-scan">
+      <%# unless user_signed_in? %>
+      <!-- <div class="container text-center alert-playlist-scan">
         <div class="row">
           <div class="col-xs-12 col-md-4 text-left">
-            <p><strong>You're not signed in yet. Log in and scan your playlist to get a customized event list matching your tastes.</strong></h1>
+            <p id="alert-playlist-scan-text"><strong>You're not signed in yet. Log in and scan your playlist to get a customized event list matching your tastes.</strong></h1>
           </div>
-          <div class="col-xs-12 col-md-4">
-            <%= link_to "Log in with Spotify", scan_playlist_path, class: 'filter-button' %>
-          </div>
+          <div class="col-xs-12 col-md-4"> -->
+            <%#= link_to "Log in with Spotify", scan_playlist_path, class: 'filter-button' %>
+          <!-- </div>
+        </div>
+      </div> -->
+      <%# end %>
+
+      <% unless user_signed_in? %>
+      <div class="alert-playlist-scan">
+        <div id="alert-playlist-scan-text-div">
+          <p id="alert-playlist-scan-text"><strong>You're not signed in yet. Log in and scan your playlist to get a customized event list matching your tastes.</strong></h1>
+        </div>
+        <div id="alert-playlist-scan-button-div">
+          <%= link_to "Log in with Spotify", user_spotify_omniauth_authorize_path, id: 'alert-playlist-scan-button' %>
         </div>
       </div>
       <% end %>
@@ -72,9 +83,11 @@
       <div id="events-list">
         <div id="event-count" class="text-center">
           <% if @events_filtered.count == 0 %>
-            Sorry, there is no event matching your search
+            <h3>Sorry, there is no event matching your search</h3>
+          <% elsif @events_filtered.count > 1 && current_user.nil? %>
+            <h3><strong><%= @events_filtered.count %> events</strong> currently in our database</h3>
           <% elsif @events_filtered.count > 1 %>
-            There are <strong><%= @events_filtered.count %> events</strong> matching your search
+            <h3>Hello <strong><%= current_user.name %></strong>! We found <strong><%= @events_filtered.count %> events</strong> for you :)</h3>
           <% end %>
         </div>
 
@@ -82,12 +95,21 @@
           <%= render 'event_list_header' %>
         </div>
 
-        <% @events_filtered.each do |event| %>
-          <div class="wrapper-event-description event" id="event_<%= event.id %>" data-latitude="<%= event.venue.latitude %>" data-longitude="<%= event.venue.longitude %>">
-            <%= render 'event_element', event: event, current_user_liked_items: @current_user_liked_items %>
-          </div>
-
+        <% @events_filtered.group_by(&:day).each do |day, events| %>
+          <h3 class="day-events-list"><%= events[0].date.strftime("%A, %d %B %Y") %></h3>
+          <% events.each do |e|  %>
+            <div class="wrapper-event-description event" id="event_<%#= event.id %>" data-latitude="<%#= event.venue.latitude %>" data-longitude="<%#= event.venue.longitude %>">
+              <%= render 'event_element', event: e, current_user_liked_items: @current_user_liked_items %>
+            </div>
+          <% end %>
         <% end %>
+
+        <%# @events_filtered.each do |event| %>
+          <!-- <div class="wrapper-event-description event" id="event_<%#= event.id %>" data-latitude="<%#= event.venue.latitude %>" data-longitude="<%#= event.venue.longitude %>"> -->
+            <%#= render 'event_element', event: event, current_user_liked_items: @current_user_liked_items %>
+          <!-- </div> -->
+        <%# end %>
+
       </div>
     </div>
   </div>

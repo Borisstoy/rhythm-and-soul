@@ -67,7 +67,7 @@ class EventsController < ApplicationController
         @user_artists_event << artist unless artist.events.empty?
       end
     end
-    @user_artists_event.sort_by!(&:name)
+    @user_artists_event.sort_by!{ |e| I18n.transliterate(e.name.downcase) }
     # LOCATION
     # Select venues according to location search
     unless params['location'].blank?
