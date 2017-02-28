@@ -6,32 +6,39 @@ class EventsController < ApplicationController
     @picked_end_date = params['end_date']
     @location = params['location']
     @events_filtered = []
-    current_user.artists.each do |artist|
-      events = Event.where(name: artist.name)
-      unless events.empty?
-        events.each do |event|
-          unless current_user.events.include?(event)
-            user_event = UserEvent.new
-            user_event.event = event
-            user_event.user = current_user
-            user_event.save
+    if current_user.nil?
+      Event.all.each do |event|
+        @events_filtered << event
+      end
+      # Artist.order("RANDOM()").first(100).each do |artist|
+      #   events = Event.where(name: artist.name)
+      #   unless events.empty?
+      #     events.each do |event|
+      #       @events_filtered << event
+      #     end
+      #   end
+      # end
+      @events_filtered.sort_by!(&:date)
+    else
+      current_user.artists.each do |artist|
+        events = Event.where(name: artist.name)
+        unless events.empty?
+          events.each do |event|
+            unless current_user.events.include?(event)
+              user_event = UserEvent.new
+              user_event.event = event
+              user_event.user = current_user
+              user_event.save
+            end
           end
         end
       end
-    end
-    #Use the following line instead if grouping by day is desired
-    current_user_events = current_user.events.order(date: :asc).group_by(&:day)
-    # current_user_events = current_user.events.order(date: :asc)
-    @events_with_day = []
-    current_user_events.each do |day, events|
-      events_day = []
-      events_day << day
-      events_day << events
-      @events_with_day << events_day
-      events.each do |event|
+      current_user_events = current_user.events.order(date: :asc)
+      @events_with_day = []
+      current_user_events.each do |event|
         @events_filtered << event
+        end
       end
-    end
 
     ########## Filters ##########
     # ARTISTS
@@ -50,10 +57,16 @@ class EventsController < ApplicationController
     end
     # show in dropdown only artists if they have an event
     @user_artists_event = []
-    current_user.artists.each do |artist|
-      @user_artists_event << artist unless artist.events.empty?
+    if current_user.nil?
+      Artist.all.each do |artist|
+        @user_artists_event << artist unless artist.events.empty?
+      end
+    else
+      current_user.artists.each do |artist|
+        @user_artists_event << artist unless artist.events.empty?
+      end
     end
-
+    @user_artists_event.sort_by!(&:name)
     # LOCATION
     # Select venues according to location search
     unless params['location'].blank?
@@ -86,7 +99,9 @@ class EventsController < ApplicationController
       end
     end
     @events_markers = events_markers(@events_filtered)
+    unless current_user.nil?
     @current_user_liked_items = current_user.find_liked_items
+    end
   end
 
   def show

@@ -14,7 +14,7 @@ class User < ApplicationRecord
   private
 
   def async_update
-    ApiJob.perform_later
+    # ApiJob.perform_later
   end
 
   def self.from_omniauth(auth)
