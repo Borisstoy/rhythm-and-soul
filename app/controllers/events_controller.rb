@@ -6,7 +6,18 @@ class EventsController < ApplicationController
     @picked_end_date = params['end_date']
     @location = params['location']
     picked_artist = Artist.where(name: params['artist_filter'])
-    searched_venues = Venue.near(params['location'], 100)
+    unless params['location'].blank?
+      center = Geocoder.search(params[:location])
+      bounds = center.first.geometry['bounds']
+      box = [
+        bounds['southwest']['lat'],
+        bounds['southwest']['lng'],
+        bounds['northeast']['lat'],
+        bounds['northeast']['lng'],
+      ]
+      searched_venues = Venue.within_bounding_box(box)
+    end
+
     # show in dropdown only artists if they have an event
     @user_artists_event = user_signed_in? ? current_user.artists.order(name: :asc) : Artist.order(name: :asc)
 
