@@ -127,3 +127,24 @@
   }
 }
 
+#alert-playlist-scan-button-div {
+  flex: 0 0 40%;
+}
+
+#alert-playlist-scan-button {
+  background-color: $very-light-grey;
+  text-decoration: none;
+  color: $main-blue;
+  font-weight: 800;
+  font-size: .8em;
+  border-radius: 45px;
+  padding: 1em 1.5em;
+  text-transform: uppercase;
+  &:hover,
+  &:focus,
+  &:active {
+    color: $very-light-grey;
+    background-color: $main-blue;
+    text-decoration: none;
+  }
+}

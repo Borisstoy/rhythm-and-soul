@@ -10,4 +10,8 @@ class Event < ApplicationRecord
   def day
     self.date.strftime('%j')
   end
+
+  def year
+    self.date.strftime('%Y')
+  end
 end
