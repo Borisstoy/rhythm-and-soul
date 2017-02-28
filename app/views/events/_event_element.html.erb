@@ -18,10 +18,12 @@
     <%= link_to "Buy ticket", event.ticket, class:"buy-ticket-button", target: :_blank %>
   </div>
   <div class="event-desc-bookmark">
-    <% if @current_user_liked_items.include? event %>
+  <% unless current_user.nil? %>
+    <% if current_user_liked_items.include? event %>
       <%= link_to "", remove_bookmark_event_path(event), method: :put, remote: true, class: 'fa fa-star' %>
     <% else %>
       <%= link_to "", bookmark_event_path(event), method: :put, remote: true, class: 'fa fa-star-o' %>
+    <% end %>
     <% end %>
   </div>
 </div>

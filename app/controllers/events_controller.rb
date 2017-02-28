@@ -7,14 +7,17 @@ class EventsController < ApplicationController
     @location = params['location']
     @events_filtered = []
     if current_user.nil?
-      Artist.all.each do |artist|
-        events = Event.where(name: artist.name)
-        unless events.empty?
-          events.each do |event|
-            @events_filtered << event
-          end
-        end
+      Event.all.each do |event|
+        @events_filtered << event
       end
+      # Artist.order("RANDOM()").first(100).each do |artist|
+      #   events = Event.where(name: artist.name)
+      #   unless events.empty?
+      #     events.each do |event|
+      #       @events_filtered << event
+      #     end
+      #   end
+      # end
       @events_filtered.sort_by!(&:date)
     else
       current_user.artists.each do |artist|
@@ -30,12 +33,13 @@ class EventsController < ApplicationController
           end
         end
       end
+
       current_user_events = current_user.events.order(date: :asc)
       @events_with_day = []
       current_user_events.each do |event|
         @events_filtered << event
+        end
       end
-    end
 
     ########## Filters ##########
     # ARTISTS
@@ -64,7 +68,6 @@ class EventsController < ApplicationController
       end
     end
     @user_artists_event.sort_by!(&:name)
-
     # LOCATION
     # Select venues according to location search
     unless params['location'].blank?
@@ -97,7 +100,9 @@ class EventsController < ApplicationController
       end
     end
     @events_markers = events_markers(@events_filtered)
+    unless current_user.nil?
     @current_user_liked_items = current_user.find_liked_items
+    end
   end
 
   def show
