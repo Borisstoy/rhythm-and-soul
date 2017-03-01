@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [ :show, :scan_playlist ]
 
   def show
-    @past_event = current_user.events.includes(:artists, :venue).where("date < ?", Date.today)
+    @past_event = current_user.events.where("date < ?", Date.today)
   end
 
   def scan_playlist
