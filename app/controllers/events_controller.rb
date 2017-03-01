@@ -6,7 +6,6 @@ class EventsController < ApplicationController
     @picked_end_date = params['end_date']
     @location = params['location'] || "Europe"
     picked_artist = Artist.where(name: params['artist_filter'])
-
       center = Geocoder.search(@location)
       bounds = center.first.geometry['bounds']
       box = [
