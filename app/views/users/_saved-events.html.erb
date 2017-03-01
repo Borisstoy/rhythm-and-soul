@@ -1,6 +1,6 @@
 <h2>Saved Events</h2>
 <% current_user.find_voted_items.each do |item| %>
-<% unless item.date >=  Date.today %>
+<% if item.date >= Date.today %>
   <div class="wrapper-events-profile">
     <div class="event-box">
       <div class="event-image">

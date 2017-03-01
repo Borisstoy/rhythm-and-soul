@@ -111,6 +111,18 @@ hr.profile {
       padding: 0;
     }
   }
+  .event-name-past {
+    flex: 0 0 75%;
+    padding-left: .9em;
+    h4 {
+      font-weight: 800;
+    }
+    p {
+      font-size: .9em;
+      margin: 0;
+      padding: 0;
+    }
+  }
   .event-date {
     flex: 0 0 10%;
   }
