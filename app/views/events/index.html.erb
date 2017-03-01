@@ -12,6 +12,15 @@
           </div>
         <% end %>
       </div>
+      <div class="user-notification">
+        <% if @events_filtered.count == 0 %>
+          <h4>Sorry, there is no event matching your search</h4>
+        <% elsif @events_filtered.count > 1 && current_user.nil? %>
+          <h4><strong><%= @events_filtered.count %> events</strong> found</h4>
+        <% elsif @events_filtered.count > 1 %>
+          <h4>Hello <strong><%= current_user.name %></strong>! We found <strong><%= @events_filtered.count %> events</strong>!</h4>
+        <% end %>
+      </div>
     <div class="events-filters">
 
       <form action="<% events_path %>" class="">
@@ -68,15 +77,6 @@
 
     <div class="index-events-list">
       <div id="events-list">
-        <div id="event-count" class="text-center">
-          <% if @events_filtered.count == 0 %>
-            <h4>Sorry, there is no event matching your search</h4>
-          <% elsif @events_filtered.count > 1 && current_user.nil? %>
-            <h4><strong><%= @events_filtered.count %> events</strong> currently in our database</h4>
-          <% elsif @events_filtered.count > 1 %>
-            <h4>Hello <strong><%= current_user.name %></strong>! We found <strong><%= @events_filtered.count %> events</strong> for you :)</h4>
-          <% end %>
-        </div>
 
         <div id="events-list-header">
           <%= render 'event_list_header' %>
