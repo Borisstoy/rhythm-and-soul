@@ -107,26 +107,6 @@
   }
 }
 
-.filter-button {
-  background-color: $main-blue;
-  text-decoration: none;
-  color: #fff;
-  font-weight: 800;
-  font-size: .8em;
-  border-radius: 45px;
-  padding: .4em 1.5em;
-  border: 2px solid $main-blue;
-  text-transform: uppercase;
-  &:hover,
-  &:focus,
-  &:active {
-    color: #fff;
-    background-color: $action-blue;
-    text-decoration: none;
-    border: 2px solid $action-blue;
-  }
-}
-
 #alert-playlist-scan-button-div {
   flex: 0 0 40%;
 }

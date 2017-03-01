@@ -45,6 +45,53 @@
     .events-filters {
       background-color: $very-light-grey;
       padding: 2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .location {
+        flex: 0 0 30%;
+      }
+      .date-picker-wrapper {
+        flex: 0 0 40%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .after {
+          flex: 0 0 50%;
+          padding-right: .5em;
+        }
+        .before {
+          flex: 0 0 50%;
+          padding-left: .5em;
+        }
+      }
+      .artist-selection {
+        flex: 0 0 30%;
+      }
+      .filter-submit {
+        flex: 0 0 auto;
+        text-align: center;
+        .filter-button {
+          background-color: $main-blue;
+          text-decoration: none;
+          color: #fff;
+          font-weight: 800;
+          font-size: 1em;
+          border-radius: 3em;
+          padding: .5em 1.6em;
+          border: 2px solid $main-blue;
+          text-transform: uppercase;
+          letter-spacing: .1em;
+          &:hover,
+          &:focus,
+          &:active {
+            color: #fff;
+            background-color: $action-blue;
+            text-decoration: none;
+            border: 2px solid $action-blue;
+          }
+        }
+      }
     }
     .index-events-list {
       padding: 2em;
@@ -76,7 +123,7 @@
   justify-content: space-between;
   align-items: center;
   text-align: left;
-  margin: 2rem .6rem 2rem .6rem;
+  // margin: 2rem .6rem 2rem .6rem;
   border-bottom: 1px solid #eaeaea;
   position: relative;
   h5 {
@@ -89,7 +136,7 @@
     flex: 0 0 15%;
   }
   .event-desc-name {
-    flex: 0 0 25%;
+    flex: 0 0 20%;
   }
   .event-desc-address {
     flex: 0 0 20%;
@@ -101,8 +148,24 @@
   }
   .event-desc-links {
     flex: 0 0 20%;
+    text-align: right;
   }
 }
+
+// STICKY SUBNAV
+
+.sticky-subnav {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 60%;
+  background: white;
+  z-index: 30000;
+  margin: 0;
+  padding: 0 2em;
+}
+
+////////////////
 
 .wrapper-event-description {
   height: 150px;
@@ -136,7 +199,9 @@
   }
   .event-desc-name {
     flex: 0 0 25%;
+    max-width: 150px;
     text-align: left;
+    word-wrap: break-word;
     .content {
       padding-left: 1em;
       h4 {
@@ -178,10 +243,28 @@
   font-weight: 500;
 }
 
+.alert-playlist-scan {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $hover-blue;
+  padding: 1.2em;
+  .text {
+    flex: 0 0 70%;
+    p {
+      color: #fff;
+    }
+  }
+  .button {
+    flex: 0 0 30%;
+  }
+}
+
 // FORM CONTROL BOOTSTRAP OVERRIDE
 
 .form-control {
-    display: block;
+    display: inline;
     width: 100%;
     height: 33px;
     padding: 6px 12px;
@@ -209,21 +292,4 @@ label {
   text-transform: uppercase;
 }
 
-.alert-playlist-scan {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: $hover-blue;
-  padding: 1.2em;
-  .text {
-    flex: 0 0 70%;
-    p {
-      color: #fff;
-    }
-  }
-  .button {
-    flex: 0 0 30%;
-  }
-}
 
