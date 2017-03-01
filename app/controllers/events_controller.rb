@@ -11,10 +11,6 @@ class EventsController < ApplicationController
     ########## Filters ##########
     @events_filtered = user_signed_in? ? current_user.events.includes(:artists, :venue).where("date >= ?", Date.today) : Event.includes(:artists, :venue).where("date >= ?", Date.today)
 
-    # ARTISTS
-    # filter for specific artist
-    @events_filtered = @events_filtered.where(artists: { name: params[:artist_filter]}) if !params[:artist_filter].blank? && params[:artist_filter] != 'All'
-
     # LOCATION
     # Select venues according to location search
     @events_filtered = @events_filtered.where(venue: @searched_venues)
@@ -23,16 +19,15 @@ class EventsController < ApplicationController
     @events_filtered = @events_filtered.where("date >= ?", @picked_start_date) unless @picked_start_date.blank?
     @events_filtered = @events_filtered.where("date < ?", @picked_end_date) unless @picked_end_date.blank?
 
-    # show in dropdown only artists if they have an event
-    # use '.sort_by!{ |e| I18n.transliterate(e.name.downcase) }' for sorting alphabetically (case & accent insensitive)
-    user_signed_in? ? current_user_artists_with_events = current_user.artists.select {|a| a if a.events.any?} : all_artists_with_events = Artist.all.select {|a| a if a.events.any?}
-    @user_artists_event = user_signed_in? ? current_user_artists_with_events.sort_by{ |a| I18n.transliterate(a.name.downcase) } : all_artists_with_events.sort_by{ |a| I18n.transliterate(a.name.downcase) }
-
-    # MARKERS
-    @events_markers = events_markers(@events_filtered)
+    # ARTISTS
+    # filter for specific artist
+    @events_filtered = @events_filtered.where(artists: { name: params[:artist_filter]}) if !params[:artist_filter].blank? && params[:artist_filter] != 'All'
 
     # BOOKMARKED
     @current_user_liked_items = current_user.find_liked_items if user_signed_in?
+
+    # MARKERS
+    @events_markers = events_markers(@events_filtered)
 
     #KAMINARI
     # @events_filtered = @events_filtered.order(:date).page(params[:page]).per(25)
@@ -65,7 +60,7 @@ class EventsController < ApplicationController
 
   def center_map_display(location)
     center = Geocoder.search(location)
-    bounds = center.first.geometry['bounds']
+    bounds = center.first.geometry['bounds'] || Geocoder.search("Europe").first.geometry['bounds']
     box = [
       bounds['southwest']['lat'],
       bounds['southwest']['lng'],
@@ -78,13 +73,29 @@ class EventsController < ApplicationController
   def events_markers(events)
     venues_coordinates = []
     events_markers = []
+    events = events.to_a.sort_by! { |event| event.date }
     events.each do |event|
       position = { lat: event.venue.latitude, lng: event.venue.longitude }
       venues_coordinates << position
       marker = {}
       marker[:venue_lat] = event.venue[:latitude]
       marker[:venue_lng] = event.venue[:longitude]
-      marker[:infowindow] = "<div class='iw-container'><h3 class='iw-title'>#{event.venue.name}</h3><div class='iw-event'><h3>#{event.artists.first.name}</h3><div>#{event.date.strftime('%d %b %Y')}</div></div></div>"
+
+      marker[:infowindow] = "
+      <div class='iw-container event'>
+        <h3 class='iw-title'>#{event.venue.name}</h3>
+        <div class='iw-event'>
+          <div>
+            <h3>#{event.artists.first.name}</h3>
+            <div>
+              #{event.date.strftime('%d %b %Y')}
+            </div>
+          </div>
+          <div class='iw-bookmark' id='iw_event_#{event.id}'>
+            #{ ApplicationController.render(partial: 'events/bookmark', locals: { event: event, current_user: current_user, current_user_liked_items: @current_user_liked_items })}
+          </div>
+        </div>
+      </div>"
       events_markers << marker
     end
 
