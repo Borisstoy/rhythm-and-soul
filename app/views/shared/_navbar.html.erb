@@ -36,7 +36,8 @@
     <% else %>
 
       <!-- Login text link -->
-      <%= link_to t(".sign_in", default: "Login With Spotify"), new_user_session_path, class: "navbar-wagon-item navbar-wagon-link" %>
+      <!-- Before uncommenting, go to routes and remove ':skip => [:sessions]' under 'devise_for :users' -->
+      <%#= link_to t(".sign_in", default: "Login With Spotify"), new_user_session_path, class: "navbar-wagon-item navbar-wagon-link" %>
 
     <% end %>
 
@@ -56,4 +57,3 @@
     </div>
   </div>
 </div>
-
