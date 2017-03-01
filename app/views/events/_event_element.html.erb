@@ -1,9 +1,10 @@
 <div class="event-desc-image">
-  <%= image_tag event.artists.first.images %>
+  <% event_artist = event.artists.first %>
+  <%= image_tag event_artist.images %>
 </div>
 <div class="event-desc-name">
   <div class="content">
-    <h4><%= event.name.capitalize %></h4>
+    <h4><%= event_artist.name %></h4>
     <p><%= event.venue.name %></p>
   </div>
 </div>

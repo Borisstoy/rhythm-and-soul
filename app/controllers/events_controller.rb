@@ -84,7 +84,7 @@ class EventsController < ApplicationController
       marker = {}
       marker[:venue_lat] = event.venue[:latitude]
       marker[:venue_lng] = event.venue[:longitude]
-      marker[:infowindow] = "<div class='iw-container'><h3 class='iw-title'>#{event.venue.name}</h3><div class='iw-event'><h3>#{event.name}</h3><div>#{event.date.strftime('%d %b %Y')}</div></div></div>"
+      marker[:infowindow] = "<div class='iw-container'><h3 class='iw-title'>#{event.venue.name}</h3><div class='iw-event'><h3>#{event.artists.first.name}</h3><div>#{event.date.strftime('%d %b %Y')}</div></div></div>"
       events_markers << marker
     end
 
