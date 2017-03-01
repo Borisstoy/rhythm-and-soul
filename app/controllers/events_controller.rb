@@ -4,9 +4,8 @@ class EventsController < ApplicationController
   def index
     @picked_start_date = params['start_date']
     @picked_end_date = params['end_date']
-    @location = params['location'] || 'Europe'
+    @location = params['location'] || "Europe"
     picked_artist = Artist.where(name: params['artist_filter'])
-    unless params['location'].blank?
       center = Geocoder.search(@location)
       bounds = center.first.geometry['bounds']
       box = [
@@ -16,11 +15,7 @@ class EventsController < ApplicationController
         bounds['northeast']['lng'],
       ]
       searched_venues = Venue.within_bounding_box(box)
-    end
 
-    # show in dropdown only artists if they have an event
-    # use '.sort_by!{ |e| I18n.transliterate(e.name.downcase) }' for sorting alphabetically (case & accent insensitive)
-    @user_artists_event = user_signed_in? ? current_user.artists.sort_by{ |e| I18n.transliterate(e.name.downcase) } : Artist.all.sort_by{ |e| I18n.transliterate(e.name.downcase) }
 
     ########## Filters ##########
     @events_filtered = user_signed_in? ? current_user.events.includes(:artists, :venue).where("date >= ?", Date.today) : Event.includes(:artists, :venue).where("date >= ?", Date.today)
@@ -31,11 +26,16 @@ class EventsController < ApplicationController
 
     # LOCATION
     # Select venues according to location search
-    @events_filtered = @events_filtered.where(venue: searched_venues) unless params['location'].blank?
+    @events_filtered = @events_filtered.where(venue: searched_venues)
 
     # DATE
     @events_filtered = @events_filtered.where("date >= ?", @picked_start_date) unless @picked_start_date.blank?
     @events_filtered = @events_filtered.where("date < ?", @picked_end_date) unless @picked_end_date.blank?
+
+    # show in dropdown only artists if they have an event
+    # use '.sort_by!{ |e| I18n.transliterate(e.name.downcase) }' for sorting alphabetically (case & accent insensitive)
+    user_signed_in? ? current_user_artists_with_events = current_user.artists.select {|a| a if a.events.any?} : all_artists_with_events = Artist.all.select {|a| a if a.events.any?}
+    @user_artists_event = user_signed_in? ? current_user_artists_with_events.sort_by{ |a| I18n.transliterate(a.name.downcase) } : all_artists_with_events.sort_by{ |a| I18n.transliterate(a.name.downcase) }
 
     # MARKERS
     @events_markers = events_markers(@events_filtered)
