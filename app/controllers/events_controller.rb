@@ -38,11 +38,11 @@ class EventsController < ApplicationController
     user_signed_in? ? current_user_artists_with_events = current_user.artists.select {|a| a if a.events.any?} : all_artists_with_events = Artist.all.select {|a| a if a.events.any?}
     @user_artists_event = user_signed_in? ? current_user_artists_with_events.sort_by{ |a| I18n.transliterate(a.name.downcase) } : all_artists_with_events.sort_by{ |a| I18n.transliterate(a.name.downcase) }
 
-    # MARKERS
-    @events_markers = events_markers(@events_filtered)
-
     # BOOKMARKED
     @current_user_liked_items = current_user.find_liked_items if user_signed_in?
+
+    # MARKERS
+    @events_markers = events_markers(@events_filtered)
 
     #KAMINARI
     # @events_filtered = @events_filtered.order(:date).page(params[:page]).per(25)
@@ -82,7 +82,17 @@ class EventsController < ApplicationController
       marker = {}
       marker[:venue_lat] = event.venue[:latitude]
       marker[:venue_lng] = event.venue[:longitude]
-      marker[:infowindow] = "<div class='iw-container'><h3 class='iw-title'>#{event.venue.name}</h3><div class='iw-event'><h3>#{event.name}</h3><div>#{event.date.strftime('%d %b %Y')}</div></div></div>"
+      marker[:infowindow] = "
+      <div class='iw-container event'id='event_#{event.id}''>
+        <h3 class='iw-title'>#{event.venue.name}</h3>
+        <div class='iw-event'>
+          <h3>#{event.name}</h3>
+          <div>
+            #{event.date.strftime('%d %b %Y')}
+          </div>
+            #{ ApplicationController.render(partial: 'events/bookmark', locals: { event: event, current_user: current_user, current_user_liked_items: @current_user_liked_items })}
+        </div>
+      </div>"
       events_markers << marker
     end
 
