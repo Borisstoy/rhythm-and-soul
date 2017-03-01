@@ -60,7 +60,7 @@ class EventsController < ApplicationController
 
   def center_map_display(location)
     center = Geocoder.search(location)
-    bounds = center.first.geometry['bounds']
+    bounds = center.first.geometry['bounds'] || Geocoder.search("Europe").first.geometry['bounds']
     box = [
       bounds['southwest']['lat'],
       bounds['southwest']['lng'],
