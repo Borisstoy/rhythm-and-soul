@@ -4,10 +4,10 @@ class EventsController < ApplicationController
   def index
     @picked_start_date = params['start_date']
     @picked_end_date = params['end_date']
-    @location = params['location']
+    @location = params['location'] || 'Europe'
     picked_artist = Artist.where(name: params['artist_filter'])
     unless params['location'].blank?
-      center = Geocoder.search(params[:location])
+      center = Geocoder.search(@location)
       bounds = center.first.geometry['bounds']
       box = [
         bounds['southwest']['lat'],
