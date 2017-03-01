@@ -40,7 +40,7 @@ class Users::OmniauthCallbacksController <  Devise::OmniauthCallbacksController
                     :headers => { "Authorization" => "Basic #{encoded_auth}" }
                   }
       response = HTTParty.post("https://accounts.spotify.com/api/token?refresh_token", request)
-      @user.update(:auth_token => response["access_token"], :expires_at => Time.now + response["expires_in"])
+      @user.update(:auth_token => response["access_token"], :expires_at => Time.now + response["expires_in"]) unless response["access_token"].nil? || response["expires_in"].nil?
     end
   end
 end
