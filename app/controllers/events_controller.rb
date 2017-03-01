@@ -35,8 +35,8 @@ class EventsController < ApplicationController
 
     # show in dropdown only artists if they have an event
     # use '.sort_by!{ |e| I18n.transliterate(e.name.downcase) }' for sorting alphabetically (case & accent insensitive)
-    current_user_artists_with_events = current_user.artists.select {|a| a if a.events.any?}
-    @user_artists_event = user_signed_in? ? current_user_artists_with_events.sort_by{ |a| I18n.transliterate(a.name.downcase) } : Artist.all.sort_by{ |a| I18n.transliterate(a.name.downcase) }
+    user_signed_in? ? current_user_artists_with_events = current_user.artists.select {|a| a if a.events.any?} : all_artists_with_events = Artist.all.select {|a| a if a.events.any?}
+    @user_artists_event = user_signed_in? ? current_user_artists_with_events.sort_by{ |a| I18n.transliterate(a.name.downcase) } : all_artists_with_events.sort_by{ |a| I18n.transliterate(a.name.downcase) }
 
     # MARKERS
     @events_markers = events_markers(@events_filtered)
