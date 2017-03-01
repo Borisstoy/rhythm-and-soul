@@ -17,6 +17,5 @@
   <div class="event-desc-ticket">
     <%= link_to "Buy ticket", event.ticket, class:"buy-ticket-button", target: :_blank %>
   </div>
-
   <%= render 'events/bookmark', event: event, current_user: current_user, current_user_liked_items: @current_user_liked_items %>
 </div>

@@ -66,7 +66,7 @@ class EventsController < ApplicationController
     @event.unliked_by current_user
     @current_user_liked_items = current_user.find_liked_items
     respond_to do |format|
-      format.html { redirect_to events_path }
+      format.html { redirect_to user_path }
       format.js
     end
   end
@@ -83,14 +83,16 @@ class EventsController < ApplicationController
       marker[:venue_lat] = event.venue[:latitude]
       marker[:venue_lng] = event.venue[:longitude]
       marker[:infowindow] = "
-      <div class='iw-container event'id='event_#{event.id}''>
+      <div class='iw-container event'>
         <h3 class='iw-title'>#{event.venue.name}</h3>
         <div class='iw-event'>
           <h3>#{event.name}</h3>
           <div>
             #{event.date.strftime('%d %b %Y')}
           </div>
+          <div id='iw_event_#{event.id}'>
             #{ ApplicationController.render(partial: 'events/bookmark', locals: { event: event, current_user: current_user, current_user_liked_items: @current_user_liked_items })}
+          </div>
         </div>
       </div>"
       events_markers << marker
