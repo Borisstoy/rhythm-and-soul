@@ -1,22 +1,40 @@
+  <div id="modal" role="document">
+    <div>
+      <div>
+        <h4 class="text-center">We are scanning your playlist</h4><br>
+        <p class="text-center">please wait few seconds...</p>
+      </div>
+      <div class="modal-body">
 
-<% if @scanning %>
+      <div class="shaft-load5">
+        <div class="shaft1"></div>
+        <div class="shaft2"></div>
+        <div class="shaft3"></div>
+        <div class="shaft4"></div>
+        <div class="shaft5"></div>
+        <div class="shaft6"></div>
+        <div class="shaft7"></div>
+        <div class="shaft8"></div>
+        <div class="shaft9"></div>
+        <div class="shaft10"></div>
+      </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
 
-<div class="header">
-  <h2>Scanning in progress mate !</h2>
-  <p>It may take a while ...</p>
-</div>
+<% content_for(:after_js) do %>
+  <script>
+    $("#nav").hide();
+    $(".scan-playlist").hide();
 
-<div class="shaft-load5">
-  <div class="shaft1"></div>
-  <div class="shaft2"></div>
-  <div class="shaft3"></div>
-  <div class="shaft4"></div>
-  <div class="shaft5"></div>
-  <div class="shaft6"></div>
-  <div class="shaft7"></div>
-  <div class="shaft8"></div>
-  <div class="shaft9"></div>
-  <div class="shaft10"></div>
-</div>
+    function hideModal(){
+      $("#modal").removeClass("in");
+      $("#modal").hide();
+      location.reload();
+    };
 
+    setTimeout(function(){
+      hideModal();
+    }, 10000);
+  </script>
 <% end %>
