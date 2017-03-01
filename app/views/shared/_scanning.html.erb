@@ -22,19 +22,4 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 
-<% content_for(:after_js) do %>
-  <script>
-    $("#nav").hide();
-    $(".scan-playlist").hide();
 
-    function hideModal(){
-      $("#modal").removeClass("in");
-      $("#modal").hide();
-      location.reload();
-    };
-
-    setTimeout(function(){
-      hideModal();
-    }, 10000);
-  </script>
-<% end %>
