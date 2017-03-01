@@ -56,7 +56,7 @@ class EventsController < ApplicationController
     @event.unliked_by current_user
     @current_user_liked_items = current_user.find_liked_items
     respond_to do |format|
-      format.html { redirect_to events_path }
+      format.html { redirect_to user_path }
       format.js
     end
   end

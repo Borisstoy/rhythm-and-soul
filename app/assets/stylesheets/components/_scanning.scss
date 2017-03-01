@@ -485,3 +485,19 @@ $height-end6: 40px;
   }
 }
 
+#modal {
+
+}
+
+.scanning-wrapper {
+  opacity: 0.1;
+  z-index: 2;
+}
+#render-scanning {
+font-size: 24px;
+    position: fixed;
+    left: 40%;
+    z-index: 10;
+    padding: 30px;
+    border-radius: 3px;
+}
