@@ -1,22 +1,73 @@
-.events-search {
-  overflow: scroll;
-  height: calc(100vh - 70px);
-  width:60%;
-}
-
-.events-filters {
-  background-color: $very-light-grey;
-  padding: 2em;
-
-}
-
 .events-wrapper {
   display: flex;
-}
-
-#event-map {
-  width: 40%;
-  height: calc(100vh - 70px);
+  .events-search {
+    overflow: scroll;
+    height: calc(100vh - 70px);
+    width:60%;
+    .spotify-alert-banner {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .text {
+        flex: 0 0 70%;
+        text-transform: uppercase;
+        font-size: .8em;
+        font-weight: 800;
+        color: #fff;
+        p {
+          margin-bottom: 0;
+          letter-spacing: .2em;
+          padding-left: .5em;
+        }
+      }
+      .button {
+        flex: 0 0 30%;
+        font-weight: 800;
+        text-align: right;
+        a {
+          border: 2px solid #fff;
+          border-radius: .3em;
+          color: #fff;
+          font-size: .8em;
+          text-transform: uppercase;
+          padding: .7em;
+          &:hover,
+          &:focus,
+          &:active {
+            text-decoration: none;
+            color: $hover-blue;
+            background-color: #fff;
+          }
+        }
+      }
+    }
+    .events-filters {
+      background-color: $very-light-grey;
+      padding: 2em;
+    }
+    .index-events-list {
+      padding: 2em;
+      .day-text {
+        margin-top: 6rem;
+        h3 {
+          font-size: 1.2em;
+          text-transform: uppercase;
+          font-weight: 800;
+          color: $main-blue;
+        }
+      }
+      .day-lign {
+        height: 2px;
+        background-color: $main-blue;
+        background-color: $main-blue;
+      }
+    }
+  }
+  #event-map {
+    width: 40%;
+    height: calc(100vh - 70px);
+  }
 }
 
 .event-list-header {
@@ -32,15 +83,13 @@
     font-size: .8em;
     font-weight: 800;
     color: $standard-grey;
+    letter-spacing: .2em;
   }
   .event-desc-image {
     flex: 0 0 15%;
   }
   .event-desc-name {
     flex: 0 0 25%;
-    h4 {
-      font-weight: 800;
-    }
   }
   .event-desc-address {
     flex: 0 0 20%;
@@ -55,10 +104,6 @@
   }
 }
 
-.day-events-list {
-  border-bottom: 2px solid $main-blue;
-}
-
 .wrapper-event-description {
   height: 150px;
   display: flex;
@@ -70,8 +115,10 @@
   border-bottom: 1px solid #eaeaea;
   position: relative;
   cursor: pointer;
+  &:after,
   &:hover {
-    border-bottom: 1px solid $main-blue;
+    border-bottom: 1px solid $hover-blue;
+    transition: .6s;
   }
   h5 {
     font-size: .8em;
@@ -107,6 +154,7 @@
   }
   .event-desc-links {
     flex: 0 0 20%;
+    text-align: right;
     .event-desc-ticket {
       padding: 0;
     }
@@ -114,9 +162,9 @@
       padding: .5em;
       position: absolute;
       top: 10px;
-      right: 10px;
+      right: 0px;
       .fa-star {
-        font-size: 1.2em;
+        font-size: 1.4em;
         color: #ffe349;
       }
     }
