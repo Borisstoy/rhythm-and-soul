@@ -78,6 +78,7 @@ class EventsController < ApplicationController
   def events_markers(events)
     venues_coordinates = []
     events_markers = []
+    events = events.to_a.sort_by! { |event| event.date }
     events.each do |event|
       position = { lat: event.venue.latitude, lng: event.venue.longitude }
       venues_coordinates << position
@@ -89,11 +90,13 @@ class EventsController < ApplicationController
       <div class='iw-container event'>
         <h3 class='iw-title'>#{event.venue.name}</h3>
         <div class='iw-event'>
-          <h3>#{event.artists.first.name}</h3>
           <div>
-            #{event.date.strftime('%d %b %Y')}
+            <h3>#{event.artists.first.name}</h3>
+            <div>
+              #{event.date.strftime('%d %b %Y')}
+            </div>
           </div>
-          <div id='iw_event_#{event.id}'>
+          <div class='iw-bookmark' id='iw_event_#{event.id}'>
             #{ ApplicationController.render(partial: 'events/bookmark', locals: { event: event, current_user: current_user, current_user_liked_items: @current_user_liked_items })}
           </div>
         </div>
