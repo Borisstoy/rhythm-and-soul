@@ -1,5 +1,6 @@
 <h2>Past Events</h2>
-<% current_user.find_voted_items.each do |item| %>
+<% unless @past_event.nil? || @past_event.empty? %>
+<% @past_event.each do |item| %>
   <div class="wrapper-events-profile">
     <div class="event-box">
       <div class="event-image">
@@ -21,3 +22,4 @@
     </div>
   </div>
 <% end %>
+<% end  %>
