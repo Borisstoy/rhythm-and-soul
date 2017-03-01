@@ -98,7 +98,6 @@
 
         <% @events_filtered.group_by(&:year).each do |year, events_array| %>
           <% Hash[ events_array.group_by(&:day).sort_by { |key, val| key } ].each do |day, events| %>
-            <%# raise %>
             <h3 class="day-events-list"><%= events[0].date.strftime("%A, %d %B %Y") %></h3>
             <% events.each do |e|  %>
               <div class="wrapper-event-description event" id="event_<%#= e.id %>" data-latitude="<%#= e.venue.latitude %>" data-longitude="<%#= e.venue.longitude %>">
