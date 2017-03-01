@@ -1,93 +1,78 @@
-<div id="events-wrapper">
-  <div id="events-search">
-    <div id="events-filters">
-
-      <div class="wrapper-filter">
-        <form action="<% events_path %>" class="">
-
-          <div class="row">
-
-            <div class="col-xs-12 col-sm-4 col-md-4">
-              <div class="event-location-picker">
-                <div class="form-group">
-                  <label for="location">Location</label>
-                  <input type="text" class="form-control location" id="location" placeholder="Where?" name="location" value="<%= @location %>">
-                </div>
-              </div>
+<div class="events-wrapper">
+  <div class="events-search">
+      <div class="spotify-alert-banner">
+        <% unless user_signed_in? %>
+          <div class="alert-playlist-scan">
+            <div class="text">
+              <p>You're not signed in yet. Log in and scan your playlist now!</p>
             </div>
-
-            <div class="col-xs-12 col-sm-8 col-md-8">
-                <div class="event-date-picker">
-                  <div class="form-inline">
-                    <div class="form-group">
-                      <label for="start-date">After</label><br>
-                      <input id="start-date" class="form-control datepicker" name="start_date" data-date-format="dd/mm/yyyy" data-date-start-date="<%= Date.today.strftime('%d/%m/%Y') %>" placeholder="<%= Date.today.strftime('%d/%m/%Y') %>" value="<%= @picked_start_date %>">
-                    </div>
-
-                    <div class="form-group">
-                      <label for="end-date">Before</label><br>
-                      <input id="end-date" class="form-control datepicker" name="end_date" data-date-format="dd/mm/yyyy" data-date-start-date="<%= Date.today.strftime('%d/%m/%Y') %>" placeholder="-" value="<%= @picked_end_date %>">
-                    </div>
-
-                  </div>
-                </div>
+            <div class="button">
+              <%= link_to "Log in with Spotify", user_spotify_omniauth_authorize_path %>
             </div>
           </div>
-
-          <div class="row">
-
-            <div class="col-xs-12 col-md-4">
-              <div class="form-group">
-                <label for="artist-selection">Artists</label>
-
-                <select class="form-control" id="artist-selection" name="artist_filter">
-                  <option>All</option>
-                  <% @user_artists_event.each do |artist| %>
-                    <option><%= artist.name %></option>
-                  <% end %>
-                </select>
-                <input type="submit" class="filter-button" value="Filter">
-              </div>
-            </div>
-
-          </div>
-
-        </form>
-
+        <% end %>
       </div>
-      <%# unless user_signed_in? %>
-      <!-- <div class="container text-center alert-playlist-scan">
+    <div class="events-filters">
+
+
+      <form action="<% events_path %>" class="">
+
         <div class="row">
-          <div class="col-xs-12 col-md-4 text-left">
-            <p id="alert-playlist-scan-text"><strong>You're not signed in yet. Log in and scan your playlist to get a customized event list matching your tastes.</strong></h1>
+          <div class="col-xs-12 col-sm-4 col-md-4">
+            <div class="event-location-picker">
+              <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" class="form-control location" id="location" placeholder="Where?" name="location" value="<%= @location %>">
+              </div>
+            </div>
           </div>
-          <div class="col-xs-12 col-md-4"> -->
-            <%#= link_to "Log in with Spotify", scan_playlist_path, class: 'filter-button' %>
-          <!-- </div>
-        </div>
-      </div> -->
-      <%# end %>
 
-      <% unless user_signed_in? %>
-      <div class="alert-playlist-scan">
-        <div id="alert-playlist-scan-text-div">
-          <p id="alert-playlist-scan-text"><strong>You're not signed in yet. Log in and scan your playlist to get a customized event list matching your tastes.</strong></h1>
-        </div>
-        <div id="alert-playlist-scan-button-div">
-          <%= link_to "Log in with Spotify", user_spotify_omniauth_authorize_path, id: 'alert-playlist-scan-button' %>
-        </div>
-      </div>
-      <% end %>
+          <div class="col-xs-12 col-sm-8 col-md-8">
+              <div class="event-date-picker">
+                <div class="form-inline">
+                  <div class="form-group">
+                    <label for="start-date">After</label><br>
+                    <input id="start-date" class="form-control datepicker" name="start_date" data-date-format="dd/mm/yyyy" data-date-start-date="<%= Date.today.strftime('%d/%m/%Y') %>" placeholder="<%= Date.today.strftime('%d/%m/%Y') %>" value="<%= @picked_start_date %>">
+                  </div>
 
+                  <div class="form-group">
+                    <label for="end-date">Before</label><br>
+                    <input id="end-date" class="form-control datepicker" name="end_date" data-date-format="dd/mm/yyyy" data-date-start-date="<%= Date.today.strftime('%d/%m/%Y') %>" placeholder="-" value="<%= @picked_end_date %>">
+                  </div>
 
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-md-4">
+            <div class="form-group">
+              <label for="artist-selection">Artists</label>
+
+              <select class="form-control" id="artist-selection" name="artist_filter">
+                <option>All</option>
+                <% @user_artists_event.each do |artist| %>
+                  <option><%= artist.name %></option>
+                <% end %>
+              </select>
+              <input type="submit" class="filter-button" value="Filter">
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+    <div class="index-events-list">
       <div id="events-list">
         <div id="event-count" class="text-center">
           <% if @events_filtered.count == 0 %>
-            <h3>Sorry, there is no event matching your search</h3>
+            <h4>Sorry, there is no event matching your search</h4>
           <% elsif @events_filtered.count > 1 && current_user.nil? %>
-            <h3><strong><%= @events_filtered.count %> events</strong> currently in our database</h3>
+            <h4><strong><%= @events_filtered.count %> events</strong> currently in our database</h4>
           <% elsif @events_filtered.count > 1 %>
-            <h3>Hello <strong><%= current_user.name %></strong>! We found <strong><%= @events_filtered.count %> events</strong> for you :)</h3>
+            <h4>Hello <strong><%= current_user.name %></strong>! We found <strong><%= @events_filtered.count %> events</strong> for you :)</h4>
           <% end %>
         </div>
 
@@ -95,30 +80,22 @@
           <%= render 'event_list_header' %>
         </div>
 
-
-
         <% @events_filtered.group_by(&:year).each do |year, events_array| %>
           <% Hash[ events_array.group_by(&:day).sort_by { |key, val| key } ].each do |day, events| %>
-            <h3 class="day-events-list"><%= events[0].date.strftime("%A, %d %B %Y") %></h3>
-            <% events.each do |e|  %>
-              <div class="wrapper-event-description event" id="event_<%= e.id %>" data-latitude="<%= e.venue.latitude %>" data-longitude="<%= e.venue.longitude %>">
-                <%= render 'event_element', event: e, current_user_liked_items: @current_user_liked_items %>
-              </div>
+              <div class="day-text"><h3><%= events[0].date.strftime("%A, %d %B %Y") %></h3></div>
+              <div class="day-lign"></div>
+              <% events.each do |e|  %>
+                <div class="wrapper-event-description event" id="event_<%= e.id %>" data-latitude="<%= e.venue.latitude %>" data-longitude="<%= e.venue.longitude %>">
+                  <%= render 'event_element', event: e, current_user_liked_items: @current_user_liked_items %>
+                </div>
+              <% end %>
             <% end %>
-          <% end %>
         <% end %>
-
-        <%# @events_filtered.each do |event| %>
-          <!-- <div class="wrapper-event-description event" id="event_<%#= event.id %>" data-latitude="<%#= event.venue.latitude %>" data-longitude="<%#= event.venue.longitude %>"> -->
-            <%#= render 'event_element', event: event, current_user_liked_items: @current_user_liked_items %>
-          <!-- </div> -->
-        <%# end %>
-
-      </div>
     </div>
   </div>
+</div>
 
-  <div id="event-map"></div>
+<div id="event-map"></div>
 
 </div>
 

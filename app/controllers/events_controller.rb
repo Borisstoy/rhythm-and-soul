@@ -4,19 +4,9 @@ class EventsController < ApplicationController
   def index
     @picked_start_date = params['start_date']
     @picked_end_date = params['end_date']
-    @location = params['location'] || "Europe"
     picked_artist = Artist.where(name: params['artist_filter'])
-
-      center = Geocoder.search(@location)
-      bounds = center.first.geometry['bounds']
-      box = [
-        bounds['southwest']['lat'],
-        bounds['southwest']['lng'],
-        bounds['northeast']['lat'],
-        bounds['northeast']['lng'],
-      ]
-      searched_venues = Venue.within_bounding_box(box)
-
+    params[:location] == '' || params[:location].nil? ? @location = "Europe" : @location = params[:location]
+    center_map_display(@location)
 
     ########## Filters ##########
     @events_filtered = user_signed_in? ? current_user.events.includes(:artists, :venue).where("date >= ?", Date.today) : Event.includes(:artists, :venue).where("date >= ?", Date.today)
@@ -27,7 +17,7 @@ class EventsController < ApplicationController
 
     # LOCATION
     # Select venues according to location search
-    @events_filtered = @events_filtered.where(venue: searched_venues)
+    @events_filtered = @events_filtered.where(venue: @searched_venues)
 
     # DATE
     @events_filtered = @events_filtered.where("date >= ?", @picked_start_date) unless @picked_start_date.blank?
@@ -73,6 +63,18 @@ class EventsController < ApplicationController
 
   private
 
+  def center_map_display(location)
+    center = Geocoder.search(location)
+    bounds = center.first.geometry['bounds']
+    box = [
+      bounds['southwest']['lat'],
+      bounds['southwest']['lng'],
+      bounds['northeast']['lat'],
+      bounds['northeast']['lng'],
+    ]
+    @searched_venues = Venue.within_bounding_box(box)
+  end
+
   def events_markers(events)
     venues_coordinates = []
     events_markers = []
@@ -82,11 +84,12 @@ class EventsController < ApplicationController
       marker = {}
       marker[:venue_lat] = event.venue[:latitude]
       marker[:venue_lng] = event.venue[:longitude]
+
       marker[:infowindow] = "
       <div class='iw-container event'>
         <h3 class='iw-title'>#{event.venue.name}</h3>
         <div class='iw-event'>
-          <h3>#{event.name}</h3>
+          <h3>#{event.artists.first.name}</h3>
           <div>
             #{event.date.strftime('%d %b %Y')}
           </div>
