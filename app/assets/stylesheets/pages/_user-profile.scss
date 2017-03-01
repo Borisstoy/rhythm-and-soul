@@ -100,17 +100,16 @@ hr.profile {
     }
   }
   .event-name {
-    flex: 0 0 15%;
+    flex: 0 0 65%;
+    padding-left: .9em;
     h4 {
       font-weight: 800;
-      padding-left: .9em;
-
     }
-  }
-  .event-venue {
-    flex: 0 0 50%;
-    padding-left: .5em;
-    padding-right: .5em;
+    p {
+      font-size: .9em;
+      margin: 0;
+      padding: 0;
+    }
   }
   .event-date {
     flex: 0 0 10%;
@@ -120,7 +119,7 @@ hr.profile {
     text-align: right;
     a {
       text-transform: uppercase;
-      font-size: .9em;
+      font-size: 1.2em;
       color: $standard-grey;
       font-weight: 500;
       &:hover {
