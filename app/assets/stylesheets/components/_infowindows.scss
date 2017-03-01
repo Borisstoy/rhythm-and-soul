@@ -13,6 +13,8 @@
   transition-duration: 0.3s;
   border-bottom: 1px solid #eaeaea;
   padding: .7em 0;
+  display: flex;
+  align-items: center;
   &:hover{
     border-bottom: 1px solid $main-blue;
   }
@@ -25,4 +27,8 @@
  text-align: center;
  padding: 5px 0;
 
+}
+
+.iw-bookmark {
+  padding-left: 10px;
 }
