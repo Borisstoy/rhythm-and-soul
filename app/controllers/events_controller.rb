@@ -18,10 +18,6 @@ class EventsController < ApplicationController
       searched_venues = Venue.within_bounding_box(box)
     end
 
-    # show in dropdown only artists if they have an event
-    # use '.sort_by!{ |e| I18n.transliterate(e.name.downcase) }' for sorting alphabetically (case & accent insensitive)
-    @user_artists_event = user_signed_in? ? current_user.artists.sort_by{ |e| I18n.transliterate(e.name.downcase) } : Artist.all.sort_by{ |e| I18n.transliterate(e.name.downcase) }
-
     ########## Filters ##########
     @events_filtered = user_signed_in? ? current_user.events.includes(:artists, :venue).where("date >= ?", Date.today) : Event.includes(:artists, :venue).where("date >= ?", Date.today)
 
@@ -36,6 +32,11 @@ class EventsController < ApplicationController
     # DATE
     @events_filtered = @events_filtered.where("date >= ?", @picked_start_date) unless @picked_start_date.blank?
     @events_filtered = @events_filtered.where("date < ?", @picked_end_date) unless @picked_end_date.blank?
+
+    # show in dropdown only artists if they have an event
+    # use '.sort_by!{ |e| I18n.transliterate(e.name.downcase) }' for sorting alphabetically (case & accent insensitive)
+    current_user_artists_with_events = current_user.artists.select {|a| a if a.events.any?}
+    @user_artists_event = user_signed_in? ? current_user_artists_with_events.sort_by{ |a| I18n.transliterate(a.name.downcase) } : Artist.all.sort_by{ |a| I18n.transliterate(a.name.downcase) }
 
     # MARKERS
     @events_markers = events_markers(@events_filtered)
