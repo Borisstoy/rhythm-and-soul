@@ -3,5 +3,6 @@ class PagesController < ApplicationController
   layout "home", only: [ :home ]
 
   def home
+    session[OmniAuth::Strategies::Spotify::FORCE_APPROVAL_KEY] = true
   end
 end
