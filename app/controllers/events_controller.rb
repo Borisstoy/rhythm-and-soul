@@ -27,7 +27,7 @@ class EventsController < ApplicationController
 
     # ARTISTS
     # filter for specific artist
-    @events_filtered = @events_filtered.where(artist: { name: params[:artist_filter]}) if !params[:artist_filter].blank? && params[:artist_filter] != 'All'
+    @events_filtered = @events_filtered.where(artists: { name: params[:artist_filter]}) if !params[:artist_filter].blank? && params[:artist_filter] != 'All'
 
     # LOCATION
     # Select venues according to location search

@@ -7,16 +7,14 @@
       </div>
       <div class="event-name">
         <h4><%= item.name.capitalize %></h4>
-      </div>
-      <div class="event-venue">
-        <strong><%= item.venue.name %></strong>,
-        <%= item.venue.address %>
+        <p><%= item.venue.name %></p>
+        <p><%= item.venue.address %></p>
       </div>
       <div class="event-date">
         <%= item.date.strftime("%m/%d/%y") %>
       </div>
       <div class="event-bookmark-controller">
-        <%= link_to "Remove", remove_bookmark_event_path(item), method: :put %>
+        <%= link_to "", remove_bookmark_event_path(item), method: :put, class: 'fa fa-trash-o' %>
       </div>
     </div>
   </div>
