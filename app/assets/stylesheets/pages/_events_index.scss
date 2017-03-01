@@ -1,23 +1,16 @@
-#events-search {
+.events-search {
   overflow: scroll;
   height: calc(100vh - 70px);
   width:60%;
 }
 
-#events-filters {
-  height:200px;
+.events-filters {
   background-color: $very-light-grey;
   padding: 2em;
-  .wrapper-filter {
-    height: 200px;
-    .event-location-picker {
-    }
-    .event-date-picker {
-    }
-  }
+
 }
 
-#events-wrapper {
+.events-wrapper {
   display: flex;
 }
 
