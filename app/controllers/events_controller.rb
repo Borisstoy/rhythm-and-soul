@@ -4,9 +4,9 @@ class EventsController < ApplicationController
   def index
     @picked_start_date = params['start_date']
     @picked_end_date = params['end_date']
-    @location = params['location'] || "Europe"
     picked_artist = Artist.where(name: params['artist_filter'])
-    params['location'] == "" ? center_map_display("Europe") && @location = "Europe" : center_map_display(@location)
+    params[:location] == '' || params[:location].nil? ? @location = "Europe" : @location = params[:location]
+    center_map_display(@location)
 
     ########## Filters ##########
     @events_filtered = user_signed_in? ? current_user.events.includes(:artists, :venue).where("date >= ?", Date.today) : Event.includes(:artists, :venue).where("date >= ?", Date.today)
