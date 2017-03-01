@@ -52,8 +52,14 @@
 
               <select class="form-control" id="artist-selection" name="artist_filter">
                 <option>All</option>
-                <% @user_artists_event.each do |artist| %>
-                  <option><%= artist.name %></option>
+                <% duplicated_artists_names = [] %>
+                <% @events_filtered.each do |event| %>
+                  <% duplicated_artists_names << event.artists.first.name %>
+                <% end %>
+                <% artists_names = duplicated_artists_names.uniq %>
+                <% artists_names = artists_names.sort_by{ |name| I18n.transliterate(name.downcase) } %>
+                <% artists_names.each do |artist_name| %>
+                  <option><%= artist_name %></option>
                 <% end %>
               </select>
               <input type="submit" class="filter-button" value="Filter">
