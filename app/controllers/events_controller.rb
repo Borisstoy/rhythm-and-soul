@@ -18,7 +18,6 @@ class EventsController < ApplicationController
     # DATE
     @events_filtered = @events_filtered.where("date >= ?", @picked_start_date) unless @picked_start_date.blank?
     @events_filtered = @events_filtered.where("date < ?", @picked_end_date) unless @picked_end_date.blank?
-
     # ARTISTS
     # filter for specific artist
     @events_filtered = @events_filtered.where(artists: { name: params[:artist_filter]}) if !params[:artist_filter].blank? && params[:artist_filter] != 'All'
