@@ -14,6 +14,9 @@
       <div class="event-date">
         <%= item.date.strftime("%m/%d/%y") %>
       </div>
+      <div class="event-buy-ticket">
+        <%= link_to "Buy ticket", item.ticket, class:"buy-ticket-event", target: :_blank %>
+      </div>
       <div class="event-bookmark-controller">
         <%= link_to "", remove_bookmark_event_path(item), method: :put, class: 'fa fa-trash-o' %>
       </div>

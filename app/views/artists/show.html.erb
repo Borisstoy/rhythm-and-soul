@@ -15,7 +15,7 @@
     </div>
     <% if user_signed_in? %>
       <div class="back-button-artists">
-        <%= link_to "Back To The List", user_path(current_user, artist_id: @artist.id), class: 'filter-button' %>
+        <%= link_to "Back To Artists List", user_path(current_user, artist_id: @artist.id), class: 'filter-button' %>
       </div>
     <% end %>
   </div>

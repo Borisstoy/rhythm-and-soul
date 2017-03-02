@@ -1,3 +1,24 @@
+.filter-button {
+  background-color: $main-blue;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1em;
+  border-radius: 3em;
+  padding: .5em 1.6em;
+  border: 2px solid $main-blue;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  &:hover,
+  &:focus,
+  &:active {
+    color: #fff;
+    background-color: $action-blue;
+    text-decoration: none;
+    border: 2px solid $action-blue;
+  }
+}
+
 .button-white {
   background-color: none;
   text-decoration: none;

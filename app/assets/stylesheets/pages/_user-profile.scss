@@ -100,7 +100,7 @@ hr.profile {
     }
   }
   .event-name {
-    flex: 0 0 65%;
+    flex: 0 0 50%;
     padding-left: .9em;
     h4 {
       font-weight: 800;
@@ -125,9 +125,30 @@ hr.profile {
   }
   .event-date {
     flex: 0 0 10%;
+    text-align: center;
+  }
+  .event-buy-ticket {
+    flex: 0 0 20%;
+    font-size: .8em;
+    text-transform: uppercase;
+    font-weight: 800;
+    text-align: center;
+    a {
+      color: $hover-blue;
+      border: 2px solid $hover-blue;
+      border-radius: .4em;
+      padding: .7em 1em;
+      &:hover {
+        background-color: $hover-blue;
+        color: #fff;
+        border: 2px solid $hover-blue;
+        border-radius: .4em;
+        padding: .7em 1em;
+      }
+    }
   }
   .event-bookmark-controller {
-    flex: 0 0 10%;
+    flex: 0 0 5%;
     text-align: right;
     a {
       text-transform: uppercase;
