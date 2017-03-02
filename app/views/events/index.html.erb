@@ -1,24 +1,12 @@
 <div class="events-wrapper">
   <div class="events-search">
-      <div class="spotify-alert-banner">
-        <% unless user_signed_in? %>
-          <div class="alert-playlist-scan">
-            <div class="text">
-              <p>You're not signed in yet. Log in and scan your playlist now!</p>
-            </div>
-            <div class="button">
-              <%= link_to "Log in with Spotify", user_spotify_omniauth_authorize_path %>
-            </div>
-          </div>
-        <% end %>
-      </div>
       <div class="user-notification">
         <% if @events_filtered.count == 0 %>
           <h4>Sorry, there is no event matching your search</h4>
-        <% elsif @events_filtered.count > 1 && current_user.nil? %>
+        <% elsif @events_filtered.count >= 1 && current_user.nil? %>
           <h4><strong><%= @events_filtered.count %> events</strong> found</h4>
-        <% elsif @events_filtered.count > 1 %>
-          <h4>Hello <strong><%= current_user.name %></strong>! We found <strong><%= @events_filtered.count %> events</strong>!</h4>
+        <% elsif @events_filtered.count >= 1 %>
+          <h4><strong><%= @events_filtered.count %> events</strong> matching your playlist</h4>
         <% end %>
       </div>
     <div class="events-filters">
@@ -39,12 +27,12 @@
                 <div class="date-picker-wrapper">
                   <div class="form-group after">
                     <label for="start-date">After</label><br>
-                    <input id="start-date" class="form-control datepicker" name="start_date" data-date-format="dd/mm/yyyy" data-date-start-date="<%= Date.today.strftime('%d/%m/%Y') %>" placeholder="<%= Date.today.strftime('%d/%m/%Y') %>" value="<%= @picked_start_date %>">
+                    <input id="start-date" class="form-control datepicker" name="start_date" placeholder="<%= Date.today.strftime('%m/%d/%Y') %>" value="<%= @picked_start_date %>">
                   </div>
 
                   <div class="form-group before">
                     <label for="end-date">Before</label><br>
-                    <input id="end-date" class="form-control datepicker" name="end_date" data-date-format="dd/mm/yyyy" data-date-start-date="<%= Date.today.strftime('%d/%m/%Y') %>" placeholder="-" value="<%= @picked_end_date %>">
+                    <input id="end-date" class="form-control datepicker" name="end_date" placeholder="-" value="<%= @picked_end_date %>">
                   </div>
                 </div>
           </div>
@@ -109,7 +97,8 @@
       $('.datepicker').datepicker({
         autoclose: true,
         weekStart: 1,
-        todayHighlight: true
+        todayHighlight: true,
+        option: 'MM/DD/YYYY'
       });
 
       // GMAPS API V3

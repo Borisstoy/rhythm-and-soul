@@ -7,13 +7,11 @@
     <% if @artist.images %>
       <%= image_tag @artist.images %>
     <% else %>
-      <img src="http://placehold.it/100x100">
+      <%= image_tag('compact-disc.png') %>
     <% end %>
     </div>
     <div class="artist-description">
       <h2><%= @artist.name.split.map(&:capitalize).join(' ') %></h2>
-      <hr>
-      <p>UPCOMING EVENTS</p>
     </div>
     <% if user_signed_in? %>
       <div class="back-button-artists">
@@ -25,6 +23,7 @@
     <% if @artist.events.empty? %>
       <p>There is no event currently planned for <%= @artist.name %>.</p>
     <% else %>
+      <p class="upcoming">UPCOMING EVENTS</p>
       <% @artist.events.each do |event| %>
           <div class="wrapper-artists-events">
             <% if event %>

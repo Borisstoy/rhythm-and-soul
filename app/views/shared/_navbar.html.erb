@@ -34,7 +34,7 @@
       </div>
 
     <% else %>
-
+    <%= link_to 'Sign in with Spotify Now', user_spotify_omniauth_authorize_path, class: 'login-event-index' %>
       <!-- Login text link -->
       <!-- Before uncommenting, go to routes and remove ':skip => [:sessions]' under 'devise_for :users' -->
       <%#= link_to t(".sign_in", default: "Login With Spotify"), new_user_session_path, class: "navbar-wagon-item navbar-wagon-link" %>

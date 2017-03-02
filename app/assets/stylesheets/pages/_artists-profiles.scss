@@ -26,7 +26,6 @@
     flex: 0 0 30%;
     img {
       width: 200px;
-      height: 200px;
     }
   }
   .artist-description {
@@ -37,6 +36,13 @@
 .artist-profile-events {
   width: 100%;
   padding: 2.5em;
+  .upcoming {
+    padding: .5em;
+    color: $hover-blue;
+    font-weight: 800;
+    border-left: 3px solid $hover-blue;
+    letter-spacing: .15em;
+  }
   .wrapper-artists-events {
     height: 80px;
     display: flex;
@@ -44,6 +50,7 @@
     align-items: center;
     border-bottom: 1px solid #eaeaea;
     padding: .5em;
+    border-left: 3px solid transparent;
       .artist-date {
         flex: 30%;
         font-size: .9em;
@@ -55,6 +62,11 @@
       }
       .artist-ticket {
         flex: 20%;
+        text-align: right;
+      }
+      &:hover {
+        border-left: 3px solid $main-blue;
+        outline: 0px solid transparent;
       }
     }
 }

@@ -83,3 +83,4 @@ production:
   database: rhythm-and-soul_production
   username: rhythm-and-soul
   password: <%= ENV['RHYTHM-AND-SOUL_DATABASE_PASSWORD'] %>
+
