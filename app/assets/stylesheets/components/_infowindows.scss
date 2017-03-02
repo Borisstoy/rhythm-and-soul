@@ -1,28 +1,20 @@
 .iw-container {
   padding: 0.8em;
   min-width: 200px;
-  .iw-title {
-    font-size: 1.7em;
-    font-weight: 800;
-    padding: .5em 0;
-    margin: 0;
-  }
   .iw-event {
     transition-duration: 0.3s;
     border-bottom: 1px solid #eaeaea;
-    padding: .7em 0;
+    padding: 0 0;
     display: flex;
     align-items: center;
     position: relative;
-    &:hover{
-      border-bottom: 1px solid $main-blue;
-    }
+    padding: 0 0 .3em 0;
     h3 {
       font-size: 1em;
     }
     .iw-bookmark {
       position: absolute;
-      top: 10px;
+      top: 28px;
       right: 1px;
       .fa-star {
         font-size: 1.4em;
@@ -32,4 +24,13 @@
   }
 }
 
+.iw-title {
+  font-size: 1.7em;
+  font-weight: 800;
+  margin-bottom: 0;
+}
 
+.iw-address {
+  margin-top: .5em;
+  width: 70%;
+}
