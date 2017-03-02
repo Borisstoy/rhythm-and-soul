@@ -1,3 +1,6 @@
+<% content_for :meta_title, "#{@user.name}'s profile on Rhythm and Soul" %>
+<% content_for :meta_description, "#{@user.name} knows all about his Spotify artists' next gigs. Join him and the rest of the community to get events listings matching your playlists." %>
+<% content_for :meta_image, @user.image %>
 <div class="main-wrapper-profile">
 
 
@@ -10,23 +13,27 @@
         <h3><%= @user.name %></h3>
         <hr class="profile">
       </div>
-      <div class="profile-nav">
-        <%= render "shared/profile-subnav" %>
-      </div>
-      <div class="wrapper-scan">
-        <%= link_to "Re-scan my Spotify Playlist", scan_playlist_path, class: 'scan-playlist', id: 'test' %>
-      </div>
+      <% if user_signed_in? %>
+        <div class="profile-nav">
+          <%= render "shared/profile-subnav" %>
+        </div>
+        <div class="wrapper-scan">
+          <%= link_to "Re-scan my Spotify Playlist", scan_playlist_path, class: 'scan-playlist', id: 'test' %>
+        </div>
+      <% end %>
     </div>
     <div class="right-side">
       <div class="tab-content" id="artists">
         <%= render 'artists-genres' %>
       </div>
-      <div class="tab-content hidden" id="saved">
-        <%= render 'saved-events' %>
-      </div>
-      <div class="tab-content hidden" id="past">
-        <%= render 'past-events' %>
-      </div>
+      <% if user_signed_in? %>
+        <div class="tab-content hidden" id="saved">
+          <%= render 'saved-events' %>
+        </div>
+        <div class="tab-content hidden" id="past">
+          <%= render 'past-events' %>
+        </div>
+      <% end %>
     </div>
   </div>
 

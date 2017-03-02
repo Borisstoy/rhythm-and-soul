@@ -1,6 +1,6 @@
-<h2>Artists</h2>
+<h2><%= user_signed_in? ? "Artists" : @user.name + "'s Artists" %></h2>
 <div class="wrapper-artists-genre-profile">
-    <% current_user.artists.each do |artist| %>
+    <% @user.artists.each do |artist| %>
       <%= link_to artist_path(artist) do %>
         <div class="card-artist-genre">
           <div class="artist-image">
