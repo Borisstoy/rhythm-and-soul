@@ -3,9 +3,9 @@
       <div class="user-notification">
         <% if @events_filtered.count == 0 %>
           <h4>Sorry, there is no event matching your search</h4>
-        <% elsif @events_filtered.count > 1 && current_user.nil? %>
+        <% elsif @events_filtered.count >= 1 && current_user.nil? %>
           <h4><strong><%= @events_filtered.count %> events</strong> found</h4>
-        <% elsif @events_filtered.count > 1 %>
+        <% elsif @events_filtered.count >= 1 %>
           <h4><strong><%= @events_filtered.count %> events</strong> matching your playlist</h4>
         <% end %>
       </div>

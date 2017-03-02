@@ -7,7 +7,7 @@
     <% if @artist.images %>
       <%= image_tag @artist.images %>
     <% else %>
-      <img src="http://placehold.it/100x100">
+      <%= image_tag('compact-disc.png') %>
     <% end %>
     </div>
     <div class="artist-description">

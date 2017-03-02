@@ -1,6 +1,6 @@
-$teal:     #56D7C6 !default;
-$purple:   #B96CFF !default;
-$blue:     #222232 !default;
+$teal:     #1FC4FF !default;
+$purple:   #10627F !default;
+$blue:     #083140 !default;
 
 // html {
 //   background: $blue;
@@ -487,19 +487,16 @@ $height-end6: 40px;
 
 
 
-
 .scanning-wrapper-opacity  {
   opacity: 0.1;
   z-index: 2;
 }
 
-
-
 #render-scanning {
-font-size: 24px;
-    position: fixed;
-    left: 40%;
-    z-index: 10;
-    padding: 30px;
-    border-radius: 3px;
+  font-size: 60px;
+  position: fixed;
+  left: 40%;
+  z-index: 10;
+  padding: 30px;
+  border-radius: 3px;
 }

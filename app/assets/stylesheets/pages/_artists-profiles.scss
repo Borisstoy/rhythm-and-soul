@@ -62,6 +62,7 @@
       }
       .artist-ticket {
         flex: 20%;
+        text-align: right;
       }
       &:hover {
         border-left: 3px solid $main-blue;
