@@ -22,7 +22,7 @@ class User < ApplicationRecord
       user.provider = auth.provider
       user.spotify_id = auth.uid
       user.email = auth.info.email
-      user.image = auth.info.images[0].url
+      auth.info.images[0].nil? ? user.image = 'http://hiphopmakers.com/wp-content/uploads/2014/03/wallpaper-443596.jpg' : user.image = auth.info.images[0].url
       user.name = auth.info.display_name
       user.auth_token = auth.credentials.token
       user.refresh_token = auth.credentials.refresh_token
