@@ -74,6 +74,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      form {
+        width: 100%;
+      }
       .location-wrapper {
         flex: 0 0 30%;
       }
@@ -221,6 +224,7 @@
       height: 100px;
       border-radius: .2em;
       object-position: center; /* Center the image within the element */
+      overflow: hidden;
     }
     .more-info {
       position: absolute;
