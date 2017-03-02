@@ -194,7 +194,7 @@
   &:after,
   &:hover {
     border-bottom: 1px solid $hover-blue;
-    transition: .6s;
+    transition: all 0.3s ease-out;
   }
   h5 {
     font-size: .8em;
