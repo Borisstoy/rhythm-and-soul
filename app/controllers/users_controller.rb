@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [ :show ]
 
   def show
-    @past_event = current_user.events.where("date < ?", Date.today)
+    @past_event = @user.events.where("date < ?", Date.today)
   end
 
 
@@ -11,6 +11,6 @@ class UsersController < ApplicationController
   private
 
   def set_user
-    @user = current_user
+    @user = User.find(params[:id])
   end
 end

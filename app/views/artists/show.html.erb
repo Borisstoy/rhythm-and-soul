@@ -1,5 +1,5 @@
 <% content_for :meta_title, "#{@artist.name}'s events on Rhythm and Soul" %>
-<% content_for :meta_description, "Join us to get music events listings matching your playlists!" %>
+<% content_for :meta_description, "Join us to get concerts, festivals or DJ sets listings matching your Spotify playlists!" %>
 <% content_for :meta_image, @artist.images %>
 <div class="main-wrapper-profile artists-padded">
   <div class="artist-profile-header">
@@ -15,9 +15,11 @@
       <hr>
       <p>UPCOMING EVENTS</p>
     </div>
-    <div class="back-button-artists">
-      <%= link_to "Back To The List", user_path(current_user, artist_id: @artist.id), class: 'filter-button' %>
-    </div>
+    <% if user_signed_in? %>
+      <div class="back-button-artists">
+        <%= link_to "Back To The List", user_path(current_user, artist_id: @artist.id), class: 'filter-button' %>
+      </div>
+    <% end %>
   </div>
   <div class="artist-profile-events">
     <% if @artist.events.empty? %>
