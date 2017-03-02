@@ -61,6 +61,7 @@ class ArtistsController < ApplicationController
       tracks << JSON.parse(tracks_serialized.get)
     end
     @names_and_ids = []
+    @artists_ids = []
     @artists_names_and_ids = tracks.map do |playlist_tracks|
       playlist = playlist_tracks["items"]
       playlist.each do |track|
@@ -70,6 +71,7 @@ class ArtistsController < ApplicationController
           track_artist_id = track["track"]["album"]["artists"][0]["id"]
           name_and_id << track_artist_name
           name_and_id << track_artist_id
+          @artists_ids << track_artist_id
           @names_and_ids << name_and_id unless @names_and_ids.include?(name_and_id)
         end
       end
@@ -89,12 +91,18 @@ class ArtistsController < ApplicationController
           new_user_artist.save
         end
       else
-        new_artist = Artist.new(name: artist_array[0])
+        new_artist = Artist.new(name: artist_array[0], spotify_id: artist_array[1])
         new_artist.save
         new_user_artist = UserArtist.new()
         new_user_artist.artist = new_artist
         new_user_artist.user = @user
         new_user_artist.save
+      end
+    end
+    @user.artists.each do |artist|
+      unless @artists_ids.include?(artist.spotify_id)
+        user_artist_to_destroy = UserArtist.find_by(artist_id: artist.id, user_id: @user.id)
+        user_artist_to_destroy.delete
       end
     end
   end
