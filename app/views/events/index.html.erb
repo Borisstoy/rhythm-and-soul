@@ -1,24 +1,12 @@
 <div class="events-wrapper">
   <div class="events-search">
-      <div class="spotify-alert-banner">
-        <% unless user_signed_in? %>
-          <div class="alert-playlist-scan">
-            <div class="text">
-              <p>You're not signed in yet. Log in and scan your playlist now!</p>
-            </div>
-            <div class="button">
-              <%= link_to "Log in with Spotify", user_spotify_omniauth_authorize_path %>
-            </div>
-          </div>
-        <% end %>
-      </div>
       <div class="user-notification">
         <% if @events_filtered.count == 0 %>
           <h4>Sorry, there is no event matching your search</h4>
         <% elsif @events_filtered.count > 1 && current_user.nil? %>
           <h4><strong><%= @events_filtered.count %> events</strong> found</h4>
         <% elsif @events_filtered.count > 1 %>
-          <h4>Hello <strong><%= current_user.name %></strong>! We found <strong><%= @events_filtered.count %> events</strong>!</h4>
+          <h4><strong><%= @events_filtered.count %> events</strong> matching your playlist</h4>
         <% end %>
       </div>
     <div class="events-filters">
