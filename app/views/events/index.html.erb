@@ -1,5 +1,6 @@
 <div class="events-wrapper">
   <div class="events-search">
+
       <div class="user-notification">
         <% if @events_filtered.count == 0 %>
           <h4>Sorry, there is no event matching your search</h4>
@@ -64,11 +65,14 @@
     </div>
 
     <div class="index-events-list">
+
+
       <div id="events-list">
 
         <div id="events-list-header">
           <%= render 'event_list_header' %>
         </div>
+
 
         <% @events_filtered.group_by(&:year).each do |year, events_array| %>
           <% Hash[ events_array.group_by(&:day).sort_by { |key, val| key } ].each do |day, events| %>
@@ -207,17 +211,10 @@
       var subNavBar = $('#events-list-header').offset();
       if ($('.events-search').scrollTop() > subNavBar.top ) {
         $('#events-list-header').addClass('sticky-subnav');
+        $('.login-now').css('display', 'flex');
       } else {
         $('#events-list-header').removeClass('sticky-subnav');
-      }
-    });
-
-    $('.events-search').scroll(function(){
-      var subNavBar = $('#events-list-header').offset();
-      if ($('.events-search').scrollTop() > subNavBar.top ) {
-        $('#events-list-header').addClass('sticky-subnav');
-      } else {
-        $('#events-list-header').removeClass('sticky-subnav');
+        $('.login-now').css('display', 'none');
       }
     });
 

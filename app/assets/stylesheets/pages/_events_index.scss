@@ -104,6 +104,28 @@
     }
     .index-events-list {
       padding: 2em;
+      .login-now {
+        display: none;
+        background-color: $hover-blue;
+        height: 50px;
+        width: 100%;
+        z-index: 99;
+        justify-content: center;
+        align-items: center;
+        border-bottom-left-radius: .4em;
+        border-bottom-right-radius: .4em;
+        .log-now-banner {
+          .alert-login {
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: .15em;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
       .day-text {
         margin-top: 6rem;
         h3 {
@@ -317,4 +339,8 @@ label {
   font-size: .8em;
   font-weight: 500;
   text-transform: uppercase;
+}
+
+.banner-display {
+  display: block;
 }
