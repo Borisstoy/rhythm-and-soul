@@ -210,7 +210,15 @@
       } else {
         $('#events-list-header').removeClass('sticky-subnav');
       }
+    });
 
+    $('.events-search').scroll(function(){
+      var subNavBar = $('#events-list-header').offset();
+      if ($('.events-search').scrollTop() > subNavBar.top ) {
+        $('#events-list-header').addClass('sticky-subnav');
+      } else {
+        $('#events-list-header').removeClass('sticky-subnav');
+      }
     });
 
     });
