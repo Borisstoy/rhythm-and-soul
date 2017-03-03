@@ -43,4 +43,11 @@ class Users::OmniauthCallbacksController <  Devise::OmniauthCallbacksController
       @user.update(:auth_token => response["access_token"], :expires_at => Time.now + response["expires_in"]) unless response["access_token"].nil? || response["expires_in"].nil?
     end
   end
+
+  protected
+
+  # PREVENT 500 WHEN CLICK ON CANCEL
+  def after_omniauth_failure_path_for(resource)
+    root_path
+  end
 end
