@@ -1,6 +1,10 @@
   <div class="event-desc-image">
     <% event_artist = event.artists.first %>
-    <%= image_tag event_artist.images %>
+    <% if !event_artist[0].try(:images).nil? %>
+      <%= image_tag event_artist.images %>
+    <% else %>
+      <%= 'N/A' %>
+    <% end %>
     <% if user_signed_in? %>
       <%= link_to artist_path(event_artist) do %>
         <div class="more-info">
