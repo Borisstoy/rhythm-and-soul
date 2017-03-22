@@ -2,31 +2,31 @@ class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
 
   def index
-    @picked_start_date = params['start_date']
-    @picked_end_date = params['end_date']
-    picked_artist = Artist.where(name: params['artist_filter'])
-    params[:location] == '' || params[:location].nil? ? @location = "Europe" : @location = params[:location]
-    center_map_display(@location)
+@picked_start_date = params['start_date']
+@picked_end_date = params['end_date']
+picked_artist = Artist.where(name: params['artist_filter'])
+params[:location] == '' || params[:location].nil? ? @location = "Europe" : @location = params[:location]
+center_map_display(@location)
 
-    ########## Filters ##########
-    @events_filtered = user_signed_in? ? current_user.events.includes(:artists, :venue).where("date >= ?", Date.today) : Event.includes(:artists, :venue).where("date >= ?", Date.today)
+########## Filters ##########
+@events_filtered = user_signed_in? ? current_user.events.includes(:artists, :venue).where("date >= ?", Date.today) : Event.includes(:artists, :venue).where("date >= ?", Date.today)
 
-    # LOCATION
-    # Select venues according to location search
-    @events_filtered = @events_filtered.where(venue: @searched_venues)
+# LOCATION
+# Select venues according to location search
+@events_filtered = @events_filtered.where(venue: @searched_venues)
 
-    # DATE
-    @events_filtered = @events_filtered.where("date >= ?", @picked_start_date) unless @picked_start_date.blank?
-    @events_filtered = @events_filtered.where("date < ?", @picked_end_date) unless @picked_end_date.blank?
-    # ARTISTS
-    # filter for specific artist
-    @events_filtered = @events_filtered.where(artists: { name: params[:artist_filter]}) if !params[:artist_filter].blank? && params[:artist_filter] != 'All'
+# DATE
+@events_filtered = @events_filtered.where("date >= ?", @picked_start_date) unless @picked_start_date.blank?
+@events_filtered = @events_filtered.where("date < ?", @picked_end_date) unless @picked_end_date.blank?
+# ARTISTS
+# filter for specific artist
+@events_filtered = @events_filtered.where(artists: { name: params[:artist_filter]}) if !params[:artist_filter].blank? && params[:artist_filter] != 'All'
 
-    # BOOKMARKED
-    @current_user_liked_items = current_user.find_liked_items if user_signed_in?
+# BOOKMARKED
+@current_user_liked_items = current_user.find_liked_items if user_signed_in?
 
-    # MARKERS
-    @events_markers = events_markers(@events_filtered)
+# MARKERS
+@events_markers = events_markers(@events_filtered)
 
     #KAMINARI
     # @events_filtered = @events_filtered.order(:date).page(params[:page]).per(25)
