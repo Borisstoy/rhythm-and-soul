@@ -86,7 +86,7 @@ center_map_display(@location)
         <h3 class='iw-title'>#{event.venue.name}</h3>
         <div class='iw-event'>
           <div>
-            <h3>#{event.artists.first.name}</h3>
+            <h3><%= event.artists.first.name.nil? Artist : #{event.artists.first.name} %></h3>
             <div>
               #{event.date.strftime('%d %b %Y')}
             </div>
