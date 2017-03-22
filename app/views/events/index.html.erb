@@ -45,7 +45,7 @@
                 <option>All</option>
                 <% duplicated_artists_names = [] %>
                 <% @events_filtered.each do |event| %>
-                  <% event.artists.first.name.blank? 'N/A' : duplicated_artists_names << event.artists.first.name %>
+                  <% duplicated_artists_names << event.artists.first.name unless event.artists.first.name.blank? %>
                 <% end %>
                 <% artists_names = duplicated_artists_names.uniq %>
                 <% artists_names = artists_names.sort_by{ |name| I18n.transliterate(name.downcase) } %>
