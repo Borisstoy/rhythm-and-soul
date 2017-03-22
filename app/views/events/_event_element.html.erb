@@ -1,6 +1,6 @@
   <div class="event-desc-image">
     <% event_artist = event.artists.first %>
-    <% if !event_artist[0].try(:images).nil? %>
+    <% if event_artist[0].try(:images).nil? %>
       <%= image_tag event_artist.images %>
     <% else %>
       <%= 'N/A' %>
