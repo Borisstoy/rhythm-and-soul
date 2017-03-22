@@ -81,7 +81,7 @@ center_map_display(@location)
       marker[:venue_lat] = event.venue[:latitude]
       marker[:venue_lng] = event.venue[:longitude]
 
-      artist_name = event.artists.first.name unless event.artists.first.name.nil?
+      artist_name = event.artists[0].name unless event.artists[0].name.blank? || event.artists[0].name.nil?
 
       marker[:infowindow] = "
       <div class='iw-container event'>
