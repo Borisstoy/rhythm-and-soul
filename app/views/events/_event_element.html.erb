@@ -1,5 +1,5 @@
   <div class="event-desc-image">
-    <% event_artist = e.artists.first %>
+    <% event_artist = event.artists.first %>
     <%= image_tag event_artist.images %>
     <% if user_signed_in? %>
       <%= link_to artist_path(event_artist) do %>
