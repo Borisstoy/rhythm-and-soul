@@ -5,7 +5,7 @@
     <%# else %>
       <%#= 'N/A' %>
     <%# end %>
-    <%# if user_signed_in? %>
+    <% if user_signed_in? %>
       <%= link_to artist_path(event_artist) do %>
         <div class="more-info">
           <p>MORE</p>
