@@ -5,7 +5,7 @@ class EventsController < ApplicationController
     @picked_start_date = params['start_date']
     @picked_end_date = params['end_date']
     picked_artist = Artist.where(name: params['artist_filter'])
-    params[:location] == '' || params[:location].nil? ? @location = "Europe" : @location = params[:location]
+    params[:location] == '' || params[:location].nil? ? @location = "Canada" : @location = params[:location]
     center_map_display(@location)
 
     ########## Filters ##########

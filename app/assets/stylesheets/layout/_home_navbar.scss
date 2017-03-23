@@ -42,7 +42,9 @@
 /* Navbar standard link */
 .navbar-wagon-link {
   color: $main-blue;
-  font-size: 14px;
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
   text-decoration: none;
 }
 

@@ -10,12 +10,21 @@
   }
 }
 
+// hides scroll bar
+::-webkit-scrollbar {
+    display: none;
+}
+
 .events-wrapper {
   display: flex;
   .events-search {
     overflow: scroll;
     height: calc(100vh - 70px);
     width:60%;
+    -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.15);
+    -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.15);
+    box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.15);
+    z-index: 99;
     .spotify-alert-banner {
       width: 100%;
       display: flex;
@@ -56,7 +65,12 @@
     }
     .user-notification {
       width: 100%;
-      background-color: $hover-blue;
+      background-image: -ms-linear-gradient(left top, #79dcff 0%, #1fc4ff 100%);
+      background-image: -moz-linear-gradient(bottom right, #79dcff 0%, #1fc4ff 100%);
+      background-image: -o-linear-gradient(bottom right, #79dcff 0%, #1fc4ff 100%);
+      background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #79dcff), color-stop(1, #1fc4ff));
+      background-image: -webkit-linear-gradient(bottom, #79dcff 0%, #1fc4ff 100%);
+      background-image: linear-gradient(to bottom right, #79dcff 0%, #1fc4ff 100%);
       padding: 1.2em 0;
       h4 {
         text-align: center;

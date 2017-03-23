@@ -41,11 +41,15 @@
 /* Navbar standard link */
 .navbar-wagon-link {
   color: $main-blue;
-  font-size: 14px;
-}
-.navbar-wagon-link:hover {
-  color: $hover-blue;
-  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  &:hover,
+  &:focus,
+  &:active {
+    color: $hover-blue;
+    text-decoration: none;
+  }
 }
 
 /* Navbar right button */
