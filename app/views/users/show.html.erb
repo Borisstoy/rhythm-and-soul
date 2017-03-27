@@ -23,7 +23,8 @@
           <%= render "shared/profile-subnav" %>
         </div>
         <div class="wrapper-scan">
-          <%= link_to "Re-scan my Spotify Playlist", scan_playlist_path, class: 'scan-playlist', id: 'test', remote: true %>
+
+          <%= link_to "Scan my Spotify Playlist", scan_playlist_path, class: 'scan-playlist', id: 'test', remote: true %>
         </div>
       <% end %>
     </div>
@@ -46,12 +47,8 @@
     <%= render 'shared/scanning' %>
   </div>
 
-
-
-
-
-
 </div>
+
 
 
 <%# content_for(:after_js) do %>

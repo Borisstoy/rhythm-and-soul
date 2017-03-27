@@ -7,7 +7,6 @@
   padding: 0px 30px;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #eaeaea;
 }
 
 /* Optional class to fix the navbar on top */
@@ -42,13 +41,12 @@
 .navbar-wagon-link {
   color: $main-blue;
   font-size: 12px;
-  letter-spacing: .06em;
   text-transform: uppercase;
   &:hover,
-  &:focus,
-  &:active {
-    color: $hover-blue;
+  &:active,
+  &:focus {
     text-decoration: none;
+    color: lighten($main-blue, 20%);
   }
 }
 
