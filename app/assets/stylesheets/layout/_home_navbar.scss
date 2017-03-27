@@ -43,16 +43,16 @@
 .navbar-wagon-link {
   color: $main-blue;
   font-size: 12px;
-  letter-spacing: .06em;
   text-transform: uppercase;
   text-decoration: none;
+  text-transform: uppercase;
+  &:hover,
+  &:active,
+  &:focus {
+    text-decoration: none;
+    color: lighten($main-blue, 20%);
+  }
 }
-
-.navbar-wagon-link:hover {
-  color: $hover-blue;
-  text-decoration: none;
-}
-
 
 /* Navbar right button */
 .navbar-wagon-button {
