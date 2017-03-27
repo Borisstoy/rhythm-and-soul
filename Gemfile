@@ -12,6 +12,7 @@ gem 'rails-i18n', '~> 5.0.0'
 gem 'devise-i18n'
 gem 'sidekiq'
 gem 'sidekiq-failures'
+gem 'sidekiq_status'
 gem 'coffee-rails', '~> 4.1.0'
 #KAMINARI
 gem 'kaminari'
