@@ -1,8 +1,13 @@
 <% content_for :meta_title, "#{@user.name}'s profile on Rhythm and Soul" %>
 <% content_for :meta_description, "#{@user.name} knows all about his Spotify artists' next gigs. Join him and the rest of the community to get events listings matching your playlists." %>
 <% content_for :meta_image, @user.image %>
+<div id="job-id-container"><p class="hidden" id="job_id"></p></div>
 <div class="main-wrapper-profile">
-
+  <div style="display:none" id="progress-bar" class="col-md-12">
+    <div class="progress">
+      <div id="job-progress" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">0%</div>
+    </div>
+  </div>
 
   <div class="scanning-wrapper">
     <div class="left-side">
@@ -18,7 +23,7 @@
           <%= render "shared/profile-subnav" %>
         </div>
         <div class="wrapper-scan">
-          <%= link_to "Re-scan my Spotify Playlist", scan_playlist_path, class: 'scan-playlist', id: 'test' %>
+          <%= link_to "Re-scan my Spotify Playlist", scan_playlist_path, class: 'scan-playlist', id: 'test', remote: true %>
         </div>
       <% end %>
     </div>
@@ -49,8 +54,8 @@
 </div>
 
 
-<% content_for(:after_js) do %>
-  <script>
+<%# content_for(:after_js) do %>
+  <!-- <script>
     $('#test').on('click', function(event) {
     $('#test').hide();
     $('#nav').hide();
@@ -63,5 +68,5 @@
     });
 
 
-  </script>
-<% end %>
+  </script> -->
+<%# end %>
