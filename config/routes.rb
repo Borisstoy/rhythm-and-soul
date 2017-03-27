@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
 
   get 'events/show'
+  get 'percentage_done' => 'users#percentage_done', as: 'percentage_done'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   scope '(:locale)', locale: /fr/ do
@@ -24,7 +25,7 @@ Rails.application.routes.draw do
     resources :users, only: [:show, :edit, :update] do
       resources :events, only: [:show]
     end
-     get '/scan_playlist' => 'artists#scan_playlist', as: :scan_playlist
+     get '/scan_playlist' => 'users#scan_playlist', as: :scan_playlist
      resources :artists, only: [:show]
   end
 end
