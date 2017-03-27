@@ -4,7 +4,6 @@ class UsersController < ApplicationController
   protect_from_forgery except: :scan_playlist
 
   def show
-    raise
     @past_event = @user.events.where("date < ?", Date.today)
   end
 

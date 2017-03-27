@@ -16,5 +16,5 @@ queryForPercentage = () ->
       if $('#job-progress').text() != '100%'
         setTimeout(queryForPercentage, 1500)
   })
-
+$ ->
   $('#job-id-container').bind('DOMSubtreeModified', queryForPercentage )
