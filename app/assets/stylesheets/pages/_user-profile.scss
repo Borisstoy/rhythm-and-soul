@@ -191,6 +191,16 @@ hr.profile {
     }
     .artist-description {
       padding: .7em;
+      .plus-events {
+        text-transform: uppercase;
+        font-size: .7em;
+        color: $main-blue;
+      }
+      .no-event {
+        text-transform: uppercase;
+        font-size: .7em;
+        color: $standard-grey;
+      }
     }
   }
 }

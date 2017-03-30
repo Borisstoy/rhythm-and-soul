@@ -13,6 +13,11 @@
           </div>
           <div class="artist-description">
             <h4><%= artist.name.split.map(&:capitalize).join(' ') %></h4>
+            <% if artist.events.count > 0 %>
+              <h5 class="plus-events"><%= artist.events.count %> events</h5>
+            <% else %>
+              <h5 class="no-event">No upcoming events</h5>
+            <% end %>
           </div>
         </div>
       <% end %>
