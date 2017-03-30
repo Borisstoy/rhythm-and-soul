@@ -13,7 +13,7 @@ class SongkickJob < ApplicationJob
     artists.each do |artist_name|
       artist_arr = songkick_artist_id(artist_name)
       artists_results = artist_arr["resultsPage"]["results"]
-      unless artists_results == [] || artists_results.empty? || artists_results.nil? || artists_results.blank?
+      unless artists_results == [] || artists_results.nil? || artists_results.blank?
         id = artist_arr["resultsPage"]["results"]["artist"][0]["id"]
       end
       artists_calendars = songkick_artist_event(id)
