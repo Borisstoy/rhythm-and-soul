@@ -10,11 +10,10 @@
     </div>
     <div class="wrapper-logged-in">
       <div class="button-one">
-        <%= link_to 'Find a music event', events_path, class:'login-spotify' if user_signed_in? %>
-        <%= link_to 'Sign in with Spotify', user_spotify_omniauth_authorize_path, class:'login-spotify' unless user_signed_in? %>
+        <%= link_to t(".top_call_to_action", default: "Discover Music Events"), events_path, class: 'discover-music'%>
       </div>
       <div class="button-two">
-        <%= link_to t(".top_call_to_action", default: "Discover Music Events"), events_path, class: 'discover-music'%>
+        <%= link_to 'Sign in with Spotify', user_spotify_omniauth_authorize_path, class:'login-spotify' unless user_signed_in? %>
       </div>
     </div>
   </div>
