@@ -43,7 +43,7 @@ class SongkickJob < ApplicationJob
   def build_event_index(artists_calendars, artist_name)
     artist_events = artists_calendars["resultsPage"]["results"]["event"]
     events_count = 0
-    unless artist_events.nil? || artist_events == [] || artist_events.empty? || artists_calendars.nil?
+    unless artist_events.nil? || artist_events == [] || artists_calendars.nil?
       until events_count == artist_events.count
         @venue_name = artist_events[events_count]["venue"]["displayName"]
         @venue_name = artist_events[events_count]["venue"]["displayName"]
