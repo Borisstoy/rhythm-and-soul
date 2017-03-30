@@ -248,8 +248,6 @@ GEM
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
     slop (3.6.0)
-    songkickr (0.5.5)
-      httparty (>= 0.5.0)
     spotify-client (0.0.10)
       excon (~> 0.37)
     spring (2.0.1)
@@ -318,7 +316,6 @@ DEPENDENCIES
   sidekiq-failures
   sidekiq_status
   simple_form
-  songkickr (~> 0.5.5)
   spotify-client
   spring
   spring-watcher-listen (~> 2.0.0)

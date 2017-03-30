@@ -20,9 +20,6 @@ gem 'kaminari'
 #BOOKMARK / UPVOTES
 gem 'acts_as_votable'
 
-#SONGKICK
-gem 'songkickr', '~> 0.5.5'
-
 gem 'sass-rails'
 gem 'compass-rails'
 gem 'jquery-rails'
