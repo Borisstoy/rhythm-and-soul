@@ -1,3 +1,21 @@
+.progress {
+  overflow: hidden;
+  height: 18px;
+  margin-bottom: 19px;
+  background-color: transparent!important;
+  border-radius: none!important;
+  box-shadow: none!important;
+  .progress-bar  {
+    border-radius: 1em;
+    background-image: -ms-linear-gradient(left top, #79dcff 0%, #1fc4ff 100%);
+    background-image: -moz-linear-gradient(bottom right, #79dcff 0%, #1fc4ff 100%);
+    background-image: -o-linear-gradient(bottom right, #79dcff 0%, #1fc4ff 100%);
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #79dcff), color-stop(1, #1fc4ff));
+    background-image: -webkit-linear-gradient(bottom, #79dcff 0%, #1fc4ff 100%);
+    background-image: linear-gradient(to bottom right, #79dcff 0%, #1fc4ff 100%);
+  }
+}
+
 .user-profile-image {
   text-align: left;
   .profile-image {
@@ -201,6 +219,11 @@ hr.profile {
         font-size: .7em;
         color: $standard-grey;
       }
+    }
+    &:hover {
+      -webkit-box-shadow: 0px 15px 56px -15px rgba(0,0,0,0.24);
+      -moz-box-shadow: 0px 15px 56px -15px rgba(0,0,0,0.24);
+      box-shadow: 0px 15px 56px -15px rgba(0,0,0,0.24);
     }
   }
 }

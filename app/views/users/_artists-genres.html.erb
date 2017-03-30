@@ -3,7 +3,7 @@
   <% @user.artists.each do |artist| %>
     <% if artist.name != "Various Artists" %>
       <%= link_to artist_path(artist) do %>
-        <div class="card-artist-genre">
+        <div class="card-artist-genre grow">
           <div class="artist-image">
           <% if artist.images %>
             <%= image_tag artist.images %>
