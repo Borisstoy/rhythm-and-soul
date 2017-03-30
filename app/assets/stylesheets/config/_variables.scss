@@ -2,12 +2,13 @@
  * Fonts
  * ------------------------------------- */
 // Google fonts
-@import url("https://fonts.googleapis.com/css?family=Fira+Sans:300,400,700|Lato:400,700,900|Oswald:400,700");
-$base-font: "Fira Sans", "Helvetica", "sans-serif";
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700|Lato:400,700,900|Oswald:400,700");
+$base-font: "Open Sans", "Verdana", "sans-serif";
 $title-font-h1: "Oswald", "Impact", "sans-serif";
-$subtitle-font: "Lato", "Verdana", "sans-serif";
+$subtitle-font: "Open Sans", "Verdana", "sans-serif";
 
 @import "normalize";
+@import "compass/css3/transition";
 
 // Local fonts (uncomment following lines)
 // @font-face {
@@ -46,3 +47,21 @@ $green: #24CC7D;
 $yellow: #FFB61D;
 $orange: #FFB61D;
 $gray: #000000;
+
+@mixin bg-gradient(){
+  background-image: -ms-linear-gradient(left top, #79dcff 0%, #1fc4ff 100%);
+  background-image: -moz-linear-gradient(bottom right, #79dcff 0%, #1fc4ff 100%);
+  background-image: -o-linear-gradient(bottom right, #79dcff 0%, #1fc4ff 100%);
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #79dcff), color-stop(1, #1fc4ff));
+  background-image: -webkit-linear-gradient(bottom, #79dcff 0%, #1fc4ff 100%);
+  background-image: linear-gradient(to bottom right, #79dcff 0%, #1fc4ff 100%);
+}
+
+@mixin bg-gradient-hover(){
+  background-image: -ms-linear-gradient(left top, #79dcff 0%, #3183e8 100%);
+  background-image: -moz-linear-gradient(bottom right, #79dcff 0%, #3183e8 100%);
+  background-image: -o-linear-gradient(bottom right, #79dcff 0%, #3183e8 100%);
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #79dcff), color-stop(1, #3183e8));
+  background-image: -webkit-linear-gradient(bottom, #79dcff 0%, #3183e8 100%);
+  background-image: linear-gradient(to bottom right, #79dcff 0%, #3183e8 100%);
+}

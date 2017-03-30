@@ -1,22 +1,20 @@
 .filter-button {
-  background-color: $main-blue;
+  @include bg-gradient();
   text-decoration: none;
   color: #fff;
-  font-weight: 800;
-  font-size: 1em;
+  font-weight: 400;
+  font-size: 1.2em;
   border-radius: 3em;
-  padding: .5em 1.6em;
-  border: 2px solid $main-blue;
-  text-transform: uppercase;
+  padding: .7em 3.4em;
+  border: 0;
   letter-spacing: .1em;
-  transition: background .3s ease-in-out;
   &:hover,
   &:focus,
   &:active {
     color: #fff;
-    background-color: $action-blue;
+    @include bg-gradient-hover();
+    border: 0;
     text-decoration: none;
-    border: 2px solid $action-blue;
   }
 }
 
