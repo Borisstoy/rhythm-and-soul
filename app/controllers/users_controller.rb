@@ -35,6 +35,7 @@ class UsersController < ApplicationController
   private
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by_spotify_id(params[:id])
+    # @user = User.friendly.find(params[:id])
   end
 end
