@@ -4,7 +4,7 @@
 <div class="main-wrapper-profile artists-padded">
   <div class="artist-profile-header">
     <div class="artist-profile-image">
-    <% if @artist.images %>
+    <% if @artist.images && @artist.name != "Various Artists" %>
       <%= image_tag @artist.images %>
     <% else %>
       <%= image_tag('compact-disc.png') %>
