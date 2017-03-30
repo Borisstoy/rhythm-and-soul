@@ -25,7 +25,6 @@ class SongkickJob < ApplicationJob
     artists_full_name.each do |artist_full_name|
       build_event_artists(artist_full_name)
     end
-
   end
 
   # Gets artists ids
@@ -60,7 +59,8 @@ class SongkickJob < ApplicationJob
           @venue.address = Geocoder.address("#{@venue_lat}, #{@venue_lng}")
           @venue.save
           @event = Event.find_or_create_by(name: artist_name, venue_id: @venue.id, date: @event_date, ticket: @venue_ticket)
-      events_count += 1
+        end
+        events_count += 1
       end
     end
   end
