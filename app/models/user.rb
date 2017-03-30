@@ -11,6 +11,10 @@ class User < ApplicationRecord
          :omniauthable, :omniauth_providers => [:spotify]
   after_save :async_update # Run on create & update
 
+  def to_param
+    spotify_id
+  end
+
   private
 
   def async_update
@@ -32,6 +36,6 @@ class User < ApplicationRecord
   end
 
   def user_params
-    params.require(:user).permit(:email)
+    params.require(:user).permit(:email, :spotify_id)
   end
 end
