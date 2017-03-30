@@ -17,7 +17,8 @@ class SongkickJob < ApplicationJob
         id = artist_arr["resultsPage"]["results"]["artist"][0]["id"]
       end
       artists_calendars = songkick_artist_event(id)
-      unless artists_calendars["resultsPage"]["results"].blank?
+      artists_calendars_results = artists_calendars["resultsPage"]["results"]
+      unless artists_calendars_results.blank? || artists_calendars_results.nil? || artists_calendars_results == []
         build_event_index(artists_calendars, artist_name)
       end
     end

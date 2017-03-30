@@ -8,7 +8,7 @@
   <div class="navbar-wagon-right hidden-xs hidden-sm">
 
     <!-- Button (call-to-action) -->
-    <%= link_to t(".top_call_to_action", default: "Discover Music Events"), events_path, class: "navbar-wagon-item navbar-wagon-link" %>
+    <%= link_to t(".top_call_to_action", default: "Events"), events_path, class: "navbar-wagon-item navbar-wagon-link" %>
 
     <!-- Different navigation if login or not -->
     <% if user_signed_in? %>
@@ -33,7 +33,7 @@
       </div>
 
     <% else %>
-    <%= link_to 'Sign in with Spotify Now', user_spotify_omniauth_authorize_path, class: 'login-event-index' %>
+    <%= link_to 'Sign in with Spotify', user_spotify_omniauth_authorize_path, class: 'login-event-index' %>
 
     <% end %>
 
