@@ -4,7 +4,14 @@ class UsersController < ApplicationController
   protect_from_forgery except: :scan_playlist
 
   def show
+    # TODO
+    # Show only the events that users selected that are now passed
     @past_event = @user.events.where("date < ?", Date.today)
+    selected = params[:artists_events_filter]
+    # Filter artists that have events
+    @artists_events_filtered = @user.artists.includes(:events).where.not(event_artists: {artist_id: nil})
+    # Filter artists that do not have events
+    @artists_events_filtered = @user.artists if selected == 'All artists'
   end
 
   def scan_playlist

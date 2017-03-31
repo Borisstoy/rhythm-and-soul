@@ -20,7 +20,7 @@ class EventsController < ApplicationController
     @events_filtered = @events_filtered.where("date < ?", @picked_end_date) unless @picked_end_date.blank?
     # ARTISTS
     # filter for specific artist
-    @events_filtered = @events_filtered.where(artists: { name: params[:artist_filter]}) if !params[:artist_filter].blank? && params[:artist_filter] != 'All'
+    @events_filtered = @events_filtered.where(artists: { name: params[:artist_filter]}) if !params[:artist_filter].blank? && params[:artist_filter] != 'All artists'
 
     # BOOKMARKED
     @current_user_liked_items = current_user.find_liked_items if user_signed_in?

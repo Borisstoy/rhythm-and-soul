@@ -68,6 +68,18 @@
   height: 100%;
   overflow:scroll;
   overflow-y: hidden;
+  .artist-selection-profile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .form-control {
+      justify-content: flex-start;
+    }
+    .filter-submit {
+      margin-left: 2rem;
+      justify-content: flex-end;
+    }
+  }
 }
 
 hr.profile {
