@@ -92,23 +92,22 @@
 }
 
 .scan-playlist {
-  background-color: none;
+  @include bg-gradient-scan();
   text-decoration: none;
-  color: $hover-blue;
-  font-weight: 800;
+  color: #fff;
+  font-weight: 400;
   font-size: .8em;
   border-radius: 45px;
   padding: 1em 1.5em;
-  border: 2px solid $hover-blue;
-  text-transform: uppercase;
+  border: none;
   transition: background .3s ease-in-out;
   &:hover,
   &:focus,
   &:active {
     color: #fff;
-    background-color: $hover-blue;
+    @include bg-gradient-scan-hover();
     text-decoration: none;
-    border: 2px solid $hover-blue;
+    border: none;
   }
 }
 

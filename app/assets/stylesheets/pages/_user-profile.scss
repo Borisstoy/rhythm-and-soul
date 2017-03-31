@@ -7,12 +7,7 @@
   box-shadow: none!important;
   .progress-bar  {
     border-radius: 1em;
-    background-image: -ms-linear-gradient(left top, #79dcff 0%, #1fc4ff 100%);
-    background-image: -moz-linear-gradient(bottom right, #79dcff 0%, #1fc4ff 100%);
-    background-image: -o-linear-gradient(bottom right, #79dcff 0%, #1fc4ff 100%);
-    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #79dcff), color-stop(1, #1fc4ff));
-    background-image: -webkit-linear-gradient(bottom, #79dcff 0%, #1fc4ff 100%);
-    background-image: linear-gradient(to bottom right, #79dcff 0%, #1fc4ff 100%);
+    @include bg-gradient-scan();
   }
 }
 
@@ -69,6 +64,7 @@
   overflow:scroll;
   overflow-y: hidden;
   .artist-selection-profile {
+    width: 94%;
     display: flex;
     flex-direction: row;
     align-items: center;

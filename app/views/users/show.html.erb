@@ -3,11 +3,6 @@
 <% content_for :meta_image, @user.image %>
 <div id="job-id-container"><p class="hidden" id="job_id"></p></div>
 <div class="main-wrapper-profile">
-  <div style="display:none" id="progress-bar" class="col-md-12">
-    <div class="progress">
-      <div id="job-progress" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">0%</div>
-    </div>
-  </div>
 
   <div class="scanning-wrapper">
     <div class="left-side">
@@ -22,11 +17,16 @@
         <div class="profile-nav">
           <%= render "shared/profile-subnav" %>
         </div>
+        <hr>
         <div class="wrapper-scan">
-
-          <%= link_to "Scan my Spotify Playlist", scan_playlist_path, class: 'scan-playlist', id: 'test', remote: true %>
+          <%= link_to "Scan my spotify playlists", scan_playlist_path, class: 'scan-playlist', id: 'test', remote: true %>
         </div>
       <% end %>
+      <div style="display:none" id="progress-bar" class="col-md-12">
+        <div class="progress">
+          <div id="job-progress" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">0%</div>
+        </div>
+      </div>
     </div>
     <div class="right-side">
       <div class="tab-content" id="artists">

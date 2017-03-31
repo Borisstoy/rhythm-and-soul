@@ -65,3 +65,21 @@ $gray: #000000;
   background-image: -webkit-linear-gradient(bottom, #79dcff 0%, #3183e8 100%);
   background-image: linear-gradient(to bottom right, #79dcff 0%, #3183e8 100%);
 }
+
+@mixin bg-gradient-scan(){
+  background-image: -ms-linear-gradient(left top, #06ff7e 0%, #37cc7f 100%);
+  background-image: -moz-linear-gradient(bottom right, #06ff7e 0%, #37cc7f 100%);
+  background-image: -o-linear-gradient(bottom right, #06ff7e 0%, #37cc7f 100%);
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #06ff7e), color-stop(1, #37cc7f));
+  background-image: -webkit-linear-gradient(bottom, #06ff7e 0%, #37cc7f 100%);
+  background-image: linear-gradient(to bottom right, #06ff7e 0%, #37cc7f 100%);
+}
+
+@mixin bg-gradient-scan-hover(){
+  background-image: -ms-linear-gradient(left top, #06ff7e 0%, #05bf5f 100%);
+  background-image: -moz-linear-gradient(bottom right, #06ff7e 0%, #05bf5f 100%);
+  background-image: -o-linear-gradient(bottom right, #06ff7e 0%, #05bf5f 100%);
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #06ff7e), color-stop(1, #05bf5f));
+  background-image: -webkit-linear-gradient(bottom, #06ff7e 0%, #05bf5f 100%);
+  background-image: linear-gradient(to bottom right, #06ff7e 0%, #05bf5f 100%);
+}
