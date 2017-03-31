@@ -1,8 +1,23 @@
 <h2><%= user_signed_in? ? "Artists" : @user.name + "'s Artists" %></h2>
+
+<hr>
+
+<form action="<% user_path %>" class="artist-selection-profile">
+  <select class="form-control" id="artists-event-selection" name="artists_events_filter" >
+    <option>Show only artists with events</option>
+    <option>All artists</option>
+  </select>
+  <div class="filter-submit">
+    <input type="submit" class="filter-button" value="Filter">
+  </div>
+</form>
+
+<br>
+
 <div class="wrapper-artists-genre-profile">
-  <% @user.artists.each do |artist| %>
+  <% @artists_events_filtered.each do |artist| %>
     <% if artist.name != "Various Artists" %>
-      <%= link_to artist_path(artist) do %>
+      <%= link_to artist_path(artist.id) do %>
         <div class="card-artist-genre grow">
           <div class="artist-image">
           <% if artist.images %>

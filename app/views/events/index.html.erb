@@ -42,7 +42,7 @@
             <div class="form-group artist-selection">
               <label for="artist-selection">Artists</label>
               <select class="form-control" id="artist-selection" name="artist_filter">
-                <option>All</option>
+                <option>All artists</option>
                 <% duplicated_artists_names = [] %>
                 <% @events_filtered.each do |event| %>
                   <% event.artists[0].try(:name).blank? ? 'N/A' : duplicated_artists_names << event.artists.first.name %>
