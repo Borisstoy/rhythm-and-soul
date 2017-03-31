@@ -8,6 +8,8 @@
   .progress-bar  {
     border-radius: 1em;
     @include bg-gradient-scan();
+    padding: 0;
+    margin: 0;
   }
 }
 
