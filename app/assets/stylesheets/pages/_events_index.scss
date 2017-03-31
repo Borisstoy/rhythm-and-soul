@@ -107,7 +107,7 @@
       padding: 2em;
       .login-now {
         display: none;
-        background-color: $hover-blue;
+        @include bg-gradient();
         height: 50px;
         width: 100%;
         z-index: 99;
