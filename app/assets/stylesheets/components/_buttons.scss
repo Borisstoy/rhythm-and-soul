@@ -1,18 +1,21 @@
 .filter-button {
-  @include bg-gradient();
+  background-color: $hover-blue;
   text-decoration: none;
   color: #fff;
   font-weight: 400;
-  font-size: 1em;
+  font-size: .9em;
   border-radius: 3em;
   padding: .7em 3.4em;
   border: 0;
-  letter-spacing: .1em;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  transition: background .3s ease-in-out;
   &:hover,
   &:focus,
   &:active {
     color: #fff;
-    @include bg-gradient-hover();
+    background-color: darken($hover-blue, 10%);
     border: 0;
     text-decoration: none;
   }
@@ -92,20 +95,22 @@
 }
 
 .scan-playlist {
-  @include bg-gradient-scan();
+  background-color: $spotify;
   text-decoration: none;
   color: #fff;
-  font-weight: 400;
-  font-size: .8em;
+  font-size: .9em;
   border-radius: 45px;
   padding: 1em 1.5em;
   border: none;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
   transition: background .3s ease-in-out;
   &:hover,
   &:focus,
   &:active {
     color: #fff;
-    @include bg-gradient-scan-hover();
+    background-color: darken($spotify, 10%);
     text-decoration: none;
     border: none;
   }

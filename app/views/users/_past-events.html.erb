@@ -1,20 +1,22 @@
 <h2>Past Events</h2>
 <% unless @past_event.nil? || @past_event.empty? %>
-<% @past_event.each do |item| %>
-  <div class="wrapper-events-profile">
-    <div class="event-box">
-      <div class="event-image">
-        <%= image_tag item.artists.first.images %>
+  <% @past_event.each do |item| %>
+    <% if item.date > Date.today %>
+      <div class="wrapper-events-profile">
+        <div class="event-box">
+          <div class="event-image">
+            <%= image_tag item.artists.first.images %>
+          </div>
+          <div class="event-name-past">
+            <h4><%= item.name.capitalize %></h4>
+            <p><%= item.venue.name %></p>
+            <p><%= item.venue.address %></p>
+          </div>
+          <div class="event-date">
+            <%= item.date.strftime("%m/%d/%y") %>
+          </div>
+        </div>
       </div>
-      <div class="event-name-past">
-        <h4><%= item.name.capitalize %></h4>
-        <p><%= item.venue.name %></p>
-        <p><%= item.venue.address %></p>
-      </div>
-      <div class="event-date">
-        <%= item.date.strftime("%m/%d/%y") %>
-      </div>
-    </div>
-  </div>
-<% end %>
+    <% end %>
+  <% end %>
 <% end  %>

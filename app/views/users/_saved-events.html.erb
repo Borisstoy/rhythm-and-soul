@@ -1,6 +1,6 @@
 <h2>Saved Events</h2>
 <% current_user.find_voted_items.each do |item| %>
-  <% if item.date >= Date.today && item.count > 0 %>
+  <% if item.date >= Date.today %>
     <div class="wrapper-events-profile">
       <div class="event-box">
         <div class="event-image">
@@ -15,7 +15,7 @@
           <%= item.date.strftime("%m/%d/%y") %>
         </div>
         <div class="event-buy-ticket">
-          <%= link_to "Buy ticket", item.ticket, class:"buy-ticket-event", target: :_blank %>
+          <%= link_to "Buy ticket", item.ticket, class:"buy-ticket-button", target: :_blank %>
         </div>
         <div class="event-bookmark-controller">
           <%= link_to "", remove_bookmark_event_path(item), method: :put, class: 'fa fa-trash-o' %>

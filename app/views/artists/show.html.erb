@@ -12,6 +12,11 @@
     </div>
     <div class="artist-description">
       <h2><%= @artist.name.split.map(&:capitalize).join(' ') %></h2>
+      <div class="artist-genre-list">
+        <% @artist.genres.each do |genre| %>
+          <p><%= genre.name.capitalize %></p>
+        <% end %>
+      </div>
     </div>
     <% if user_signed_in? %>
       <div class="back-button-artists">
