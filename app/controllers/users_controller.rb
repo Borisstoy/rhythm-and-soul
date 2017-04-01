@@ -4,9 +4,8 @@ class UsersController < ApplicationController
   protect_from_forgery except: :scan_playlist
 
   def show
-    # TODO
     # Show only the events that users selected that are now passed
-    @past_event = @user.events.where("date < ?", Date.today)
+    @past_event = @user.find_liked_items
     selected = params[:artists_events_filter]
     # Filter artists that have events
     @artists_events_filtered = @user.artists.includes(:events).where.not(event_artists: {artist_id: nil})
@@ -14,6 +13,7 @@ class UsersController < ApplicationController
     @artists_events_filtered = @user.artists if selected == 'All artists'
   end
 
+  # Async playlist scan job
   def scan_playlist
     user = User.find(current_user.id)
     @job_id = SpotifyWorker.perform_async(current_user.id)
