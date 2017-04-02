@@ -87,7 +87,7 @@
         </div>
 
 
-        <% @events_filtered.group_by(&:year).each do |year, events_array| %>
+        <% @events_filtered.uniq.group_by(&:year).each do |year, events_array| %>
           <% Hash[ events_array.group_by(&:day).sort_by { |key, val| key } ].each do |day, events| %>
               <div class="day-text"><h3><%= events[0].date.strftime("%A, %d %B %Y") %></h3></div>
               <div class="day-lign"></div>
