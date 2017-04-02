@@ -1,71 +1,84 @@
 <div class="events-wrapper">
   <div class="events-search">
 
-      <div class="user-notification">
-        <% if @events_filtered.count == 0 %>
-          <h4>Sorry, there is no event matching your search</h4>
-        <% elsif @events_filtered.count >= 1 && current_user.nil? %>
-          <h4><strong><%= @events_filtered.count %> events</strong> found</h4>
-        <% elsif @events_filtered.count >= 1 %>
-          <h4><strong><%= @events_filtered.count %> events</strong> matching your search</h4>
-        <% end %>
-      </div>
     <div class="events-filters">
 
       <form action="<% events_path %>" class="">
 
-        <div class="row">
-          <div class="col-xs-12 col-sm-4 col-md-4">
-            <div class="event-location-picker">
-              <div class="form-group location-wrapper">
-                <label for="location">Location</label>
-                <input type="text" class="form-control location" id="location" placeholder="Where?" name="location" value="<%= @location %>">
-              </div>
-            </div>
+        <div class="location-date">
+          <div class="form-group location-wrapper">
+            <input type="text" class="form-control location" id="location" placeholder="&#61447;" name="location" value="<%= @location %>">
+            <i id="icons-inputs" class="fa fa-search"></i>
           </div>
 
-          <div class="col-xs-12 col-sm-5 col-md-5">
-            <div class="date-picker-wrapper">
-              <div class="form-group after">
-                <label for="start-date">After</label><br>
-                <input id="start-date" class="form-control datepicker" name="start_date" placeholder="<%= Date.today.strftime('%m/%d/%Y') %>" value="<%= @picked_start_date %>">
-              </div>
-
-              <div class="form-group before">
-                <label for="end-date">Before</label><br>
-                <input id="end-date" class="form-control datepicker" name="end_date" placeholder="-" value="<%= @picked_end_date %>">
-              </div>
-            </div>
+          <div class="form-group after">
+            <input type="text" id="start-date" class="form-control datepicker" name="start_date" placeholder="<%= Date.today.strftime('%m/%d/%Y') %>" value="<%= @picked_start_date %>">
+            <i id="icons-inputs" class="fa fa-calendar-minus-o"></i>
           </div>
 
-          <div class="col-xs-12 col-sm-3 col-md-3">
-            <div class="form-group artist-selection">
-              <label for="artist-selection">Artists</label>
-              <select class="form-control" id="artist-selection" name="artist_filter">
-                <option>All artists</option>
-                <% duplicated_artists_names = [] %>
-                <% @events_filtered.each do |event| %>
-                  <% event.artists[0].try(:name).blank? ? 'N/A' : duplicated_artists_names << event.artists.first.name %>
-                <% end %>
-                <% artists_names = duplicated_artists_names.uniq %>
-                <% artists_names = artists_names.sort_by{ |name| I18n.transliterate(name.downcase) } %>
-                <% artists_names.each do |artist_name| %>
-                  <option><%= artist_name %></option>
-                <% end %>
-              </select>
-            </div>
+          <div class="form-group before">
+            <input type="text" id="end-date" class="form-control datepicker" name="end_date" placeholder="-" value="<%= @picked_end_date %>">
+            <i id="icons-inputs" class="fa fa-calendar-plus-o"></i>
+          </div>
+        </div>
+
+        <div class="form-group artists-genres">
+
+          <div class="artists">
+            <select class="form-control" id="artist-selection" name="artist_filter">
+              <option>All artists</option>
+              <% duplicated_artists_names = [] %>
+              <% @events_filtered.each do |event| %>
+                <% event.artists[0].try(:name).blank? ? 'N/A' : duplicated_artists_names << event.artists.first.name %>
+              <% end %>
+              <% artists_names = duplicated_artists_names.uniq %>
+              <% artists_names = artists_names.sort_by { |name| I18n.transliterate(name.downcase) } %>
+              <% artists_names.each do |artist_name| %>
+                <option><%= artist_name %></option>
+              <% end %>
+            </select>
           </div>
 
-      </div>
-      <div class="filter-submit">
-        <input type="submit" class="filter-button" value="Filter">
-      </div>
+          <div class="genres">
+            <select class="form-control" id="genre-selection" name="genre_filter">
+              <option>All genres</option>
+              <% genres = [] %>
+              <% @events_filtered.each do |event| %>
+                <% genres << event.genres %>
+              <% end %>
+              <% genres = genres.flatten.uniq %>
+              <% genres.each do |genre| %>
+                <option><%= genre.name.capitalize %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+
+        <div class="result-filter">
+          <div class="result-mess">
+            <% if @events_filtered.count == 0 %>
+              <h4>There is no event matching your search in this area</h4>
+            <% elsif @selected_genre != "All genres" %>
+              <h4><span><%= @events_filtered.count %></span> events for <strong><%= @selected_genre %></strong></h4>
+            <% elsif @events_filtered.count >= 1 && current_user.nil? %>
+              <h4><span><%= @events_filtered.count %></span> events found for <strong><%= @selected_artist %></strong></h4>
+            <% elsif @selected_artist == "All artists" %>
+              <h4><span><%= @events_filtered.count %></span> events found in total</h4>
+            <% elsif @events_filtered.count >= 1 %>
+              <h4><span><%= @events_filtered.count %></span> events for <strong><%= @selected_artist %></strong></h4>
+            <% end %>
+          </div>
+
+          <div class="submit-button">
+            <input type="submit" class="filter-button" value="Apply">
+          </div>
+        </div>
 
       </form>
+
     </div>
 
     <div class="index-events-list">
-
 
       <div id="events-list">
 

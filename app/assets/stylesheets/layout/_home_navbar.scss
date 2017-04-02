@@ -48,7 +48,7 @@
   &:active,
   &:focus {
     text-decoration: none;
-    color: lighten($main-blue, 20%);
+    color: $hover-blue;
   }
 }
 

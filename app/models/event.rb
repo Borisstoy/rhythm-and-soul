@@ -4,6 +4,7 @@ class Event < ApplicationRecord
   has_many :artists, through: :event_artists
   has_many :users, through: :user_events
   has_many :user_events, dependent: :destroy
+  has_many :genres, through: :artists
   acts_as_votable
 
   def day

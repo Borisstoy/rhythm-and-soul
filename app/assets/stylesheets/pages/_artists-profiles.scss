@@ -9,6 +9,7 @@
   text-align: left;
   border-bottom: 5px solid $main-blue;
   position: relative;
+  height: 300px;
   .back-button-artists{
       position: absolute;
       top: 10px;
@@ -23,13 +24,13 @@
     color: $dark-grey;
   }
   .artist-profile-image {
-    flex: 0 0 30%;
+    flex: 0 0 20%;
     img {
       width: 200px;
     }
   }
   .artist-description {
-    flex: 0 0 70%;
+    flex: 0 0 80%;
     .artist-genre-list {
       margin: 2rem 0 0 0;
       display: flex;
@@ -38,11 +39,10 @@
       flex-wrap: wrap;
       p {
         font-size: .7em;
-        background-color: #f9f9f9;
         border: 1px solid #b7b7b7;
-        border-radius: 1.3em;
+        border-radius: 1.5em;
         padding: .7em .9em;
-        margin: 0 .6rem 0 0;
+        margin: 0 .6rem .6rem 0;
         color: #a2a2a2;
       }
     }

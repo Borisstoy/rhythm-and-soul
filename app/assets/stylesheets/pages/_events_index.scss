@@ -3,6 +3,20 @@
     display: none;
 }
 
+// font awesome relarive position in inputs
+
+#icons-inputs {
+  position: relative;
+  z-index: 1;
+  left: 15px;
+  top: -33px;
+  color: #7B7B7B;
+  cursor:pointer;
+  width: 0;
+}
+
+// end //
+
 .events-wrapper {
   display: flex;
   .events-search {
@@ -51,60 +65,90 @@
         }
       }
     }
-    .user-notification {
-      width: 100%;
-      background-image: -ms-linear-gradient(left top, #79dcff 0%, #1fc4ff 100%);
-      background-image: -moz-linear-gradient(bottom right, #79dcff 0%, #1fc4ff 100%);
-      background-image: -o-linear-gradient(bottom right, #79dcff 0%, #1fc4ff 100%);
-      background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #79dcff), color-stop(1, #1fc4ff));
-      background-image: -webkit-linear-gradient(bottom, #79dcff 0%, #1fc4ff 100%);
-      background-image: linear-gradient(to bottom right, #79dcff 0%, #1fc4ff 100%);
-      padding: 1.2em 0;
-      h4 {
-        text-align: center;
-        color: #fff;
-        font-size: 1em;
-        font-weight: 400;
-        letter-spacing: .15em;
-        margin: 0;
-      }
-    }
     .events-filters {
-      background-color: $very-light-grey;
-      padding: 2em;
+      background-color: #fff;
+      padding: 2em 2em 2em 2em;
+      border-bottom: 1px solid #eaeaea;
+      border-top: 1px solid #eaeaea;
       display: flex;
       align-items: center;
       justify-content: center;
       form {
         width: 100%;
       }
-      .location-wrapper {
-        flex: 0 0 30%;
-      }
-      .date-picker-wrapper {
-        flex: 0 0 40%;
+      .location-date {
         display: flex;
         align-items: center;
         justify-content: center;
-        .after {
+        .location-wrapper {
           flex: 0 0 50%;
-          padding-right: .5em;
+          padding: .5em;
+        }
+        .after {
+          flex: 0 0 25%;
+          padding: .5em;
         }
         .before {
-          flex: 0 0 50%;
-          padding-left: .5em;
+          flex: 0 0 25%;
+          padding: .5em;
         }
       }
-      .artist-selection {
-        flex: 0 0 30%;
+      .artists-genres {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .artists {
+          flex: 0 0 50%;
+          padding: .5em;
+        }
+        .genres {
+          flex: 0 0 50%;
+          padding: .5em;
+        }
       }
-      .filter-submit {
-        flex: 0 0 auto;
-        text-align: center;
+      .result-filter {
+        display: flex;
+        padding: 0 .5em;
+        .result-mess {
+          justify-content: flex-start;
+          flex: 0 0 70%;
+          h4 {
+            font-size: 1em;
+            span {
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              background-color: none;
+              min-width: 3em;
+              min-height: 1em;
+              border-radius: 50%;
+              vertical-align: middle;
+              padding: .7em;
+              border: 2px solid $main-blue;
+              font-weight: 700;
+              font-size: 1.2em;
+              margin-right: .5rem;
+            }
+            span:before {
+              content:'';
+              float: left;
+              width: auto;
+              padding-bottom: 100%;
+            }
+          }
+        }
+        .submit-button {
+          flex: 0 0 30%;
+          display: flex;
+          justify-content: flex-end;
+          .filter-button {
+            max-height: 50px;
+          }
+        }
       }
     }
     .index-events-list {
-      padding: 2em;
+      padding: 0 2em;
       .login-now {
         display: none;
         @include bg-gradient();
@@ -325,19 +369,19 @@
 // FORM CONTROL BOOTSTRAP OVERRIDE
 
 .form-control {
-    display: inline;
-    width: 100%;
-    height: 33px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.4;
-    color: #000000;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #dddddd;
-    border-radius: 2px;
-    box-shadow: none;
-    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  display: inline;
+  width: 100%;
+  height: 33px;
+  padding: 1.6em 2.8em;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #5f5f5f;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #d0d0d0;
+  border-radius: 2px;
+  box-shadow: none;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
 .form-control:focus {
