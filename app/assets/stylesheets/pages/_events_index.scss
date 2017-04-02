@@ -384,6 +384,10 @@
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
+.form-group {
+  margin: 0;
+}
+
 .form-control:focus {
     border-color: $hover-blue;
     outline: 0;

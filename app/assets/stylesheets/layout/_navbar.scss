@@ -1,3 +1,49 @@
+// Dropdown
+
+.dropbtn {
+  background-color: none;
+  color: white;
+  font-size: 1em;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: none;
+  min-width: 160px;
+  border: 1px solid #eaeaea;
+  z-index: 1;
+  right: 0;
+  border-radius: .2em;
+}
+
+.dropdown-content a {
+  color: $main-blue;
+  padding: 1em 1.2em;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f9f9f9;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #fff;
+}
+
+
 /* Main class */
 .navbar-wagon {
   background: white;
@@ -65,69 +111,4 @@
   color: white;
   background: #1FC4FF;
   border-color: #1FC4FF;
-}
-
-/* Navbar search form */
-.navbar-wagon-search {
-  flex: 0 1 300px;
-  display: flex;
-  justify-content: flex-end;
-  padding: 0 10px;
-  position: relative;
-}
-.navbar-wagon-search-btn {
-  line-height: 40px;
-  color: #E6E6E6;
-  border: none;
-  background: transparent;
-  position: absolute;
-  right: 14px;
-  top: -2px;
-  z-index: 1;
-}
-.navbar-wagon-search-input {
-  flex: 0 1 300px;
-  transition: all 0.15s ease;
-  line-height: 40px;
-  font-weight: lighter;
-  color: #666666;
-  border: 1px solid #E6E6E6;
-  border-radius: 5px;
-  padding: 0 10px;
-  font-size: 14px;
-  outline: none;
-}
-.navbar-wagon-search-input:focus  {
-  border: 1px solid #CCCCCC;
-}
-
-/* Navbar dropdown menu */
-.navbar-wagon-dropdown-menu {
-  margin-top: 15px;
-  box-shadow: 1px 1px 4px #E6E6E6;
-  border-color: #E6E6E6;
-}
-.navbar-wagon-dropdown-menu li > a {
-  transition: color 0.3s ease;
-  font-weight: lighter !important;
-  color: #999999 !important;
-  font-size: 15px !important;
-  line-height: 22px !important;
-  padding: 10px 20px;
-}
-.navbar-wagon-dropdown-menu li > a:hover {
-  background: transparent !important;
-  color: black !important;
-}
-.navbar-wagon-dropdown-menu:before {
-  content: ' ';
-  height: 10px;
-  width: 10px;
-  position: absolute;
-  right: 10px;
-  top: -6px;
-  background-color: white;
-  transform: rotate(45deg);
-  border-left: 1px solid #E6E6E6;
-  border-top: 1px solid #E6E6E6;
 }
