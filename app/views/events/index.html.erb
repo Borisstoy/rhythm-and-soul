@@ -58,10 +58,10 @@
           <div class="result-mess">
             <% if @events_filtered.count == 0 %>
               <h4>There is no event matching your search in this area</h4>
-            <% elsif @selected_genre != "All genres" %>
-              <h4><span><%= @events_filtered.count %></span> events for <strong><%= @selected_genre %></strong></h4>
             <% elsif @events_filtered.count >= 1 && current_user.nil? %>
               <h4><span><%= @events_filtered.count %></span> events found in total</strong></h4>
+            <% elsif @selected_genre != "All genres" %>
+              <h4><span><%= @events_filtered.count %></span> events  related to <strong><%= @selected_genre %></strong></h4>
             <% elsif @selected_artist == "All artists" %>
               <h4><span><%= @events_filtered.count %></span> events found in total</h4>
             <% elsif @events_filtered.count >= 1 %>

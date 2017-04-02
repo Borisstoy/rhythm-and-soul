@@ -152,7 +152,6 @@
       padding: 0 2em;
       .login-now {
         display: none;
-        @include bg-gradient();
         height: 50px;
         width: 100%;
         z-index: 99;

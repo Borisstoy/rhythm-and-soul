@@ -17,7 +17,7 @@
 <% unless user_signed_in? %>
   <div class="login-now">
     <div class="log-now-banner">
-      <%= link_to 'Sign in with Spotify Now', user_spotify_omniauth_authorize_path, class: 'alert-login' %>
+      <%= link_to 'Sign in with Spotify', user_spotify_omniauth_authorize_path, class: 'login-event-index' %>
     </div>
   </div>
 <% end %>
