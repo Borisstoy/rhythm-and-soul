@@ -8,7 +8,7 @@
         <div class="location-date">
           <div class="form-group location-wrapper">
             <input type="text" class="form-control location" id="location" placeholder="&#61447;" name="location" value="<%= @location %>">
-            <i id="icons-inputs" class="fa fa-search"></i>
+            <i id="icons-inputs" class="fa fa-map-marker"></i>
           </div>
 
           <div class="form-group after">
@@ -59,7 +59,7 @@
             <% if @events_filtered.count == 0 %>
               <h4>There is no event matching your search in this area</h4>
             <% elsif @events_filtered.count >= 1 && current_user.nil? || !current_user.nil? && @selected_genre.nil? || @selected_artist.nil? %>
-              <h4><span><%= @events_filtered.count %></span> events found in total</strong></h4>
+              <h4><span><%= @events_filtered.count %></span> events found in this area</strong></h4>
             <% elsif @selected_genre != "All genres" %>
               <h4><span><%= @events_filtered.count %></span> events related to <strong><%= @selected_genre %></strong></h4>
             <% elsif @selected_artist == "All artists" %>

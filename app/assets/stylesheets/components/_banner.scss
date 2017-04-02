@@ -13,21 +13,23 @@
     .banner-content {
       text-align: left;
       max-width: 600px;
+      color: #fff;
       hr {
-        border-bottom: 5px solid $main-blue;
+        border-bottom: 5px solid #fff;
       }
       h2 {
         line-height: 1.3em;
         font-size: 1.6em;
+        color: #fff;
       }
       h1 {
         font-size: 48px;
         font-weight: 800;
+        color: #fff;
       }
       p {
         font-size: 25px;
         font-weight: 500;
-        color: $main-blue;
         margin-bottom: 40px;
       }
     }

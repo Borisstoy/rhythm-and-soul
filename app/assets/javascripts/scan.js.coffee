@@ -15,6 +15,8 @@ queryForPercentage = () ->
       # which resend the request to my percentage_done action
       if $('#job-progress').text() != '100%'
         setTimeout(queryForPercentage, 1500)
+      if $('#job-progress').text() == '100%'
+        location.reload();
   })
 $ ->
   $('#job-id-container').bind('DOMSubtreeModified', queryForPercentage )
