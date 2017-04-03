@@ -35,6 +35,9 @@
               <div class="artist-date">
                 <%= event.date.strftime('%A, %d %b %Y %l:%M %p') %>
               </div>
+              <div class="artist-venue">
+                @ <%= event.venue.name %>
+              </div>
               <div class="artist-address">
                 <%= event.venue.address %>
               </div>

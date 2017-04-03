@@ -78,8 +78,12 @@
         text-transform: uppercase;
         font-weight: 800;
       }
+      .artist-venue {
+        flex: 0 0 20%;
+        font-weight: 700;
+      }
       .artist-address {
-        flex: 50%;
+        flex: 30%;
       }
       .artist-ticket {
         flex: 20%;
