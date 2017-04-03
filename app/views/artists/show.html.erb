@@ -29,7 +29,7 @@
       <p>There is no event currently planned for <%= @artist.name %>.</p>
     <% else %>
       <p class="upcoming">UPCOMING EVENTS</p>
-      <% @artist.events.each do |event| %>
+      <% @artist.events.uniq.each do |event| %>
           <div class="wrapper-artists-events">
             <% if event %>
               <div class="artist-date">
