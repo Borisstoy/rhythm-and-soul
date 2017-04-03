@@ -42,8 +42,10 @@
 /* Navbar standard link */
 .navbar-wagon-link {
   color: $main-blue;
-  font-size: 1em;
+  font-size: .85em;
+  text-transform: uppercase;
   text-decoration: none;
+  font-weight: 700;
   &:hover,
   &:active,
   &:focus {

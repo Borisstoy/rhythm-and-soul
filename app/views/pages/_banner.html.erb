@@ -13,13 +13,13 @@
     </div>
   </div>
 
-  <div class="wrapper-left" style="background-image: url('<%= image_path "banner-home.jpg" %>')">
+  <div class="wrapper-left" style="background-image: url('<%= image_path "banner-home.png" %>')">
     <div class="button-one">
       <%= link_to t(".top_call_to_action", default: "Discover Music Events"), events_path, class: 'discover-music'%>
     </div>
   </div>
 
-  <div class="wrapper-right" style="background-image: url('<%= image_path "banner-home-2.jpg" %>')">
+  <div class="wrapper-right" style="background-image: url('<%= image_path "banner-home-2.png" %>')">
     <div class="button-two">
       <% unless user_signed_in? %>
         <%= link_to 'Sign in with Spotify', user_spotify_omniauth_authorize_path, class:'login-spotify' unless user_signed_in? %>
