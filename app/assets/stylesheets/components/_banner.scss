@@ -15,7 +15,7 @@
       color: #fff;
     }
     h1 {
-      font-size: 2.5em;
+      font-size: 3.5em;
       font-weight: 800;
       color: #fff;
     }
@@ -38,7 +38,7 @@
     align-content: center;
     .button-one {
       z-index: 99;
-      margin: 0 0 2rem 0;
+      margin: 10rem 0 0 0;
     }
   }
   .wrapper-right {
@@ -53,6 +53,7 @@
     background-size: cover !important;
     .button-two {
       z-index: 99;
+      margin: 10rem 0 0 0;
     }
   }
 }
