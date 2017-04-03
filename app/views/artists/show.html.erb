@@ -39,7 +39,7 @@
                 @ <%= event.venue.name %>
               </div>
               <div class="artist-address">
-                <%= event.venue.address %>
+                <%= event.venue.address.nil? ? 'N/A' : event.venue.address %>
               </div>
               <% if !event.ticket.nil? %>
                 <div class="artist-ticket">

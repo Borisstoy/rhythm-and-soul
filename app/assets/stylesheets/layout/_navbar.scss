@@ -22,6 +22,20 @@
   right: 0;
   font-size: .9em;
   border-radius: .2em;
+  top: 4.3em;
+  &:after {
+    position: absolute;
+    left: 89%;
+    margin-left: -15px;
+    top: -6px;
+    width: 0;
+    height: 0;
+    content: '';
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid $main-blue;
+    border-radius: 0.5em;
+  }
   a {
     color: #fff;
     padding: .8em 1em;
@@ -33,12 +47,11 @@
     }
   }
 }
+.show {display:block;}
 
-
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
+// .dropdown:hover .dropdown-content {
+//   display: block;
+// }
 
 .dropdown:hover .dropbtn {
   background-color: #fff;

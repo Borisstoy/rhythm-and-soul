@@ -16,9 +16,9 @@
       <!-- Profile picture and dropdown -->
       <div class="navbar-wagon-item">
 
-        <div class="dropdown">
+        <div class="dropdown" onclick="myFunction()">
           <%= image_tag current_user.image, class: "avatar dropbtn", id: "navbar-wagon-menu", "data-toggle" => "dropdown" %>
-          <div class="dropdown-content">
+          <div id="myDropdown" class="dropdown-content">
             <%= link_to user_path(current_user) do %>
               <i class="fa fa-user-o"></i> &nbsp; <%= t(".profile", default: "Profile") %>
             <% end %>
@@ -48,3 +48,28 @@
     </div>
   </div>
 </div>
+
+<% content_for(:dropdown_js) do %>
+<script>
+    /* When the user clicks on the button,
+  toggle between hiding and showing the dropdown content */
+  function myFunction() {
+      document.getElementById("myDropdown").classList.toggle("show");
+  }
+
+  // Close the dropdown menu if the user clicks outside of it
+  window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      var i;
+      for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+          openDropdown.classList.remove('show');
+        }
+      }
+    }
+  }
+</script>
+<% end %>
