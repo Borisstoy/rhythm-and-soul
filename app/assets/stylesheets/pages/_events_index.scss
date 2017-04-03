@@ -319,6 +319,10 @@
   .event-desc-address {
     flex: 0 0 20%;
     padding: 1em;
+    p {
+      font-weight: 800;
+      margin: 0;
+    }
   }
   .event-desc-date {
     flex: 0 0 20%;
