@@ -1,0 +1,55 @@
+.dropdown-menu {
+  position: absolute;
+  color: #fff;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 1em;
+  margin: 2px 0 0;
+  list-style: none;
+  font-size: .9em;
+  text-align: left;
+  background-color: $main-blue;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: .2em;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+}
+
+.datepicker-dropdown:after {
+  content: '';
+  display: inline-block;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid $main-blue;
+  border-top: 0;
+  position: absolute;
+}
+
+.datepicker table tr td.today {
+  color: #fff;
+  background-color: $hover-blue;
+  border-color: $hover-blue;
+  &:hover {
+    color: #fff;
+    background-color: lighten($hover-blue, 40%);
+    border-color: lighten($hover-blue, 40%);
+  }
+}
+
+.datepicker table tr td.day:hover, .datepicker table tr td.focused {
+  border: none;
+  border-color: none;
+  color: $main-blue;
+  cursor: pointer;
+}
+
+.datepicker table tr td.active.active {
+    color: #fff;
+    background-color: $hover-blue;
+    border-color: $hover-blue;
+}
