@@ -35,6 +35,9 @@ class EventsController < ApplicationController
     # MARKERS
     @events_markers = events_markers(@events_filtered)
 
+    # Venues
+    # TODO
+
     #KAMINARI
     # @events_filtered = @events_filtered.order(:date).page(params[:page]).per(25)
   end
@@ -90,12 +93,12 @@ class EventsController < ApplicationController
 
       marker[:infowindow] = "
       <div class='iw-container event'>
-        <h3 class='iw-title'>#{event.venue.name}</h3>
+        <h3 class='iw-title'><span>#{event.artists.count} event </span>@ #{event.venue.name}</h3>
         <div class='iw-event'>
           <div>
             <h3>#{event.artists.first.name}</h3>
             <div>
-              #{event.date.strftime('%d %b %Y')}
+            <p>#{event.date.strftime('%d %b %Y')}</p>
             </div>
           </div>
           <div class='iw-bookmark' id='iw_event_#{event.id}'>

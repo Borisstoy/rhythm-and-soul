@@ -1,6 +1,45 @@
+/*style the box*/
+ .gm-style .gm-style-iw {
+  background-color: $main-blue!important;
+  color: #fff!important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  min-height: 100% !important;
+  padding: 1.5em!important;
+  border-radius: .3em!important;
+  display: block !important;
+ }
+
+/*style the p tag*/
+.gm-style .gm-style-iw #google-popup p{
+  padding: 10px;
+}
+
+/*style the arrow*/
+.gm-style div div div div div div div div {
+  background-color: $main-blue !important;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  color: #fff;
+  font-size: 1em;
+}
+
+/*style the link*/
+.gm-style div div div div div div div div a {
+  color: #fff;
+  font-weight: 400;
+}
+
+img[src="https://maps.gstatic.com/mapfiles/api-3/images/mapcnt6.png"] {
+  display: none;
+}
+
 .iw-container {
-  padding: 0.8em;
+  padding: 1.8em;
   min-width: 200px;
+  background-color: $main-blue;
   .iw-event {
     transition-duration: 0.3s;
     border-bottom: 1px solid #eaeaea;
@@ -10,7 +49,16 @@
     position: relative;
     padding: 0 0 .3em 0;
     h3 {
-      font-size: 1em;
+      color: #fff;
+      font-size: 1.4em;
+    }
+    h5 {
+      color: #fff;
+      font-size: .8em;
+    }
+    p {
+      color: #eaeaea;
+      font-size: .8em;
     }
     .iw-bookmark {
       position: absolute;
@@ -25,12 +73,20 @@
 }
 
 .iw-title {
-  font-size: 1.7em;
+  font-size: 1.3em;
   font-weight: 800;
   margin-bottom: 0;
+  color: #fff;
+  line-height: 1.3em;
+  span {
+    color: $hover-blue;
+  }
 }
 
 .iw-address {
   margin-top: .5em;
   width: 70%;
 }
+
+
+

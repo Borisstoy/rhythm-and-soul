@@ -23,6 +23,9 @@ gem 'acts_as_votable'
 #Friendly URL
 gem 'friendly_id', '~> 5.1.0' # Note: You MUST use 5.0.0 or greater for Rails 4.0+
 
+#Heroku add on, detects controllers activity
+gem 'scout_apm'
+
 gem 'sass-rails'
 gem 'compass-rails'
 gem 'jquery-rails'
