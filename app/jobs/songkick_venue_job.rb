@@ -1,4 +1,4 @@
-class SongkickJob < ApplicationJob
+class SongkickVenueJob < ApplicationJob
   queue_as :default
 
   def perform

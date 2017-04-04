@@ -1,14 +1,18 @@
-  <div class="event-desc-image">
-    <% event_artist = event.artists.first %>
+<div class="event-desc-image">
+  <% event_artist = event.artists.uniq.first %>
+  <% if event_artist.images %>
     <%= image_tag event_artist.images %>
-    <% if user_signed_in? %>
-      <%= link_to artist_path(event_artist) do %>
-        <div class="more-info">
-          <p>MORE</p>
-        </div>
-      <% end %>
+  <% else %>
+    <%= image_tag('compact-disc.png') %>
+  <% end %>
+  <% if user_signed_in? %>
+    <%= link_to artist_path(event_artist) do %>
+      <div class="more-info">
+        <p>MORE</p>
+      </div>
     <% end %>
-  </div>
+  <% end %>
+</div>
 <div class="event-desc-name">
   <div class="content">
     <h4><%= event_artist.name %></h4>
