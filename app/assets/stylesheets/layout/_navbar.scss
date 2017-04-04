@@ -38,7 +38,7 @@
   }
   a:first-child {
     color: #fff;
-    padding: 1em 1em 0 1em;
+    padding: 2em 1em 0 2em;
     text-decoration: none;
     display: block;
     transition: color .3s ease-in-out;
@@ -48,7 +48,7 @@
   }
   a:last-child {
     color: #fff;
-    padding: 1em;
+    padding: 2em 1em 2em 2em;
     text-decoration: none;
     display: block;
     transition: color .3s ease-in-out;
@@ -57,6 +57,7 @@
     }
   }
 }
+
 .show {display:block;}
 
 // .dropdown:hover .dropdown-content {

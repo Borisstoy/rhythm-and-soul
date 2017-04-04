@@ -13,6 +13,11 @@
     <%= link_to 'https://www.facebook.com/therhythmandsoul/', target: "_blank" do %>
       <i class="fa fa-facebook" aria-hidden="true"></i>
     <% end %>
+
+    <%= mail_to "therhythmandsoul@gmail.com" do %>
+      <i class="fa fa-envelope-o" aria-hidden="true"></i>
+    <% end %>
+
     <!-- Different navigation if login or not -->
     <% if user_signed_in? %>
 

@@ -17,7 +17,8 @@
     }
   .artist-description {
     align-self: flex-end;
-    padding: 0 0 2em 0;
+    flex: 0 0 80%;
+    padding: 0 0 2em 2em;
     h2 {
       font-weight: 800;
       font-size: 2.5em;
@@ -26,16 +27,6 @@
       font-weight: 500;
       color: $dark-grey;
     }
-  }
-  .artist-profile-image {
-    flex: 0 0 20%;
-    align-self: flex-end;
-    img {
-      width: 200px;
-    }
-  }
-  .artist-description {
-    flex: 0 0 80%;
     .artist-genre-list {
       margin: 2rem 0 0 0;
       display: flex;
@@ -50,6 +41,13 @@
         margin: 0 .6rem .6rem 0;
         color: #a2a2a2;
       }
+    }
+  }
+  .artist-profile-image {
+    flex: 0 0 20%;
+    align-self: flex-end;
+    img {
+      width: 200px;
     }
   }
 }
