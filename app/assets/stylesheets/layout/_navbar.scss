@@ -36,9 +36,19 @@
     border-bottom: 10px solid $main-blue;
     border-radius: 0.5em;
   }
-  a {
+  a:first-child {
     color: #fff;
-    padding: .8em 1em;
+    padding: 1em 1em 0 1em;
+    text-decoration: none;
+    display: block;
+    transition: color .3s ease-in-out;
+    &:hover {
+      color: lighten($main-blue, 60%);
+    }
+  }
+  a:last-child {
+    color: #fff;
+    padding: 1em;
     text-decoration: none;
     display: block;
     transition: color .3s ease-in-out;
