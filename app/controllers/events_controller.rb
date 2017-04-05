@@ -39,7 +39,7 @@ class EventsController < ApplicationController
     puts "GENRE #{@start - Time.now}"
 
     # PAGINATION
-    @events_filtered = @events_filtered.page(params[:page])
+    # @events_filtered = @events_filtered.page(params[:page])
 
     # BOOKMARKED
     @current_user_liked_items = current_user.find_liked_items if user_signed_in?
