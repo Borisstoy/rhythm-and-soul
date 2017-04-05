@@ -93,7 +93,7 @@ class EventsController < ApplicationController
 
       marker[:infowindow] = "
       <div class='iw-container event'>
-        <h3 class='iw-title'><span>#{event.artists.count} event </span>@ #{event.venue.name}</h3>
+        <h3 class='iw-title'><span>#{event.artists.count} event(s) </span>@ #{event.venue.name}</h3>
         <div class='iw-event'>
           <div>
             <h3>#{event.artists.first.name}</h3>

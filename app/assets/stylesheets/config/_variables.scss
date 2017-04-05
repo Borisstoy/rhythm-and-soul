@@ -49,6 +49,27 @@ $yellow: #FFB61D;
 $orange: #FFB61D;
 $gray: #000000;
 
+
+.sml {
+  color: #a5e7ff;
+}
+
+.med {
+  color: #1fc4ff;
+}
+
+.hgh {
+  color: #20b304;
+}
+
+.ult {
+  color: #ffa21f;
+}
+
+.gia {
+ color: #ff3867;
+}
+
 @mixin bg-gradient(){
   background-image: -ms-linear-gradient(left top, #79dcff 0%, #1fc4ff 100%);
   background-image: -moz-linear-gradient(bottom right, #79dcff 0%, #1fc4ff 100%);

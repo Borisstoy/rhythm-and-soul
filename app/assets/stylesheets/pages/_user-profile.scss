@@ -192,6 +192,13 @@ hr.profile {
     border-radius: .3em;
     width: 30%;
     border: 1px solid #eaeaea;
+    position: relative;
+    .marker-ev {
+      position: absolute;
+      bottom: 24px;
+      left: 9px;
+      font-size: .6em;
+    }
     h4 {
       font-weight: 800;
       font-size: 1.2em;

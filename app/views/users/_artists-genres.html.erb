@@ -19,6 +19,7 @@
     <% if artist.name != "Various Artists" %>
       <%= link_to artist_path(artist.id) do %>
         <div class="card-artist-genre grow">
+
           <div class="artist-image">
           <% if artist.images %>
             <%= image_tag artist.images %>
@@ -26,13 +27,29 @@
             <%= image_tag('compact-disc.png') %>
           <% end %>
           </div>
+
           <div class="artist-description">
             <h4><%= artist.name.split.map(&:capitalize).join(' ') %></h4>
-            <% if artist.events.count > 0 %>
-              <h5 class="plus-events"><%= artist.events.count %> events</h5>
+            <% aec = artist.events.count %>
+            <% if artist.events.count == 1 %>
+              <h5 class="plus-events"><%= aec %> event</h5>
+            <% elsif aec > 1 %>
+              <h5 class="plus-events"><%= aec %> events</h5>
             <% else %>
               <h5 class="no-event">No upcoming events</h5>
             <% end %>
+
+          <% if aec <= 5 %>
+            <i class="fa fa-circle marker-ev sml "></i>
+          <% elsif aec > 5 && aec < 15 %>
+            <i class="fa fa-circle marker-ev med"></i>
+          <% elsif aec > 15 && aec < 30 %>
+            <i class="fa fa-circle marker-ev hgh"></i>
+          <% elsif aec > 30 && aec < 45 %>
+            <i class="fa fa-circle marker-ev ult"></i>
+          <% else %>
+            <i class="fa fa-circle marker-ev gia"></i>
+          <% end %>
           </div>
         </div>
       <% end %>
