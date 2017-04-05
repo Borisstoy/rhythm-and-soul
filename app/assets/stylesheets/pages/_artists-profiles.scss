@@ -23,6 +23,11 @@
       font-weight: 800;
       font-size: 2.5em;
     }
+    span {
+      font-size: .4em;
+      color: lighten($main-blue, 50%);
+      margin: 0 0 0 1rem;
+    }
     p {
       font-weight: 500;
       color: $dark-grey;
@@ -71,7 +76,7 @@
     padding: .5em;
     border-left: 3px solid transparent;
       .artist-date {
-        flex: 30%;
+        flex: 25%;
         font-size: .9em;
         text-transform: uppercase;
         font-weight: 800;
@@ -82,7 +87,7 @@
         padding: 0 .6em;
       }
       .artist-address {
-        flex: 30%;
+        flex: 35%;
       }
       .artist-ticket {
         flex: 20%;

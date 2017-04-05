@@ -11,7 +11,19 @@
     <% end %>
     </div>
     <div class="artist-description">
-      <h2><%= @artist.name.split.map(&:capitalize).join(' ') %></h2>
+      <h2><%= @artist.name.split.map(&:capitalize).join(' ') %>
+      <span>
+      <% if @artist.events.count == 0  %>
+        <%= @artist.events.count %> events
+      <% elsif @artist.events.count == 1  %>
+        <%= @artist.events.count %> event
+      <% else %>
+        <%= @artist.events.count %> events
+      <% end %>
+      </span>
+      </h2>
+
+
       <div class="artist-genre-list">
         <% @artist.genres.each do |genre| %>
           <p><%= genre.name.capitalize %></p>
