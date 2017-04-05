@@ -17,6 +17,8 @@ gem 'coffee-rails', '~> 4.1.0'
 #KAMINARI
 gem 'kaminari'
 
+gem 'will_paginate', '~> 3.0.7'
+
 #BOOKMARK / UPVOTES
 gem 'acts_as_votable'
 
