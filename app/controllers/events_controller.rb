@@ -7,11 +7,14 @@ class EventsController < ApplicationController
     @selected_artist = params[:artist_filter]
     @selected_genre = params[:genre_filter]
 
+    @start = Time.now
+    puts "START #{@start - Time.now}"
+
     params[:location] == '' || params[:location].nil? ? @location = "Canada" : @location = params[:location]
     center_map_display(@location)
 
     ########## Filters ##########
-    @events_filtered = user_signed_in? ? current_user.events.includes(:artists, :venue).where("date >= ?", Date.today) : Event.includes(:artists, :venue).where("date >= ?", Date.today)
+    @events_filtered = user_signed_in? ? current_user.events.includes(:artists, :venue, :genres).where("date >= ?", Date.today) : Event.includes(:artists, :venue, :genres).where("date >= ?", Date.today)
 
     # LOCATION
     # Select venues according to location search
@@ -21,13 +24,19 @@ class EventsController < ApplicationController
     @events_filtered = @events_filtered.where("date >= ?", @picked_start_date) unless @picked_start_date.blank?
     @events_filtered = @events_filtered.where("date < ?", @picked_end_date) unless @picked_end_date.blank?
 
+    puts "DATE + LOCATION #{@start - Time.now}"
+
     # ARTISTS
     # filter for specific artist
     @events_filtered = @events_filtered.where(artists: { name: @selected_artist }) if !@selected_artist .blank? && @selected_artist  != 'All artists'
 
+    puts "ARTIST #{@start - Time.now}"
+
     # GENRES
     # filter for specific genre
-    @events_filtered = @events_filtered.includes(:genres).where(genres: { name: @selected_genre.downcase}) if (!@selected_genre.blank? && @selected_genre != 'All genres') && (@selected_artist != 'All artists' || @selected_artist == 'All artists')
+    @events_filtered = @events_filtered.includes(artists: :genres).where(genres: { name: @selected_genre.downcase}) if (!@selected_genre.blank? && @selected_genre != 'All genres') && (@selected_artist != 'All artists' || @selected_artist == 'All artists')
+
+    puts "GENRE #{@start - Time.now}"
 
     # PAGINATION
     # @events_filtered = @events_filtered.page(params[:page])
