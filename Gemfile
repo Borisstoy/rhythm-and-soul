@@ -16,6 +16,8 @@ gem 'sidekiq_status'
 gem 'coffee-rails', '~> 4.1.0'
 #KAMINARI
 gem 'kaminari'
+gem 'jquery-infinite-pages'
+
 
 #BOOKMARK / UPVOTES
 gem 'acts_as_votable'
@@ -54,7 +56,7 @@ gem "geocoder"
 group :development, :test do
   gem 'binding_of_caller'
   gem 'better_errors'
-
+  gem 'bullet'
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'spring'

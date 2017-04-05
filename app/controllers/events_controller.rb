@@ -11,7 +11,7 @@ class EventsController < ApplicationController
     center_map_display(@location)
 
     ########## Filters ##########
-    @events_filtered = user_signed_in? ? current_user.events.includes(:artists, :venue, :genres).where("date >= ?", Date.today) : Event.includes(:artists, :venue, :genres).where("date >= ?", Date.today)
+    @events_filtered = user_signed_in? ? current_user.events.includes(:artists, :venue).where("date >= ?", Date.today) : Event.includes(:artists, :venue).where("date >= ?", Date.today)
 
     # LOCATION
     # Select venues according to location search
@@ -30,7 +30,7 @@ class EventsController < ApplicationController
     @events_filtered = @events_filtered.joins(artists: :genres).where(genres: { name: @selected_genre.downcase}) if (!@selected_genre.blank? && @selected_genre != 'All genres') && (@selected_artist != 'All artists' || @selected_artist == 'All artists')
 
     # PAGINATION
-    # @events_filtered = @events_filtered.paginate(:page => params[:page], :per_page => 10)
+    # @events_filtered = @events_filtered.page(params[:page])
 
     # BOOKMARKED
     @current_user_liked_items = current_user.find_liked_items if user_signed_in?
