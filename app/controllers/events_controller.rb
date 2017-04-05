@@ -27,7 +27,7 @@ class EventsController < ApplicationController
 
     # GENRES
     # filter for specific genre
-    @events_filtered = @events_filtered.joins(artists: :genres).where(genres: { name: @selected_genre.downcase}) if (!@selected_genre.blank? && @selected_genre != 'All genres') && (@selected_artist != 'All artists' || @selected_artist == 'All artists')
+    @events_filtered = @events_filtered.includes(:genres).where(genres: { name: @selected_genre.downcase}) if (!@selected_genre.blank? && @selected_genre != 'All genres') && (@selected_artist != 'All artists' || @selected_artist == 'All artists')
 
     # PAGINATION
     # @events_filtered = @events_filtered.page(params[:page])
