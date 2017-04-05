@@ -49,7 +49,6 @@ class SongkickJob < ApplicationJob
     unless artist_events.nil? || artist_events == [] || artists_calendars.nil?
       until events_count == artist_events.count
         @venue_name = artist_events[events_count]["venue"]["displayName"]
-        @venue_id = artist_events[events_count]["venue"]["id"]
         @venue_ticket = artist_events[events_count]["uri"]
         @venue_lat = artist_events[events_count]["location"]["lat"]
         @venue_lng = artist_events[events_count]["location"]["lng"]
@@ -57,7 +56,7 @@ class SongkickJob < ApplicationJob
         # TODO
         # if event already exists, check duplicate with date
         # if event doesn't exist, create
-        @venue = Venue.find_or_create_by(name: @venue_name, latitude: @venue_lat.to_f, longitude: @venue_lng.to_f, sgkvenueid: @venue_id)
+        @venue = Venue.find_or_create_by(name: @venue_name, latitude: @venue_lat.to_f, longitude: @venue_lng.to_f)
         if @venue.address.nil?
           @venue.address = Geocoder.address("#{@venue_lat}, #{@venue_lng}")
           @venue.save

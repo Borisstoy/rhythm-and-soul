@@ -86,7 +86,6 @@
           <%= render 'event_list_header' %>
         </div>
 
-
         <% @events_filtered.uniq.group_by(&:year).each do |year, events_array| %>
           <% Hash[ events_array.group_by(&:day).sort_by { |key, val| key } ].each do |day, events| %>
               <div class="day-text"><h3><%= events[0].date.strftime("%A, %d %B %Y") %></h3></div>
@@ -98,6 +97,7 @@
               <% end %>
             <% end %>
         <% end %>
+        <%= will_paginate @events_filtered %>
     </div>
   </div>
 </div>
