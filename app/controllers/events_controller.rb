@@ -28,18 +28,16 @@ class EventsController < ApplicationController
     # GENRES
     # filter for specific genre
     @events_filtered = @events_filtered.joins(artists: :genres).where(genres: { name: @selected_genre.downcase}) if (!@selected_genre.blank? && @selected_genre != 'All genres') && (@selected_artist != 'All artists' || @selected_artist == 'All artists')
-    # raise
+
+    # PAGINATION
+    # @events_filtered = @events_filtered.paginate(:page => params[:page], :per_page => 10)
+
     # BOOKMARKED
     @current_user_liked_items = current_user.find_liked_items if user_signed_in?
 
     # MARKERS
     @events_markers = events_markers(@events_filtered)
 
-    # Venues
-    # TODO
-
-    #KAMINARI
-    # @events_filtered = @events_filtered.order(:date).page(params[:page]).per(25)
   end
 
   def show
