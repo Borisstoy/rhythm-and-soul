@@ -109,7 +109,7 @@ class EventsController < ApplicationController
       marker = {}
       marker[:venue_lat] = event.venue[:latitude]
       marker[:venue_lng] = event.venue[:longitude]
-      marker[:infowindow] = render_to_string(partial: "infowindow.html.erb", formats: [:html], layout: false, locals: {current_user: current_user, current_user_liked_items: @current_user_liked_items, event: event})
+      marker[:infowindow] = render_to_string(partial: "infowindow.html.erb", formats: [:html], layout: false, locals: {current_user: current_user, current_user_liked_items: @current_user_liked_items, event: event}, cache: true)
       events_markers << marker
     end
 

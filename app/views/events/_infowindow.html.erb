@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class='iw-bookmark' id='iw_event_<%= event.id %>'>
-    <% ApplicationController.render(partial: 'events/bookmark', locals: { event: event, current_user: current_user, current_user_liked_items: @current_user_liked_items }) %>
+    <%= ApplicationController.render(partial: 'events/bookmark', locals: { event: event, current_user: current_user, current_user_liked_items: @current_user_liked_items }, cache: true) %>
     </div>
   </div>
 </div>
