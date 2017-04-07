@@ -18,10 +18,10 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'kaminari'
 gem 'jquery-infinite-pages'
 
-# cache partials
+# Cache partials
 gem 'multi_fetch_fragments'
 
-#BOOKMARK / UPVOTES
+# Bookmark / Upvotes
 gem 'acts_as_votable'
 
 #Friendly URL
