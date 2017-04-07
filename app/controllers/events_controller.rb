@@ -2,52 +2,64 @@ class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
 
   def index
-    @picked_start_date = params['start_date']
-    @picked_end_date = params['end_date']
+    @picked_start_date = params[:start_date]
+    @picked_end_date = params[:end_date]
     @selected_artist = params[:artist_filter]
     @selected_genre = params[:genre_filter]
+    @picked_location = params[:location]
 
-    @start = Time.now
-    puts "START #{@start - Time.now}"
+    center_map
+    build_events
+    location_filter
+    date_filter
+    artists_filter
+    genres_filter
+    markers
+    liked_events
+    # pagination
+  end
 
-    params[:location] == '' || params[:location].nil? ? @location = "Canada" : @location = params[:location]
+  def center_map
+    @picked_location == '' || @picked_location.nil? ? @location = "Canada" : @location = params[:location]
     center_map_display(@location)
+  end
 
-    ########## Filters ##########
-    @events_filtered = user_signed_in? ? current_user.events.includes(:artists, :venue, :genres).where("date >= ?", Date.today) : Event.includes(:artists, :venue, :genres).where("date >= ?", Date.today)
+  def build_events
+    if user_signed_in?
+      @events_filtered = current_user.events.includes(:artists, :venue).where("date >= ?", Date.today)
+    else
+      @events_filtered = Event.includes(:artists, :venue).where("date >= ?", Date.today)
+    end
+  end
 
-    # LOCATION
-    # Select venues according to location search
+  def location_filter
     @events_filtered = @events_filtered.where(venue: @searched_venues)
+  end
 
-    # DATE
+  def date_filter
     @events_filtered = @events_filtered.where("date >= ?", @picked_start_date) unless @picked_start_date.blank?
     @events_filtered = @events_filtered.where("date < ?", @picked_end_date) unless @picked_end_date.blank?
-
-    puts "DATE + LOCATION #{@start - Time.now}"
-
-    # ARTISTS
-    # filter for specific artist
-    @events_filtered = @events_filtered.where(artists: { name: @selected_artist }) if !@selected_artist .blank? && @selected_artist  != 'All artists'
-
-    puts "ARTIST #{@start - Time.now}"
-
-    # GENRES
-    # filter for specific genre
-    @events_filtered = @events_filtered.includes(artists: :genres).where(genres: { name: @selected_genre.downcase}) if (!@selected_genre.blank? && @selected_genre != 'All genres') && (@selected_artist != 'All artists' || @selected_artist == 'All artists')
-
-    puts "GENRE #{@start - Time.now}"
-
-    # PAGINATION
-    # @events_filtered = @events_filtered.page(params[:page])
-
-    # BOOKMARKED
-    @current_user_liked_items = current_user.find_liked_items if user_signed_in?
-
-    # MARKERS
-    @events_markers = events_markers(@events_filtered)
-
   end
+
+  def artists_filter
+    @events_filtered = @events_filtered.where(artists: { name: @selected_artist }) if !@selected_artist .blank? && @selected_artist  != 'All artists'
+  end
+
+  def genres_filter
+    @events_filtered = @events_filtered.includes(artists: :genres).where(genres: { name: @selected_genre.downcase}) if (!@selected_genre.blank? && @selected_genre != 'All genres') && (@selected_artist != 'All artists' || @selected_artist == 'All artists')
+  end
+
+  def markers
+    @events_markers = events_markers(@events_filtered)
+  end
+
+  def liked_events
+    @current_user_liked_items = current_user.find_liked_items if user_signed_in?
+  end
+
+  # def pagination
+  #   @events_filtered = @events_filtered #.page(1).per(10)
+  # end
 
   def show
     @artist = Artist.find(params[:id])
@@ -90,29 +102,14 @@ class EventsController < ApplicationController
   def events_markers(events)
     venues_coordinates = []
     events_markers = []
-    events = events.to_a.sort_by! { |event| event.date }
+    # events = events.to_a.sort_by! { |event| event.date }
     events.each do |event|
       position = { lat: event.venue.latitude, lng: event.venue.longitude }
       venues_coordinates << position
       marker = {}
       marker[:venue_lat] = event.venue[:latitude]
       marker[:venue_lng] = event.venue[:longitude]
-
-      marker[:infowindow] = "
-      <div class='iw-container event'>
-        <h3 class='iw-title'><span>#{event.artists.count} event(s) </span>@ #{event.venue.name}</h3>
-        <div class='iw-event'>
-          <div>
-            <h3>#{event.artists.first.name}</h3>
-            <div>
-            <p>#{event.date.strftime('%d %b %Y')}</p>
-            </div>
-          </div>
-          <div class='iw-bookmark' id='iw_event_#{event.id}'>
-            #{ ApplicationController.render(partial: 'events/bookmark', locals: { event: event, current_user: current_user, current_user_liked_items: @current_user_liked_items })}
-          </div>
-        </div>
-      </div>"
+      marker[:infowindow] = render_to_string(partial: "infowindow.html.erb", formats: [:html], layout: false, locals: {current_user: current_user, current_user_liked_items: @current_user_liked_items, event: event})
       events_markers << marker
     end
 

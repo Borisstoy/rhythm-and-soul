@@ -1,0 +1,14 @@
+<div class='iw-container event'>
+  <h3 class='iw-title'><span><%= event.artists.count %> events(s)</span> @ <%= event.venue.name %></h3>
+  <div class='iw-event'>
+    <div>
+      <h3><%= event.artists.first.name %></h3>
+      <div>
+      <p><%= event.date.strftime('%d %b %Y') %></p>
+      </div>
+    </div>
+    <div class='iw-bookmark' id='iw_event_<%= event.id %>'>
+    <% ApplicationController.render(partial: 'events/bookmark', locals: { event: event, current_user: current_user, current_user_liked_items: @current_user_liked_items }) %>
+    </div>
+  </div>
+</div>
