@@ -46,9 +46,9 @@
               <% @events_filtered.each do |event| %>
                 <% genres << event.genres %>
               <% end %>
-              <% genres = genres.flatten.uniq %>
+              <% genres = genres.flatten.uniq.map{ |genre| genre.name.capitalize }.sort %>
               <% genres.each do |genre| %>
-                <option><%= genre.name.capitalize %></option>
+                <option><%= genre %></option>
               <% end %>
             </select>
           </div>
