@@ -16,7 +16,7 @@ class EventsController < ApplicationController
     genres_filter
     markers
     liked_events
-    # pagination
+    pagination
   end
 
   def center_map
@@ -26,9 +26,9 @@ class EventsController < ApplicationController
 
   def build_events
     if user_signed_in?
-      @events_filtered = current_user.events.includes(:artists, :venue).where("date >= ?", Date.today)
+      @events_filtered = current_user.events.includes(:artists, :venue).where("date >= ?", Date.today).order(:date)
     else
-      @events_filtered = Event.includes(:artists, :venue).where("date >= ?", Date.today)
+      @events_filtered = Event.includes(:artists, :venue).where("date >= ?", Date.today).order(:date)
     end
   end
 
@@ -57,9 +57,9 @@ class EventsController < ApplicationController
     @current_user_liked_items = current_user.find_liked_items if user_signed_in?
   end
 
-  # def pagination
-  #   @events_filtered = @events_filtered #.page(1).per(10)
-  # end
+  def pagination
+    @events_filtered = @events_filtered.page(1).per(20)
+  end
 
   def show
     @artist = Artist.find(params[:id])
