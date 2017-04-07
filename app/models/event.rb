@@ -7,6 +7,8 @@ class Event < ApplicationRecord
   has_many :genres, through: :artists
   acts_as_votable
 
+  # scope :of_the_day, -> (day) {joins(:artists, :venue).where("date >= ?", day).order(:date).group("events.date")}
+
   def day
     self.date.strftime('%j')
   end

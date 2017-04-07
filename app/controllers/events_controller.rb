@@ -16,11 +16,11 @@ class EventsController < ApplicationController
     genres_filter
     markers
     liked_events
-    pagination
+    # pagination
   end
 
   def center_map
-    @picked_location == '' || @picked_location.nil? ? @location = "Canada" : @location = params[:location]
+     @location = params[:location].presence || "Canada"
     center_map_display(@location)
   end
 
@@ -57,9 +57,13 @@ class EventsController < ApplicationController
     @current_user_liked_items = current_user.find_liked_items if user_signed_in?
   end
 
-  def pagination
-    @events_filtered = @events_filtered.page(1).per(20)
-  end
+  # def pagination
+  #   @events_filtered = @events_filtered.page(1).per(20)
+  #   respond_to do |format|
+  #     format.html { render 'index' }
+  #     format.js   { render 'infinite_scroll_index' }
+  #   end
+  # end
 
   def show
     @artist = Artist.find(params[:id])
