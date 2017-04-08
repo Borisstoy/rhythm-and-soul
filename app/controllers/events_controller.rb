@@ -25,11 +25,11 @@ class EventsController < ApplicationController
   end
 
   def build_events
-    if user_signed_in?
-      @events_filtered = current_user.events.includes(:artists, :venue).where("date >= ?", Date.today).order(:date)
-    else
-      @events_filtered = Event.includes(:artists, :venue).where("date >= ?", Date.today).order(:date)
-    end
+    @events_filtered =
+      (user_signed_in? ? current_user.events : Event)
+        .includes(:artists, :venue)
+        .where("date >= ?", Date.today)
+        .order(:date)
   end
 
   def location_filter
@@ -46,7 +46,11 @@ class EventsController < ApplicationController
   end
 
   def genres_filter
-    @events_filtered = @events_filtered.includes(artists: :genres).where(genres: { name: @selected_genre.downcase}) if (!@selected_genre.blank? && @selected_genre != 'All genres') && (@selected_artist != 'All artists' || @selected_artist == 'All artists')
+    if (!@selected_genre.blank? && @selected_genre != 'All genres') && (@selected_artist != 'All artists' || @selected_artist == 'All artists')
+      @events_filtered = @events_filtered
+      .includes(artists: :genres)
+      .where(genres: { name: @selected_genre.downcase})
+    end
   end
 
   def markers
