@@ -1,5 +1,5 @@
 <h2>Past Events</h2>
-<% unless @past_event.nil? || @past_event.empty? %>
+<% if @past_event.presence %>
   <% @past_event.each do |item| %>
     <% if item.date < Date.today %>
       <div class="wrapper-events-profile">
