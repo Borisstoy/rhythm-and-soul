@@ -1,0 +1,4 @@
+<% events_list = j render 'event_filtered' %>
+<% pagination_nav = j render 'pagination_nav' %>
+$("#events-list").append("<%= events_list %>");
+$("#pagination-nav").html("<%= pagination_nav %>");

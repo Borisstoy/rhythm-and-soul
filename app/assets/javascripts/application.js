@@ -3,5 +3,7 @@
 //= require rollbar
 //= require bootstrap-sprockets
 //= require bootstrap-datepicker
-//= require_tree .
+//= require events
+//= require jquery.infinite-pages
 //= require jquery.infinitescroll
+//= require_tree .

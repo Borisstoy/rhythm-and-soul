@@ -16,7 +16,7 @@ class EventsController < ApplicationController
     genres_filter
     markers
     liked_events
-    # pagination
+    pagination
   end
 
   def center_map
@@ -61,13 +61,14 @@ class EventsController < ApplicationController
     @current_user_liked_items = current_user.find_liked_items if user_signed_in?
   end
 
-  # def pagination
-  #   @events_filtered = @events_filtered.page(1).per(20)
-  #   respond_to do |format|
-  #     format.html { render 'index' }
-  #     format.js   { render 'infinite_scroll_index' }
-  #   end
-  # end
+  def pagination
+    @events_filtered = @events_filtered.page(1).per(10)
+    @events_count = @events_filtered.total_count # renders the events_filtered total count (not per page)
+    respond_to do |format|
+      format.html { render 'index' }
+      format.js   { render 'infinite_scroll_index' }
+    end
+  end
 
   def show
     @artist = Artist.find(params[:id])

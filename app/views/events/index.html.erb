@@ -56,16 +56,16 @@
 
         <div class="result-filter">
           <div class="result-mess">
-            <% if @events_filtered.count == 0 %>
+            <% if @events_count == 0 %>
               <h4>There is no event matching your search in this area</h4>
-            <% elsif @events_filtered.count >= 1 && current_user.nil? || !current_user.nil? && @selected_genre.nil? || @selected_artist.nil? %>
-              <h4><span><%= @events_filtered.count %></span> events found in this area</strong></h4>
+            <% elsif @events_count >= 1 && current_user.nil? || !current_user.nil? && @selected_genre.nil? || @selected_artist.nil? %>
+              <h4><span><%= @events_count %></span> events found in this area</strong></h4>
             <% elsif @selected_genre != "All genres" %>
-              <h4><span><%= @events_filtered.count %></span> events related to <strong><%= @selected_genre %></strong></h4>
+              <h4><span><%= @events_count %></span> events related to <strong><%= @selected_genre %></strong></h4>
             <% elsif @selected_artist == "All artists" %>
-              <h4><span><%= @events_filtered.count %></span> events found in total</h4>
-            <% elsif @events_filtered.count >= 1 %>
-              <h4><span><%= @events_filtered.count %></span> events for <strong><%= @selected_artist %></strong></h4>
+              <h4><span><%= @events_count %></span> events found in total</h4>
+            <% elsif @events_count >= 1 %>
+              <h4><span><%= @events_count %></span> events for <strong><%= @selected_artist %></strong></h4>
             <% end %>
           </div>
 
@@ -86,25 +86,18 @@
           <%= render 'event_list_header' %>
         </div>
 
-        <% @events_filtered.uniq.group_by(&:year).each do |year, events_array| %>
-          <% Hash[ events_array.group_by(&:day).sort_by { |key, val| key } ].each do |day, events| %>
-              <div class="day-text"><h3><%= events[0].date.strftime("%A, %d %B %Y") %></h3></div>
-              <div class="day-lign"></div>
-              <% events.each do |e| %>
-                <div class="wrapper-event-description event" id="event_<%= e.id %>" data-latitude="<%= e.venue.latitude %>" data-longitude="<%= e.venue.longitude %>">
-                  <%= render 'event_element', event: e, current_user_liked_items: @current_user_liked_items, cache: true %>
-                </div>
-              <% end %>
-            <% end %>
-        <% end %>
+        <div class="partial-events">
+          <%= render 'event_filtered', events_filtered: @events_filtered %>
+        </div>
+
     </div>
-      <%#= paginate @events_filtered %>
+      <div id='pagination-nav'>
+        <%= render 'pagination_nav' %>
+      </div>
   </div>
 </div>
 
 <div id="event-map"></div>
-
-</div>
 
 <% content_for(:after_js) do %>
 
