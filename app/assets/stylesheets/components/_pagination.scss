@@ -1,0 +1,17 @@
+#pagination-nav {
+  // display: none;
+  text-align: center;
+  .pagination {
+    font-size: .9em;
+    a {
+      padding: .3em;
+      font-weight: 400;
+      color: lighten($main-blue, 50%);
+    }
+    .current {
+      padding: .3em;
+      font-weight: 700;
+      color: $main-blue;
+    }
+  }
+}
