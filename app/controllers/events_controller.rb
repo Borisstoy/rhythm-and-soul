@@ -62,7 +62,7 @@ class EventsController < ApplicationController
   end
 
   def pagination
-    @events_filtered = @events_filtered.page(1).per(10)
+    @events_filtered = @events_filtered.page(params[:page]).per(10)
     @events_count = @events_filtered.total_count # renders the events_filtered total count (not per page)
     respond_to do |format|
       format.html { render 'index' }
