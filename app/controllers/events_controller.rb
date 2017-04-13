@@ -20,7 +20,7 @@ class EventsController < ApplicationController
   end
 
   def center_map
-     @location = params[:location].presence || "Canada"
+     @location = params[:location].presence || "Montreal, QC, Canada"
     center_map_display(@location)
   end
 
