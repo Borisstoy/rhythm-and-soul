@@ -12,17 +12,17 @@ ActiveAdmin.register User do
 #   permitted
 # end
 
-form do |f|
-    f.inputs "Identity" do
-      f.input :name
-      f.input :email
-    end
-    f.inputs "Admin" do
-      f.input :admin
-    end
-    f.actions
-  end
+# form do |f|
+#     f.inputs "Identity" do
+#       f.input :name
+#       f.input :email
+#     end
+#     f.inputs "Admin" do
+#       f.input :admin
+#     end
+#     f.actions
+#   end
 
-  permit_params :name, :email, :admin
+#   permit_params :name, :email, :admin
 
 end

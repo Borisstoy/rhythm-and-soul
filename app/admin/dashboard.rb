@@ -15,9 +15,10 @@ ActiveAdmin.register_page "Dashboard" do
     columns do
       column do
         panel "Recent Users" do
-          ul do
-            User.all do |u|
-              li link_to(u.name, admin_u_path(u))
+          tr do
+            User.all.each do |u|
+              td  u.id
+              td link_to(u.email)
             end
           end
         end

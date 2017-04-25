@@ -13,6 +13,19 @@ ActiveAdmin.setup do |config|
   # # [...]
   # config.logout_link_method = :delete
 
+  # if ActiveAdmin::VERSION == "0.3.4" && Rails.version == "3.2.0"
+  #   class ActiveSupport::FileUpdateChecker
+  #     def paths
+  #       @files
+  #     end
+  #   end
+  # else
+  #   warn = "!! double check the ActiveSupport::FileUpdateChecker duck punch in #{__FILE__} !!"
+  #   puts "!" * warn.size
+  #   puts warn
+  #   puts "!" * warn.size
+  # end
+
   # == Site Title
   #
   # Set the title that is displayed on the main layout
