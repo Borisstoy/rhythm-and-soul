@@ -1,1 +1,1 @@
-$("#events-list").append("<div class='partial-events'><%= escape_javascript(render 'events_filtered' %></div>");
+$(".events-search .index-events-list #events-list").append("<div class='partial-events'><%= escape_javascript(render(@events_filtered) %></div>");

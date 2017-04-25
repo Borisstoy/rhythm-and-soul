@@ -90,9 +90,11 @@
           <%= render 'event_filtered', events_filtered: @events_filtered %>
         </div>
 
-        <div id='pagination-nav'>
-          <%= render 'pagination_nav' %>
-        </div>
+        <%= paginate @events_filtered %>
+
+        <!-- <div id='pagination-nav'>
+          <%#= render 'pagination_nav' %>
+        </div> -->
     </div>
   </div>
 </div>

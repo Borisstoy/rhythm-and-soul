@@ -30,6 +30,10 @@ gem 'friendly_id', '~> 5.1.0' # Note: You MUST use 5.0.0 or greater for Rails 4.
 #Heroku add on, detects controllers activity
 gem 'scout_apm'
 
+#Active Admin
+gem 'activeadmin', github: 'activeadmin/activeadmin'
+gem 'inherited_resources', github: 'activeadmin/inherited_resources'
+
 gem 'sass-rails'
 gem 'compass-rails'
 gem 'jquery-rails'
