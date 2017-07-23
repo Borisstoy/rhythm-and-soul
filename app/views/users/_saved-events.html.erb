@@ -1,25 +1,27 @@
 <h2>Saved Events</h2>
-<% current_user.find_voted_items.sort_by do |item| %>
-  <% if item.date >= Date.today %>
-    <div class="wrapper-events-profile">
-      <div class="event-box">
-        <div class="event-image">
-          <%= image_tag item.artists.first.images %>
-        </div>
-        <div class="event-name">
-          <h4><%= item.artists.first.name.capitalize %> <span>@ <%= item.venue.name.capitalize %></span></h4>
-          <p><%= item.venue.address %></p>
-        </div>
-        <div class="event-date">
-          <%= item.date.strftime("%d/%m/%y") %>
-        </div>
-        <div class="event-buy-ticket">
-          <%= link_to "Buy ticket", item.ticket, class:"buy-ticket-button", target: :_blank %>
-        </div>
-        <div class="event-bookmark-controller">
-          <%= link_to "", remove_bookmark_event_path(item), method: :put, class:'fa fa-trash-o' %>
+<% if current_user.find_voted_items.present? %>
+  <% current_user.find_voted_items.sort_by do |item| %>
+    <% if item.date >= Date.today %>
+      <div class="wrapper-events-profile">
+        <div class="event-box">
+          <div class="event-image">
+            <%= image_tag item.artists.first.images %>
+          </div>
+          <div class="event-name">
+            <h4><%= item.artists.first.name.capitalize %> <span>@ <%= item.venue.name.capitalize %></span></h4>
+            <p><%= item.venue.address %></p>
+          </div>
+          <div class="event-date">
+            <%= item.date.strftime("%d/%m/%y") %>
+          </div>
+          <div class="event-buy-ticket">
+            <%= link_to "Buy ticket", item.ticket, class:"buy-ticket-button", target: :_blank %>
+          </div>
+          <div class="event-bookmark-controller">
+            <%= link_to "", remove_bookmark_event_path(item), method: :put, class:'fa fa-trash-o' %>
+          </div>
         </div>
       </div>
-    </div>
+    <% end %>
   <% end %>
 <% end %>
