@@ -1,5 +1,5 @@
 <h2>Saved Events</h2>
-<% if current_user.find_voted_items.present? %>
+<% unless current_user.find_voted_items.nil? %>
   <% current_user.find_voted_items.sort_by do |item| %>
     <% if item.date >= Date.today %>
       <div class="wrapper-events-profile">
