@@ -26,7 +26,7 @@ Rails.application.routes.draw do
     resources :users, only: [:show, :edit, :update] do
       resources :events, only: [:show]
     end
-     get '/scan_playlist' => 'users#scan_playlist', as: :scan_playlist
-     resources :artists, only: [:show]
+    get '/scan_playlist' => 'users#scan_playlist', as: :scan_playlist
+    resources :artists, only: [:show]
   end
 end

@@ -42,7 +42,7 @@ class EventsController < ApplicationController
   end
 
   def artists_filter
-    @events_filtered = @events_filtered.where(artists: { name: @selected_artist }) if !@selected_artist .blank? && @selected_artist  != 'All artists'
+    @events_filtered = @events_filtered.where(artists: { name: @selected_artist }) if !@selected_artist.blank? && @selected_artist  != 'All artists'
   end
 
   def genres_filter
