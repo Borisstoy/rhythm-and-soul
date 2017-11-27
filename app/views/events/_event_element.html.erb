@@ -1,6 +1,6 @@
 <div class="event-desc-image">
   <% event_artist = event.artists.uniq.first %>
-  <% if event_artist.images %>
+  <% if event_artist&.images %>
     <%= image_tag event_artist.images %>
   <% else %>
     <%= image_tag('compact-disc.png') %>
@@ -15,15 +15,15 @@
 </div>
 <div class="event-desc-name">
   <div class="content">
-    <h4><%= event_artist.name %></h4>
+    <h4><%= event_artist&.name %></h4>
   </div>
 </div>
 <div class="event-desc-address">
-  <p><%= event.venue.name %></p>
-  <%= event.venue.address %>
+  <p><%= event.venue&.name %></p>
+  <%= event.venue&.address %>
 </div>
 <div class="event-desc-date">
-  <%= event.date.strftime('%A, %d %b %Y %l:%M %p') %>
+  <%= event.date&.strftime('%A, %d %b %Y %l:%M %p') %>
 </div>
 <div class="event-desc-links">
   <div class="event-desc-ticket">
