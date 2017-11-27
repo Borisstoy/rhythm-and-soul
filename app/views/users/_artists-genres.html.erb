@@ -15,7 +15,7 @@
 <br>
 
 <div class="wrapper-artists-genre-profile">
-  <% @artists_events_filtered.each do |artist| %>
+  <% @artists_events_filtered.uniq.each do |artist| %>
     <% if artist.name != "Various Artists" %>
       <%= link_to artist_path(artist.id) do %>
         <div class="card-artist-genre grow">
