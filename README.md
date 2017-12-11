@@ -1,1 +1,1 @@
-Rails app generated with [lewagon/rails-templates](https://github.com/lewagon/rails-templates), created by the [Le Wagon coding bootcamp](https://www.lewagon.com) team.
+This app is using Heroku hosting, due to free dynos limit (and thus DB limit), we might not be able to serve all the playlists scans and events match. Nevertheless a good demo to understand the concept ;)
